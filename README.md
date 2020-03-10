@@ -30,3 +30,14 @@ A bunch of plugins will be run automatically:
 Those plugins generate reports from those checks in ``/build/reports/`` and wont let you build successful.
 
 //TODO: here should be something on travis.
+
+## Package structure
+| API endpoint | package name | gives access to |
+|--------------|--------------|-----------------|
+|Acquisitions|no.unit.alma.acq.*| POLines, Vendors |
+|Analytics|no.unit.alma.analytics.*| Alma reports |
+|Bibliographic Records and Inventory|no.unit.alma.bibs.*| Bibs, Holdings, Items |
+|Configuration and Administration|no.unit.alma.conf.*| Alma configurations |
+|Resource Sharing Partners|no.unit.alma.partners.*| Partners |
+|Users and Fulfillment|no.unit.alma.users.*| Users |
+
