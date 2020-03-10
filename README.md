@@ -40,5 +40,6 @@ Those plugins generate reports from those checks in ``/build/reports/`` and wont
 | Configuration and Administration | no.unit.alma.conf.* | Alma configurations |
 | Resource Sharing Partners | no.unit.alma.partners.* | Partners |
 | Users and Fulfillment | no.unit.alma.users.* | Users |
+
 https://developers.exlibrisgroup.com/console/
 
