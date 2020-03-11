@@ -6,7 +6,7 @@ The Library-system Alma from ExLibris offers some API-endpoint (see
 Unit provides some applications and services that make use of those Alma-APIs.
 In order to communicate with those Alma-APIs you need to provide an ```API Key```.
 As long as Units applications and services are running on safespring-cloud, 
-we will use Vault to handle those ```API Key``` 
+Vault is used to handle ```API Key``` 
 (see vault-client project on [gitLab.bibsys.no](https://git.bibsys.no/infrastruktur/vault-client) for details).
 
 This project is meant to give guidelines in form of example implementations to those API-endpoints and example use of 
@@ -22,19 +22,19 @@ The project uses gradle. Make sure you have the latest gradle version:
     gradle wrapper
 ```
 If you have [java 11](https://openjdk.java.net/install/) installed run ```gradle build```.
-A bunch of plugins will be run automatically: 
+The following plugins will be run automatically: 
 * [checkstyle](https://docs.gradle.org/current/userguide/checkstyle_plugin.html) for java file style checks
 * [PMD](https://docs.gradle.org/current/userguide/pmd_plugin.html) for java code style checks
 * [JaCoCo](https://docs.gradle.org/current/userguide/jacoco_plugin.html) for test coverage
 
 Those plugins generate reports from those checks in ``/build/reports/`` and wont let you build successful.
 
-//TODO: here should be something on travis.
+The project uses Travis CI to check if the code compiles.
 
 ## Package structure
 | API endpoint | package name | gives access to |
 |--------------|--------------|-----------------|
-| Acquisitions | no.unit.alma.acq.* | POLines, Vendors |
+| Acquisitions | no.unit.alma.acquisition.* | POLines, Vendors |
 | Analytics | no.unit.alma.analytics.* | Alma reports |
 | Bibliographic Records and Inventory | no.unit.alma.bibs.* | Bibs, Holdings, Items |
 | Configuration and Administration | no.unit.alma.conf.* | Alma configurations |
