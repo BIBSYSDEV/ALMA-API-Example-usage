@@ -1,5 +1,8 @@
 package no.unit.alma.acquisitions;
 
+import no.unit.alma.commons.AlmaServiceFactory;
+import no.unit.alma.commons.AlmaStage;
+import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -8,10 +11,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AlmaVendorsClientTest {
 
+    private AlmaServiceFactory almaServiceFactory = new AlmaServiceFactory(JerseyClientBuilder.newClient());
+
+
     @Test
     void testGetVendor() throws IOException, InterruptedException {
-        AlmaVendorsClient almaVendorsClient= new AlmaVendorsClient(null);
-        Vendor test = almaVendorsClient.getVendor("testid");
+
+        AlmaVendorsService almaVendorsService = almaServiceFactory.getAlmaVendors("g", AlmaStage.SANDBOX2);
+        Vendor test = almaVendorsService.getVendor("testid");
         assertEquals("test", test.getVendorContentReplacement());
     }
 
