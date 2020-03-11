@@ -34,10 +34,10 @@ The project uses Travis CI to check if the code compiles.
 ## Package structure
 | API endpoint | package name | gives access to |
 |--------------|--------------|-----------------|
-| Acquisitions | no.unit.alma.acquisition.* | POLines, Vendors |
+| Acquisitions | no.unit.alma.acquisitions.* | POLines, Vendors |
 | Analytics | no.unit.alma.analytics.* | Alma reports |
 | Bibliographic Records and Inventory | no.unit.alma.bibs.* | Bibs, Holdings, Items |
-| Configuration and Administration | no.unit.alma.conf.* | Alma configurations |
+| Configuration and Administration | no.unit.alma.configurations.* | Alma configurations |
 | Resource Sharing Partners | no.unit.alma.partners.* | Partners |
 | Users and Fulfillment | no.unit.alma.users.* | Users |
 
