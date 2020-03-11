@@ -12,18 +12,18 @@ import java.time.Duration;
 
 public class AlmaVendorsClient implements AlmaVendors {
 
-    private final HttpClient acqTarget;
-    private final String context;
-    private final String contextValue;
-    private final AlmaStage almaStage;
+    private final HttpClient acqTarget = null;
+    private final String context = null;
+    private final String contextValue = null;
+    private final AlmaStage almaStage = null;
 
     private final static String VENDORS_URL = "https://jsonplaceholder.typicode.com/todos/1"; //"vendors";
 
     public AlmaVendorsClient(AlmaClient almaClient) {
-        this.acqTarget = almaClient.getWebTarget();//.path("acq");
-        this.context = almaClient.getContext();
-        this.contextValue = almaClient.getContextValue();
-        this.almaStage =almaClient.getAlmaStage();
+//        this.acqTarget = almaClient.getWebTarget();//.path("acq");
+//        this.context = almaClient.getContext();
+//        this.contextValue = almaClient.getContextValue();
+//        this.almaStage =almaClient.getAlmaStage();
     }
 
 //    public Vendors searchVendor(String q) {

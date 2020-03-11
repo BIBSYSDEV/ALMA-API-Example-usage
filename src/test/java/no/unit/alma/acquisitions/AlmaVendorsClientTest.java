@@ -12,7 +12,7 @@ class AlmaVendorsClientTest {
     void testGetVendor() throws IOException, InterruptedException {
         AlmaVendorsClient almaVendorsClient= new AlmaVendorsClient(null);
         Vendor test = almaVendorsClient.getVendor("testid");
-        assertEquals(test.getVendorContentReplacement(), "test");
+        assertEquals("test", test.getVendorContentReplacement());
     }
 
 }
