@@ -24,7 +24,7 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
     @Override
     public void filter(ClientRequestContext clientRequestContext, ClientResponseContext clientResponseContext) throws IOException {
         if (clientResponseContext.getStatusInfo().getFamily() != Family.SUCCESSFUL) {
-//            log.trace("Response from alma is marked as unsuccessful.\nUri: {}\nMethod: {}\nResponse code: {}",
+            log.trace("Response from alma is marked as unsuccessful.\nUri: {}\nMethod: {}\nResponse code: {}",
                 clientRequestContext.getUri(), clientRequestContext.getMethod(), clientResponseContext.getStatus());
 
             String responseBody = unmarshalResponseEntity(clientResponseContext);

@@ -1,5 +1,6 @@
 package no.unit.alma.acquisitions;
 
+import no.bibsys.alma.rest.vendor.Vendor;
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
 import org.apache.commons.lang3.StringUtils;

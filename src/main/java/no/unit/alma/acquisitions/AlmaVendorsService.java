@@ -1,5 +1,6 @@
 package no.unit.alma.acquisitions;
 
+import no.bibsys.alma.rest.vendor.Vendor;
 import no.unit.alma.commons.AlmaContext;
 
 import java.io.IOException;

@@ -1,20 +1,23 @@
 package no.unit.alma.commons;
 
+import no.bibsys.vault.VaultClient;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
 public class VaultApiAuthorization implements ApiAuthorization {
 
-    //private static final transient Logger log = LoggerFactory.getLogger(ApiAuthorizationService.class);
+    private static final transient Logger log = LoggerFactory.getLogger(ApiAuthorizationService.class);
 
-    //private final VaultClient vaultClient;
+    private final VaultClient vaultClient;
     private final String environment;
     private final AlmaStage almaStage;
     private final String organization;
 
-    VaultApiAuthorization(/*VaultClient vaultClient,*/ String environment, AlmaStage almaStage, String organization) {
-        //Objects.requireNonNull(vaultClient, "Vault client is required");
+    VaultApiAuthorization(VaultClient vaultClient, String environment, AlmaStage almaStage, String organization) {
+        Objects.requireNonNull(vaultClient, "Vault client is required");
         if (StringUtils.isEmpty(environment)) {
             throw new NullPointerException("Environment is required");
         }
@@ -22,7 +25,7 @@ public class VaultApiAuthorization implements ApiAuthorization {
             throw new NullPointerException("Organization is required");
         }
         Objects.requireNonNull(almaStage, "Alma stage is required");
-        //this.vaultClient = vaultClient;
+        this.vaultClient = vaultClient;
         this.environment = environment;
         this.almaStage = almaStage;
         this.organization = organization;
@@ -61,15 +64,14 @@ public class VaultApiAuthorization implements ApiAuthorization {
 
     private String getSecret(String type, String key) {
         String secretPath = String.format("secret/service/alma/apikey/%s/%s/%s#value", environment, almaStage.getVaultAlmaStageName(), key);
-        //log.trace("Vault secret path for Environment '{}', Alma stage '{}', Context '{}', Value '{}': {}", environment, almaStage, type, key, secretPath);
-        //final String secret = vaultClient.read(secretPath);
-//        if (secret == null) {
-//            throw new NullPointerException(String.format("Unable to retrieve AlmaContext secret. Environment: '%s', Alma stage: '%s', AlmaContext: '%s', Value: '%s'",
-//                environment, almaStage, type, key));
-//        }
-        //log.debug("AlmaContext secret found for Environment '{}', Alma stage '{}', Context '{}', Value '{}'", environment, almaStage, type, key);
-//        return secret;
-        return "";
+        log.trace("Vault secret path for Environment '{}', Alma stage '{}', Context '{}', Value '{}': {}", environment, almaStage, type, key, secretPath);
+        final String secret = vaultClient.read(secretPath);
+        if (secret == null) {
+            throw new NullPointerException(String.format("Unable to retrieve AlmaContext secret. Environment: '%s', Alma stage: '%s', AlmaContext: '%s', Value: '%s'",
+                environment, almaStage, type, key));
+        }
+        log.debug("AlmaContext secret found for Environment '{}', Alma stage '{}', Context '{}', Value '{}'", environment, almaStage, type, key);
+        return secret;
     }
 
     @Override
