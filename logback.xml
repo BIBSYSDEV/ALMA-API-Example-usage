@@ -11,9 +11,6 @@
     
 	<property name="joblogpattern" value="%d{dd MMM yyyy HH:mm:ss.SSS} %-5level - %m%n" />
 
-	<property name="smtpHost" value="smtp.bibsys.no" />
-
-
     <turboFilter class="ch.qos.logback.classic.turbo.DynamicThresholdFilter">
         <Key>LOG_LEVEL</Key>
         <DefaultThreshold>ERROR</DefaultThreshold> <!-- Set at highest. If eventLevel is less than defaultLevel, then NEUTRAL -->
@@ -51,24 +48,6 @@
     </turboFilter>
     
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>${pattern}</Pattern>
-        </encoder>
-    </appender>
-    
-    <logger name="net.sourceforge.cobertura" level="INFO"/>
-    <logger name="com.wordnik.swagger" level="INFO"/>
-    
-    <appender name="FILE_LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- rollover daily -->
-            <fileNamePattern>/fasehome/applogs/${CONTEXT_NAME:-UNKNOWN}/%d{yyyy-MM-dd}-%d{HHmmss, aux}_${HOSTNAME}_%i.json.log</fileNamePattern>
-            <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
-            <maxFileSize>100MB</maxFileSize>
-            <!-- keep 90 days' worth of history -->
-            <maxHistory>90</maxHistory>
-            <totalSizeCap>20GB</totalSizeCap>
-        </rollingPolicy>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">            
             <!--<timeZone>UTC</timeZone>-->
             <providers class="net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders">
@@ -118,13 +97,7 @@
     <root level="${root.level:-debug}"> <!-- override in ${PROJECT_BASEDIR}/logback-local.properties -->
         <!--  you can access system properties, logback properties or special variables like HOSTNAME and CONTEXT_NAME -->
 
-        <if condition='"${root.log_to_console}" == "true"'>
-            <then>
-                <appender-ref ref="CONSOLE" />
-            </then>
-        </if>
-        
-        <appender-ref ref="FILE_LOGSTASH" />
+        <appender-ref ref="CONSOLE" />
 
     </root>
 	
