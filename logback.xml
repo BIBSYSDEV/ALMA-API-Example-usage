@@ -7,8 +7,6 @@
  
     <property name="pattern" value="%d{dd MMM yyyy HH:mm:ss.SSS} %-5level %-15([%thread]) [%class.%method:%line] %mdc{ASPECT} %marker %replace(ContainerId=%mdc{CONTAINER_ID} -){'ContainerId= -', ''} %m%n" /> 
 
-    <!-- <property name="pattern" value="%d{dd MMM yyyy HH:mm:ss.SSS} %-5level %-15([%thread]) [%class.%method:%line] - %mdc{ASPECT} %mdc{CONTAINER_MESSAGE} %marker %m%n" /> -->
-    
 	<property name="joblogpattern" value="%d{dd MMM yyyy HH:mm:ss.SSS} %-5level - %m%n" />
 
     <turboFilter class="ch.qos.logback.classic.turbo.DynamicThresholdFilter">
