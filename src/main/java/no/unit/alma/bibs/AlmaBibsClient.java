@@ -36,16 +36,17 @@ public class AlmaBibsClient implements AlmaBibs {
 
     @Override
     public Bib getBib(String identifier, String availParams) {
-        WebTarget getBibTarget = bibsTarget
-            .path(identifier);
+        WebTarget getBibTarget =
+                bibsTarget
+                        .path(identifier);
         if (StringUtils.isNotEmpty(availParams)) {
             getBibTarget = getBibTarget.queryParam("expand", availParams);
         }
         return getBibTarget
-            .request()
-            .accept(MediaType.APPLICATION_XML)
-            .buildGet()
-            .invoke(Bib.class);
+                .request()
+                .accept(MediaType.APPLICATION_XML)
+                .buildGet()
+                .invoke(Bib.class);
     }
 
     /**
@@ -58,71 +59,76 @@ public class AlmaBibsClient implements AlmaBibs {
     public void addBibToCollection(String mmsId, String collectionId) {
         final String bibXmlString = String.format("<bib>\n<mms_id>%s</mms_id>\n</bib>\n", mmsId);
         bibsTarget
-            .path("collections")
-            .path(collectionId)
-            .path("bibs")
-            .request(MediaType.APPLICATION_XML)
-            .accept(MediaType.APPLICATION_XML)
-            .buildPost(Entity.xml(bibXmlString))
-            .invoke()
-            .close();
+                .path("collections")
+                .path(collectionId)
+                .path("bibs")
+                .request(MediaType.APPLICATION_XML)
+                .accept(MediaType.APPLICATION_XML)
+                .buildPost(Entity.xml(bibXmlString))
+                .invoke()
+                .close();
     }
 
     /**
      * Create linked record in IZ that points to the record in NZ with given mmsId.
      *
-     * @param mmsId of the record in NZ that ends with 2201 (Example 991441774984702201)
-     * @return true if record is created that links from IZ to the NZ. Returns false if linked record already exists.
+     * @param mmsId of the record in NZ that ends with 2201 (Example
+     *              991441774984702201)
+     * @return true if record is created that links from IZ to the NZ. Returns false
+     *         if linked record already exists.
      */
     @Override
     public Bib createLinkedRecord(String mmsId) {
         return bibsTarget
-            .queryParam("from_nz_mms_id", mmsId)
-            .request(MediaType.APPLICATION_XML)
-            .accept(MediaType.APPLICATION_XML)
-            .buildPost(Entity.xml(new Bib()))
-            .invoke(Bib.class);
+                .queryParam("from_nz_mms_id", mmsId)
+                .request(MediaType.APPLICATION_XML)
+                .accept(MediaType.APPLICATION_XML)
+                .buildPost(Entity.xml(new Bib()))
+                .invoke(Bib.class);
     }
 
     @Override
     public Bib updateBib(final Bib bib) {
         return bibsTarget
-            .path(bib.getMmsId())
-            .request(MediaType.APPLICATION_XML)
-            .accept(MediaType.APPLICATION_XML)
-            .buildPut(Entity.xml(bib))
-            .invoke(Bib.class);
+                .path(bib.getMmsId())
+                .request(MediaType.APPLICATION_XML)
+                .accept(MediaType.APPLICATION_XML)
+                .buildPut(Entity.xml(bib))
+                .invoke(Bib.class);
     }
 
     @Override
     public UserRequests getRequestsFromBib(String recordIdentifier, boolean deleted) {
-        WebTarget userRequestsTarget = bibsTarget
-            .path(recordIdentifier)
-            .path("requests");
+        WebTarget userRequestsTarget =
+                bibsTarget
+                        .path(recordIdentifier)
+                        .path("requests");
         if (deleted) {
-            userRequestsTarget = userRequestsTarget
-                .queryParam("request_type", "DIGITIZATION")
-                .queryParam("status", "history");
+            userRequestsTarget =
+                    userRequestsTarget
+                            .queryParam("request_type", "DIGITIZATION")
+                            .queryParam("status", "history");
         }
         return userRequestsTarget
-            .request()
-            .accept(MediaType.APPLICATION_XML)
-            .buildGet()
-            .invoke(UserRequests.class);
+                .request()
+                .accept(MediaType.APPLICATION_XML)
+                .buildGet()
+                .invoke(UserRequests.class);
     }
 
     private Representation createRemotePresentation(String mmsId, Representation representation) {
         return bibsTarget
-            .path(mmsId)
-            .path("representations")
-            .request(MediaType.APPLICATION_XML)
-            .accept(MediaType.APPLICATION_XML)
-            .buildPost(Entity.xml(representation))
-            .invoke(Representation.class);
+                .path(mmsId)
+                .path("representations")
+                .request(MediaType.APPLICATION_XML)
+                .accept(MediaType.APPLICATION_XML)
+                .buildPost(Entity.xml(representation))
+                .invoke(Representation.class);
     }
 
     @Override
-    public Representation createRemotePresentation(String barcode, String access, String digitalRepositoryId, String url, String libraryCode) {
+    public Representation createRemotePresentation(String barcode, String access, String digitalRepositoryId,
+            String url, String libraryCode) {
         final Item item = getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
         final Representation input = new Representation();
@@ -139,7 +145,7 @@ public class AlmaBibsClient implements AlmaBibs {
         input.setRepository(repository);
         input.setLinkingParameter1(url);
         input.setLinkingParameter4(barcode);
-        final String label = AlmaBibService.Factory.instance().createLabel(item);
+        final String label = AlmaBibService.Factory.instance(almaClient).createLabel(item);
         input.setLabel(label);
         input.setPublicNote(access);
 
@@ -147,7 +153,8 @@ public class AlmaBibsClient implements AlmaBibs {
     }
 
     @Override
-    public Representation createRemotePresentation(String mmsId, String barcode, String access, String digitalRepositoryId, String url, String libraryCode) {
+    public Representation createRemotePresentation(String mmsId, String barcode, String access,
+            String digitalRepositoryId, String url, String libraryCode) {
         final Representation input = new Representation();
         input.setIsRemote(true);
         final Representation.Library library = new Representation.Library();
@@ -168,7 +175,9 @@ public class AlmaBibsClient implements AlmaBibs {
     }
 
     @Override
-    public Representation createRemotePresentation(long mmsId, String access, String remoteRepositoryId, String libraryCode, String url, String year, String month, String day, String volume, String issue, String number) {
+    public Representation createRemotePresentation(long mmsId, String access, String remoteRepositoryId,
+            String libraryCode, String url, String year, String month, String day, String volume, String issue,
+            String number) {
         final String mmsIdAsString = Long.toString(mmsId);
         final Representation input = new Representation();
         input.setIsRemote(true);
@@ -184,7 +193,9 @@ public class AlmaBibsClient implements AlmaBibs {
         input.setLinkingParameter1(url);
         input.setLinkingParameter4("" + mmsId);
         input.setOriginatingRecordId(url);
-        String label = AlmaBibService.Factory.instance().createLabel(volume, issue, number, "", year, month, day, "");
+        String label =
+                AlmaBibService.Factory.instance(almaClient).createLabel(volume, issue, number, "", year, month, day,
+                        "");
         input.setLabel(label);
         input.setYear(year);
         input.setSeasonMonth(month);
@@ -198,7 +209,9 @@ public class AlmaBibsClient implements AlmaBibs {
     }
 
     @Override
-    public Representation createRemotePresentation(String barcode, String access, String remoteRepositoryId, String libraryCode, String url, String year, String month, String day, String volume, String issue, String number) {
+    public Representation createRemotePresentation(String barcode, String access, String remoteRepositoryId,
+            String libraryCode, String url, String year, String month, String day, String volume, String issue,
+            String number) {
         final Item item = getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
         final Representation input = new Representation();
@@ -215,7 +228,9 @@ public class AlmaBibsClient implements AlmaBibs {
         input.setLinkingParameter1(url);
         input.setLinkingParameter4(barcode);
         input.setOriginatingRecordId(url);
-        final String label = AlmaBibService.Factory.instance().createLabel(volume, issue, number, "", year, month, day, "");
+        final String label =
+                AlmaBibService.Factory.instance(almaClient).createLabel(volume, issue, number, "", year, month, day,
+                        "");
         input.setLabel(label);
         input.setYear(year);
         input.setSeasonMonth(month);
@@ -229,7 +244,9 @@ public class AlmaBibsClient implements AlmaBibs {
     }
 
     @Override
-    public Representation createRemotePresentation(String barcode, String label, String access, String remoteRepositoryId, String libraryCode, String url, String year, String month, String day, String volume, String issue, String number) {
+    public Representation createRemotePresentation(String barcode, String label, String access,
+            String remoteRepositoryId, String libraryCode, String url, String year, String month, String day,
+            String volume, String issue, String number) {
         final Item item = getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
         final Representation input = new Representation();
@@ -260,24 +277,24 @@ public class AlmaBibsClient implements AlmaBibs {
 
     private Item getItem(String barcode) {
         return itemsTarget
-            .queryParam("item_barcode", barcode)
-            .request()
-            .accept(MediaType.APPLICATION_XML)
-            .buildGet()
-            .invoke(Item.class);
+                .queryParam("item_barcode", barcode)
+                .request()
+                .accept(MediaType.APPLICATION_XML)
+                .buildGet()
+                .invoke(Item.class);
     }
 
     @Override
     public Representations getRemoteRepresentationsFromMmsId(String mmsId, int limit, int offset) {
         return bibsTarget
-            .path(mmsId)
-            .path("representations")
-            .queryParam("limit", limit)
-            .queryParam("offset", offset)
-            .request()
-            .accept(MediaType.APPLICATION_XML)
-            .buildGet()
-            .invoke(Representations.class);
+                .path(mmsId)
+                .path("representations")
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .request()
+                .accept(MediaType.APPLICATION_XML)
+                .buildGet()
+                .invoke(Representations.class);
     }
 
     @Override
@@ -290,29 +307,30 @@ public class AlmaBibsClient implements AlmaBibs {
     @Override
     public Representation getSingleRemoteRepresentationFromMmsId(String mmsId, String representationId) {
         return bibsTarget
-            .path(mmsId)
-            .path("representations")
-            .path(representationId)
-            .request()
-            .accept(MediaType.APPLICATION_XML)
-            .buildGet()
-            .invoke(Representation.class);
+                .path(mmsId)
+                .path("representations")
+                .path(representationId)
+                .request()
+                .accept(MediaType.APPLICATION_XML)
+                .buildGet()
+                .invoke(Representation.class);
     }
 
     @Override
-    public Bibs retrieveBibs(String mms_id, String ie_id, String holdings_id, String representation_id, String nz_mms_id, String view, String expand) {
+    public Bibs retrieveBibs(String mms_id, String ie_id, String holdings_id, String representation_id,
+            String nz_mms_id, String view, String expand) {
         return bibsTarget
-            .queryParam("mms_id", mms_id)
-            .queryParam("ie_id", ie_id)
-            .queryParam("holdings_id", holdings_id)
-            .queryParam("representation_id", representation_id)
-            .queryParam("nz_mms_id", nz_mms_id)
-            .queryParam("view", view)
-            .queryParam("expand", expand)
-            .request()
-            .accept(MediaType.APPLICATION_XML)
-            .buildGet()
-            .invoke(Bibs.class);
+                .queryParam("mms_id", mms_id)
+                .queryParam("ie_id", ie_id)
+                .queryParam("holdings_id", holdings_id)
+                .queryParam("representation_id", representation_id)
+                .queryParam("nz_mms_id", nz_mms_id)
+                .queryParam("view", view)
+                .queryParam("expand", expand)
+                .request()
+                .accept(MediaType.APPLICATION_XML)
+                .buildGet()
+                .invoke(Bibs.class);
     }
 
     @Override
