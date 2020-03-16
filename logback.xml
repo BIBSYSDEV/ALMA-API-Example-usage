@@ -47,12 +47,10 @@
     
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">            
-            <!--<timeZone>UTC</timeZone>-->
             <providers class="net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders">
                 <timestamp class="net.logstash.logback.composite.loggingevent.LoggingEventFormattedTimestampJsonProvider"/>
                 <mdc class="net.logstash.logback.composite.loggingevent.MdcJsonProvider"/> <!-- MDC variables on the Thread will be written as JSON fields--> 
                 <context class="net.logstash.logback.composite.ContextJsonProvider"/> <!--Outputs entries from logback's context -->
-                <!--<callerData/>-->
                 <version class="net.logstash.logback.composite.LogstashVersionJsonProvider"/> <!-- Logstash json format version, the @version field in the output-->
                 <logLevel class="net.logstash.logback.composite.loggingevent.LogLevelJsonProvider"/>
                 <loggerName class="net.logstash.logback.composite.loggingevent.LoggerNameJsonProvider"/>
@@ -84,7 +82,6 @@
                         <exclude>sun\.reflect\..*\.invoke.*</exclude>
                         <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
                         <evaluator class="no.bibsys.logging.logstash.StackTraceEvaluator"/>
-                        <!--<rootCauseFirst>true</rootCauseFirst>-->
                     </throwableConverter>
                 </stackTrace>
             </providers>
@@ -93,13 +90,10 @@
 	
 	  <!-- Conditional processing and JaninoEventEvaluator require the Janino library -->
     <root level="${root.level:-debug}"> <!-- override in ${PROJECT_BASEDIR}/logback-local.properties -->
-        <!--  you can access system properties, logback properties or special variables like HOSTNAME and CONTEXT_NAME -->
 
         <appender-ref ref="CONSOLE" />
 
     </root>
-	
-	<!-- additivity=false can be added to ensure data only goes to the specific log -->
 	
 	<!-- example for setting different log level for external libraries -->
 	<!-- 	<logger name="org.glassfish.jersey" level="WARN" /> -->
