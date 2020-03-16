@@ -7,7 +7,7 @@ import no.bibsys.alma.rest.representations.Representations;
 import no.bibsys.alma.rest.user_request.UserRequests;
 import no.unit.alma.commons.AlmaContext;
 
-public interface AlmaBibs extends AlmaContext {
+public interface AlmaBibsService extends AlmaContext {
 
     Bib getBib(String identifier, String availParams);
 

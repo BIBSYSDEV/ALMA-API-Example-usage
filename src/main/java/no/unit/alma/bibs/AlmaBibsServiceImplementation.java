@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import no.bibsys.alma.rest.bibs.Bib;
 import no.bibsys.alma.rest.bibs.Bibs;
 import no.bibsys.alma.rest.items.Item;
+import no.bibsys.alma.rest.items.ItemData;
 import no.bibsys.alma.rest.representations.Representation;
 import no.bibsys.alma.rest.representations.Representations;
 import no.bibsys.alma.rest.user_request.UserRequests;
@@ -18,7 +19,7 @@ import no.unit.alma.commons.AlmaStage;
 /**
  * This client implements an integration to the /almaws/v1/bibs
  */
-public class AlmaBibsClient implements AlmaBibs {
+public class AlmaBibsServiceImplementation implements AlmaBibsService {
 
     private final WebTarget bibsTarget;
     private final WebTarget itemsTarget;
@@ -26,7 +27,7 @@ public class AlmaBibsClient implements AlmaBibs {
     private final String contextValue;
     private final AlmaStage almaStage;
 
-    public AlmaBibsClient(AlmaClient almaClient) {
+    public AlmaBibsServiceImplementation(AlmaClient almaClient) {
         this.bibsTarget = almaClient.getWebTarget().path("bibs");
         this.itemsTarget = almaClient.getWebTarget().path("items");
         this.context = almaClient.getContext();
@@ -145,7 +146,7 @@ public class AlmaBibsClient implements AlmaBibs {
         input.setRepository(repository);
         input.setLinkingParameter1(url);
         input.setLinkingParameter4(barcode);
-        final String label = AlmaBibService.Factory.instance(almaClient).createLabel(item);
+        final String label = createLabel(item);
         input.setLabel(label);
         input.setPublicNote(access);
 
@@ -193,9 +194,7 @@ public class AlmaBibsClient implements AlmaBibs {
         input.setLinkingParameter1(url);
         input.setLinkingParameter4("" + mmsId);
         input.setOriginatingRecordId(url);
-        String label =
-                AlmaBibService.Factory.instance(almaClient).createLabel(volume, issue, number, "", year, month, day,
-                        "");
+        String label = createLabel(volume, issue, number, "", year, month, day, "");
         input.setLabel(label);
         input.setYear(year);
         input.setSeasonMonth(month);
@@ -228,9 +227,7 @@ public class AlmaBibsClient implements AlmaBibs {
         input.setLinkingParameter1(url);
         input.setLinkingParameter4(barcode);
         input.setOriginatingRecordId(url);
-        final String label =
-                AlmaBibService.Factory.instance(almaClient).createLabel(volume, issue, number, "", year, month, day,
-                        "");
+        final String label = createLabel(volume, issue, number, "", year, month, day, "");
         input.setLabel(label);
         input.setYear(year);
         input.setSeasonMonth(month);
@@ -347,4 +344,47 @@ public class AlmaBibsClient implements AlmaBibs {
     public AlmaStage getAlmaStage() {
         return almaStage;
     }
+
+    private String createLabel(String enumerationA, String enumerationB, String enumerationC, String enumerationD,
+            String chronologyI, String chronologyJ, String chronologyK, String chronologyL) {
+
+        enumerationA = (enumerationA != null ? enumerationA.trim() : "");
+        enumerationB = (enumerationB != null ? enumerationB.trim() : "");
+        enumerationC = (enumerationC != null ? enumerationC.trim() : "");
+        enumerationD = (enumerationD != null ? enumerationD.trim() : "");
+        chronologyI = (chronologyI != null ? chronologyI.trim() : "");
+        chronologyJ = (chronologyJ != null ? chronologyJ.trim() : "");
+        chronologyK = (chronologyK != null ? chronologyK.trim() : "");
+        chronologyL = (chronologyL != null ? chronologyL.trim() : "");
+
+        String label = enumerationA;
+
+        if (!"".equals(chronologyI)) {
+            label +=
+                    "(" + chronologyI + (!"".equals(chronologyJ) ? "," + chronologyJ : "")
+                            + (!"".equals(chronologyK) ? "," + chronologyK : "")
+                            + (!"".equals(chronologyL) ? "," + chronologyL : "") + ")";
+        }
+        if (!"".equals(enumerationB)) {
+            label +=
+                    " " + enumerationB + (!"".equals(enumerationC) ? "," + enumerationC : "")
+                            + (!"".equals(enumerationD) ? "," + enumerationD : "");
+        }
+
+        if (label == null) {
+            label = "";
+        }
+
+        return label;
+    }
+
+    private String createLabel(Item item) {
+
+        ItemData itemData = item.getItemData();
+        return createLabel(itemData.getEnumerationA(), itemData.getEnumerationB(), itemData.getEnumerationC(),
+                itemData.getEnumerationD(), itemData.getChronologyI(), itemData.getChronologyJ(),
+                itemData.getChronologyK(), itemData.getChronologyL());
+
+    }
+
 }

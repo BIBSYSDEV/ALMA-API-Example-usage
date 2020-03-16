@@ -1,13 +1,11 @@
 package no.unit.alma.acquisitions;
 
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
 import no.bibsys.alma.rest.vendor.Vendor;
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 
 public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
 
@@ -20,7 +18,7 @@ public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
         this.acqTarget = almaClient.getWebTarget().path("acq");
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
-        this.almaStage =almaClient.getAlmaStage();
+        this.almaStage = almaClient.getAlmaStage();
     }
 
 //    @Override
