@@ -32,6 +32,7 @@ dependencies {
     implementation group: 'com.typesafe', name: 'config', version: '1.4.0'
     implementation 'no.bibsys:vault-client:1.0.8'
 
+    testImplementation 'junit:junit:4.12'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.0'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.3.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
