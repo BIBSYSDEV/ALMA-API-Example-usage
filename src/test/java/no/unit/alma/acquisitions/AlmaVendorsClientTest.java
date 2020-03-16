@@ -24,6 +24,7 @@ import javax.ws.rs.client.WebTarget;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,17 +36,21 @@ class AlmaVendorsClientTest {
     @Mock
     AlmaClient mockAlmaApiClient;
 
+    @Mock
+    WebTarget webTarget;
+
     @Test
     void testGetVendor() throws IOException, InterruptedException {
         //setup
-        Client client = JerseyClientBuilder.newClient();
-        WebTarget webTarget = client.target("http://www.example.com/");
+//        Client client = JerseyClientBuilder.newClient();
+//        WebTarget webTarget = client.target("http://www.example.com/");
 
         //mock almaClient-methods
         when(mockAlmaApiClient.getWebTarget()).thenReturn(webTarget);
         when(mockAlmaApiClient.getAlmaStage()).thenReturn(AlmaStage.SANDBOX2);
         when(mockAlmaApiClient.getContext()).thenReturn("");
         when(mockAlmaApiClient.getContextValue()).thenReturn("");
+        when(webTarget.path(any())).thenReturn(null);
         AlmaVendorsServiceImplementation almaVendorsServiceImplementation = new AlmaVendorsServiceImplementation(mockAlmaApiClient);
 
         Vendor vendor = almaVendorsServiceImplementation.getVendor(TEST_ID);
