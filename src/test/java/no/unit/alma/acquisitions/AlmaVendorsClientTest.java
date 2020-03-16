@@ -12,15 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AlmaVendorsClientTest {
 
-    //private AlmaServiceFactory almaServiceFactory = new AlmaServiceFactory(JerseyClientBuilder.newClient());
+    private AlmaServiceFactory almaServiceFactory = new AlmaServiceFactory(JerseyClientBuilder.newClient());
 
 
     @Test
     void testGetVendor() throws IOException, InterruptedException {
-//        AlmaVendorsService almaVendorsService = almaServiceFactory.getAlmaVendors("g", AlmaStage.SANDBOX2);
-//        Vendor test = almaVendorsService.getVendor("testid");
-//        assertEquals("test", test.getVendorLibraries());
-        assertEquals("test", "test");
+        AlmaVendorsService almaVendorsService = almaServiceFactory.getAlmaVendors("g", AlmaStage.SANDBOX2);
+        Vendor test = almaVendorsService.getVendor("testid");
+        assertEquals("test", test.getVendorLibraries());
 
     }
 
