@@ -1,13 +1,20 @@
 package no.unit.alma.commons;
 
+import javax.ws.rs.client.Client;
+
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+
 import no.bibsys.vault.AppRole;
 import no.bibsys.vault.VaultClient;
 import no.unit.alma.acquisitions.AlmaVendorsService;
 import no.unit.alma.acquisitions.AlmaVendorsServiceImplementation;
-
-import javax.ws.rs.client.Client;
+import no.unit.alma.bibs.AlmaBibsService;
+import no.unit.alma.bibs.AlmaBibsServiceImplementation;
+import no.unit.alma.bibs.AlmaHoldingsService;
+import no.unit.alma.bibs.AlmaHoldingsServiceImplementation;
+import no.unit.alma.bibs.AlmaItemsService;
+import no.unit.alma.bibs.AlmaItemsServiceImplementation;
 
 public class AlmaServiceFactory {
 
@@ -23,8 +30,7 @@ public class AlmaServiceFactory {
         this(client, config,
                 VaultClient.builder()
                         .withCredentials(AppRole.from(config.getString("roleId"), config.getString("secretId")))
-                        .build()
-        );
+                        .build());
     }
 
     public AlmaServiceFactory(Client client, Config config, VaultClient vaultClient) {
@@ -32,8 +38,7 @@ public class AlmaServiceFactory {
                 ApiAuthorizationService.builder()
                         .vaultClient(vaultClient)
                         .environment(config.getString("environment"))
-                        .build()
-        );
+                        .build());
     }
 
     public AlmaServiceFactory(Client client, Config config, ApiAuthorizationService apiAuthorizationService) {
@@ -53,13 +58,33 @@ public class AlmaServiceFactory {
                 .build();
     }
 
-//    public AlmaBibs getAlmaBibs(String bibCode, AlmaStage almaStage) {
-//        return new AlmaBibsClient(newAlmaClientInstance(bibCode, almaStage));
-//    }
-//
-//    public AlmaBibs getAlmaBibs(String bibCode, String almaStage) {
-//        return new AlmaBibsClient(newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
-//    }
+    public AlmaBibsService getAlmaBibs(String bibCode, AlmaStage almaStage) {
+        return new AlmaBibsServiceImplementation(newAlmaClientInstance(bibCode, almaStage));
+    }
+
+    public AlmaBibsService getAlmaBibs(String bibCode, String almaStage) {
+        return new AlmaBibsServiceImplementation(
+                newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
+    }
+
+    public AlmaHoldingsService getAlmaHoldings(String bibCode, AlmaStage almaStage) {
+        return new AlmaHoldingsServiceImplementation(newAlmaClientInstance(bibCode, almaStage));
+    }
+
+    public AlmaHoldingsService getAlmaHoldings(String bibCode, String almaStage) {
+        return new AlmaHoldingsServiceImplementation(
+                newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
+    }
+
+    public AlmaItemsService getAlmaItems(String bibCode, AlmaStage almaStage) {
+        return new AlmaItemsServiceImplementation(newAlmaClientInstance(bibCode, almaStage));
+    }
+
+    public AlmaItemsService getAlmaItems(String bibCode, String almaStage) {
+        return new AlmaItemsServiceImplementation(
+                newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
+    }
+
 //
 //    public AlmaConf getAlmaConf(String bibCode, AlmaStage almaStage) {
 //        return new AlmaConfClient(newAlmaClientInstance(bibCode, almaStage));
@@ -77,13 +102,6 @@ public class AlmaServiceFactory {
 //        return new AlmaFundsClient(newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
 //    }
 //
-//    public AlmaHoldings getAlmaHoldings(String bibCode, AlmaStage almaStage) {
-//        return new AlmaHoldingsClient(newAlmaClientInstance(bibCode, almaStage));
-//    }
-//
-//    public AlmaHoldings getAlmaHoldings(String bibCode, String almaStage) {
-//        return new AlmaHoldingsClient(newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
-//    }
 //
 //    public AlmaInvoices getAlmaInvoices(String bibCode, AlmaStage almaStage) {
 //        return new AlmaInvoicesClient(newAlmaClientInstance(bibCode, almaStage));
@@ -122,14 +140,7 @@ public class AlmaServiceFactory {
     }
 
     public AlmaVendorsService getAlmaVendors(String bibCode, String almaStage) {
-        return new AlmaVendorsServiceImplementation(newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
+        return new AlmaVendorsServiceImplementation(
+                newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
     }
-//
-//    public AlmaItems getAlmaItems(String bibCode, AlmaStage almaStage) {
-//        return new AlmaItemsClient(newAlmaClientInstance(bibCode, almaStage));
-//    }
-//
-//    public AlmaItems getAlmaItems(String bibCode, String almaStage) {
-//        return new AlmaItemsClient(newAlmaClientInstance(bibCode, AlmaStage.valueOf(almaStage.toUpperCase())));
-//    }
 }

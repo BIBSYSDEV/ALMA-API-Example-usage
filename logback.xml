@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="true">
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+
+    <!--  The variables contained in that file will be read and then defined within local scope -->
+    <property file="logback-local.properties" />
+ 
+    <property name="pattern" value="%d{dd MMM yyyy HH:mm:ss.SSS} %-5level %-15([%thread]) [%class.%method:%line] %mdc{ASPECT} %marker %replace(ContainerId=%mdc{CONTAINER_ID} -){'ContainerId= -', ''} %m%n" /> 
+
+	<property name="joblogpattern" value="%d{dd MMM yyyy HH:mm:ss.SSS} %-5level - %m%n" />
+
+    <turboFilter class="ch.qos.logback.classic.turbo.DynamicThresholdFilter">
+        <Key>LOG_LEVEL</Key>
+        <DefaultThreshold>ERROR</DefaultThreshold> <!-- Set at highest. If eventLevel is less than defaultLevel, then NEUTRAL -->
+        <OnHigherOrEqual>ACCEPT</OnHigherOrEqual>
+        <OnLower>NEUTRAL</OnLower>
+        <MDCValueLevelPair class="ch.qos.logback.classic.turbo.MDCValueLevelPair">
+            <value>TRACE</value>
+            <level>TRACE</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair class="ch.qos.logback.classic.turbo.MDCValueLevelPair">
+            <value>DEBUG</value>
+            <level>DEBUG</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair class="ch.qos.logback.classic.turbo.MDCValueLevelPair">
+            <value>INFO</value>
+            <level>INFO</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair class="ch.qos.logback.classic.turbo.MDCValueLevelPair">
+            <value>WARN</value>
+            <level>WARN</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair class="ch.qos.logback.classic.turbo.MDCValueLevelPair">
+            <value>ERROR</value>
+            <level>ERROR</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair class="ch.qos.logback.classic.turbo.MDCValueLevelPair">
+            <value>OFF</value>
+            <level>OFF</level>
+        </MDCValueLevelPair>
+    </turboFilter>
+    
+    <turboFilter class="ch.qos.logback.classic.turbo.MarkerFilter">
+        <Marker>SECURITY</Marker>
+        <OnMatch>ACCEPT</OnMatch>
+    </turboFilter>
+    
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">            
+            <providers class="net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders">
+                <timestamp class="net.logstash.logback.composite.loggingevent.LoggingEventFormattedTimestampJsonProvider"/>
+                <mdc class="net.logstash.logback.composite.loggingevent.MdcJsonProvider"/> <!-- MDC variables on the Thread will be written as JSON fields--> 
+                <context class="net.logstash.logback.composite.ContextJsonProvider"/> <!--Outputs entries from logback's context -->
+                <version class="net.logstash.logback.composite.LogstashVersionJsonProvider"/> <!-- Logstash json format version, the @version field in the output-->
+                <logLevel class="net.logstash.logback.composite.loggingevent.LogLevelJsonProvider"/>
+                <loggerName class="net.logstash.logback.composite.loggingevent.LoggerNameJsonProvider"/>
+
+                <!-- we can add some custom fields to be sent with all the log entries.-->
+                <!--make filtering easier in Logstash-->
+                <!--or searching with Kibana-->
+                <pattern class="net.logstash.logback.composite.loggingevent.LoggingEventPatternJsonProvider">
+                 <pattern>
+                    {      
+                    "location": "%class.%method{}\\(%file:%line{}\\)",
+                    "contextName": "%contextName"
+                    }
+                 </pattern>
+                </pattern>
+
+                <threadName class="net.logstash.logback.composite.loggingevent.ThreadNameJsonProvider"/>
+                <message class="net.logstash.logback.composite.loggingevent.MessageJsonProvider"/>
+
+                <tags class="net.logstash.logback.composite.loggingevent.TagsJsonProvider"/> <!-- Logback Marker(s) -->
+                <logstashMarkers class="net.logstash.logback.composite.loggingevent.LogstashMarkersJsonProvider"/> <!-- Useful so we can add extra information for specific log lines as Markers--> 
+                <arguments class="net.logstash.logback.composite.loggingevent.ArgumentsJsonProvider"/> <!--or through StructuredArguments-->
+
+                <stackTrace class="net.logstash.logback.composite.loggingevent.StackTraceJsonProvider">
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                        <maxLength>2048</maxLength>
+                        <shortenedClassNameLength>20</shortenedClassNameLength>
+                        <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                        <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                        <evaluator class="no.bibsys.logging.logstash.StackTraceEvaluator"/>
+                    </throwableConverter>
+                </stackTrace>
+            </providers>
+        </encoder>
+    </appender> 
+	
+	  <!-- Conditional processing and JaninoEventEvaluator require the Janino library -->
+    <root level="${root.level:-debug}"> <!-- override in ${PROJECT_BASEDIR}/logback-local.properties -->
+
+        <appender-ref ref="CONSOLE" />
+
+    </root>
+	
+	<!-- example for setting different log level for external libraries -->
+	<!-- 	<logger name="org.glassfish.jersey" level="WARN" /> -->
+	
+</configuration>
