@@ -13,15 +13,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bibsys.alma.rest.vendor.Vendor;
-import no.unit.alma.acquisitions.AlmaVendorsServiceImplementation;
+import no.bibsys.alma.rest.bibs.Bib;
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaBibsClientTest {
 
-    private static final String TEST_ID = "123456";
+    private static final String TEST_MMS_ID = "123456";
 
     @Mock
     private AlmaClient mockAlmaApiClient;
@@ -30,7 +29,7 @@ class AlmaBibsClientTest {
     private WebTarget webTarget;
 
     @Test
-    void testGetVendor() throws IOException, InterruptedException {
+    void testGetBib() throws IOException, InterruptedException {
         // setup
 //        Client client = JerseyClientBuilder.newClient();
 //        WebTarget webTarget = client.target("http://www.example.com/");
@@ -41,12 +40,12 @@ class AlmaBibsClientTest {
         when(mockAlmaApiClient.getAlmaStage()).thenReturn(AlmaStage.SANDBOX2);
         when(mockAlmaApiClient.getContext()).thenReturn("");
         when(mockAlmaApiClient.getContextValue()).thenReturn("");
-        when(webTarget.path(any())).thenReturn(null);
-        AlmaBibVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
+        when(webTarget.path(any())).thenReturn(webTarget);
+        AlmaBibsService almaVendorsServiceImplementation =
+                new AlmaBibsServiceImplementation(mockAlmaApiClient);
 
-        Vendor vendor = almaVendorsServiceImplementation.getVendor(TEST_ID);
-        assertEquals("test", vendor.getVendorLibraries());
+        Bib bib = almaVendorsServiceImplementation.getBib(TEST_MMS_ID, "");
+        assertEquals("test", bib.getTitle());
     }
 
 }
