@@ -5,8 +5,10 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import no.bibsys.alma.rest.vendor.Vendor;
+import no.bibsys.alma.rest.vendor.Vendors;
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
+import org.apache.commons.lang3.StringUtils;
 
 public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
 
@@ -22,45 +24,45 @@ public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
         this.almaStage = almaClient.getAlmaStage();
     }
 
-//    @Override
-//    public Vendors searchVendor(String q) {
-//        return retrieveVendors(q, "ACTIVE", "material_supplier", -1, 0);
-//    }
-//
-//    @Override
-//    public Vendors retrieveVendors(String q, String status, String type, int limit, int offset) {
-//        WebTarget vendorsTarget = acqTarget.path("vendors");
-//
-//        if (StringUtils.isEmpty(q) && StringUtils.isEmpty(status) && StringUtils.isEmpty(type)) {
-//            return vendorsTarget
-//                    .request()
-//                    .accept(MediaType.APPLICATION_XML)
-//                    .buildGet()
-//                    .invoke(Vendors.class);
-//        }
-//
-//        vendorsTarget = vendorsTarget
-//                .queryParam("status", StringUtils.isEmpty(status) ? "ALL" : status);
-//
-//        if (StringUtils.isNotEmpty(q)) {
-//            vendorsTarget = vendorsTarget.queryParam("q", q);
-//        }
-//        if (StringUtils.isNotEmpty(type)) {
-//            vendorsTarget = vendorsTarget.queryParam("type", type);
-//        }
-//        if (limit > -1) {
-//            vendorsTarget = vendorsTarget.queryParam("limit", limit);
-//        }
-//        if (offset > 0) {
-//            vendorsTarget = vendorsTarget.queryParam("offset", offset);
-//        }
-//
-//        return vendorsTarget
-//                .request()
-//                .accept(MediaType.APPLICATION_XML)
-//                .buildGet()
-//                .invoke(Vendors.class);
-//    }
+    @Override
+    public Vendors searchVendor(String q) {
+        return retrieveVendors(q, "ACTIVE", "material_supplier", -1, 0);
+    }
+
+    @Override
+    public Vendors retrieveVendors(String q, String status, String type, int limit, int offset) {
+        WebTarget vendorsTarget = acqTarget.path("vendors");
+
+        if (StringUtils.isEmpty(q) && StringUtils.isEmpty(status) && StringUtils.isEmpty(type)) {
+            return vendorsTarget
+                    .request()
+                    .accept(MediaType.APPLICATION_XML)
+                    .buildGet()
+                    .invoke(Vendors.class);
+        }
+
+        vendorsTarget = vendorsTarget
+                .queryParam("status", StringUtils.isEmpty(status) ? "ALL" : status);
+
+        if (StringUtils.isNotEmpty(q)) {
+            vendorsTarget = vendorsTarget.queryParam("q", q);
+        }
+        if (StringUtils.isNotEmpty(type)) {
+            vendorsTarget = vendorsTarget.queryParam("type", type);
+        }
+        if (limit > -1) {
+            vendorsTarget = vendorsTarget.queryParam("limit", limit);
+        }
+        if (offset > 0) {
+            vendorsTarget = vendorsTarget.queryParam("offset", offset);
+        }
+
+        return vendorsTarget
+                .request()
+                .accept(MediaType.APPLICATION_XML)
+                .buildGet()
+                .invoke(Vendors.class);
+    }
 
     @Override
     public Vendor getVendor(String vendorIdentifier) {
