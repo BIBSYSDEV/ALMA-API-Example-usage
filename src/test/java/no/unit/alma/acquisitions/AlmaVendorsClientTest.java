@@ -3,6 +3,7 @@ package no.unit.alma.acquisitions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -27,29 +28,23 @@ class AlmaVendorsClientTest {
 
     @Mock
     private AlmaClient mockAlmaApiClient;
-
     @Mock
     private WebTarget webTarget;
-
     @Mock
     private Invocation.Builder builder;
-
     @Mock
     private Invocation invocation;
-
     @Mock
-    private Response response;
-
+    Response response;
 
     @Test
     void testGetVendor() throws IOException, InterruptedException {
-        // mock almaClient-methods
         when(this.mockAlmaApiClient.getWebTarget())
                 .thenReturn(webTarget);
         when(mockAlmaApiClient.getAlmaStage()).thenReturn(AlmaStage.SANDBOX2);
         when(mockAlmaApiClient.getContext()).thenReturn("");
         when(mockAlmaApiClient.getContextValue()).thenReturn("");
-        when(webTarget.path(any())).thenReturn(webTarget);
+
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
@@ -57,10 +52,33 @@ class AlmaVendorsClientTest {
         Vendor tempVendor = new Vendor();
         tempVendor.setCode("test");
         when(invocation.invoke((Class<Object>) any())).thenReturn(tempVendor);
+
         AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
                 new AlmaVendorsServiceImplementation(mockAlmaApiClient);
         Vendor vendor = almaVendorsServiceImplementation.getVendor(TEST_ID);
         assertEquals(tempVendor.getCode(), vendor.getCode());
     }
+
+    @Test
+    void testDeleteVendor() throws IOException, InterruptedException {
+        when(this.mockAlmaApiClient.getWebTarget())
+                .thenReturn(webTarget);
+        when(mockAlmaApiClient.getAlmaStage()).thenReturn(AlmaStage.SANDBOX2);
+        when(mockAlmaApiClient.getContext()).thenReturn("");
+        when(mockAlmaApiClient.getContextValue()).thenReturn("");
+
+        when(webTarget.path(any())).thenReturn(webTarget);
+        when(webTarget.request()).thenReturn(builder);
+        when(builder.accept(anyString())).thenReturn(builder);
+        when(builder.buildDelete()).thenReturn(invocation);
+        when(invocation.invoke()).thenReturn(response);
+        doNothing().when(response).close();
+
+
+        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
+                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
+        almaVendorsServiceImplementation.deleteVendor(TEST_ID);
+    }
+
 
 }

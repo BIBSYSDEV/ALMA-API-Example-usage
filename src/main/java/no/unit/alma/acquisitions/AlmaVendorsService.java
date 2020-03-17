@@ -11,11 +11,11 @@ public interface AlmaVendorsService extends AlmaContext {
 //    Vendors retrieveVendors(String q, String status, String type, int limit, int offset);
 
     Vendor getVendor(String vendorIdentifier) throws IOException, InterruptedException;
-//
-//    Vendor postVendor(Vendor vendor);
-//
-//    Vendor updateVendor(String vendorIdentifier, Vendor vendor);
-//
-//    void deleteVendor(String vendorIdentifier);
+
+    Vendor postVendor(Vendor vendor);
+
+    Vendor updateVendor(String vendorIdentifier, Vendor vendor);
+
+    void deleteVendor(String vendorIdentifier);
 
 }

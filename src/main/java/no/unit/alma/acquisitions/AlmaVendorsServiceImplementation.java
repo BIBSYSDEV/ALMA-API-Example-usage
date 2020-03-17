@@ -1,5 +1,6 @@
 package no.unit.alma.acquisitions;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -72,38 +73,38 @@ public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
                 .invoke(Vendor.class);
     }
 
-//    @Override
-//    public Vendor postVendor(final Vendor vendor) {
-//        return acqTarget
-//                .path("vendors")
-//                .request(MediaType.APPLICATION_XML)
-//                .accept(MediaType.APPLICATION_XML)
-//                .buildPost(Entity.xml(vendor))
-//                .invoke(Vendor.class);
-//    }
-//
-//    @Override
-//    public Vendor updateVendor(String vendorIdentifier, final Vendor vendor) {
-//        return acqTarget
-//                .path("vendors")
-//                .path(vendorIdentifier)
-//                .request(MediaType.APPLICATION_XML)
-//                .accept(MediaType.APPLICATION_XML)
-//                .buildPut(Entity.xml(vendor))
-//                .invoke(Vendor.class);
-//    }
-//
-//    @Override
-//    public void deleteVendor(String vendorIdentifier) {
-//        acqTarget
-//                .path("vendors")
-//                .path(vendorIdentifier)
-//                .request()
-//                .accept(MediaType.APPLICATION_XML)
-//                .buildDelete()
-//                .invoke()
-//                .close();
-//    }
+    @Override
+    public Vendor postVendor(final Vendor vendor) {
+        return acqTarget
+                .path("vendors")
+                .request(MediaType.APPLICATION_XML)
+                .accept(MediaType.APPLICATION_XML)
+                .buildPost(Entity.xml(vendor))
+                .invoke(Vendor.class);
+    }
+
+    @Override
+    public Vendor updateVendor(String vendorIdentifier, final Vendor vendor) {
+        return acqTarget
+                .path("vendors")
+                .path(vendorIdentifier)
+                .request(MediaType.APPLICATION_XML)
+                .accept(MediaType.APPLICATION_XML)
+                .buildPut(Entity.xml(vendor))
+                .invoke(Vendor.class);
+    }
+
+    @Override
+    public void deleteVendor(String vendorIdentifier) {
+        acqTarget
+                .path("vendors")
+                .path(vendorIdentifier)
+                .request()
+                .accept(MediaType.APPLICATION_XML)
+                .buildDelete()
+                .invoke()
+                .close();
+    }
 
     @Override
     public String getContext() {
