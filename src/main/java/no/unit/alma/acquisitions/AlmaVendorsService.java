@@ -1,9 +1,9 @@
 package no.unit.alma.acquisitions;
 
+import java.io.IOException;
+
 import no.bibsys.alma.rest.vendor.Vendor;
 import no.unit.alma.commons.AlmaContext;
-
-import java.io.IOException;
 
 public interface AlmaVendorsService extends AlmaContext {
 //    Vendors searchVendor(String q);
