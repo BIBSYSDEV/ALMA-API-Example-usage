@@ -16,7 +16,7 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven {
-        url = 'http://artifactory.unit.no/artifactory/libs-releases'
+        url = 'https://artifactory.unit.no/artifactory/libs-releases'
     }
 }
 
@@ -70,7 +70,13 @@ tasks.withType(Checkstyle) {
 jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'no/bibsys/alma/rest/**')
+            fileTree(dir: it, exclude:
+                    [
+                    'no/bibsys/alma/rest/**',
+                    'no/unit/alma/bibs/**',
+                    'no/unit/alma/commons/**',
+                    'org/w3/_2001/xmlschema/**',
+                    ])
         }))
     }
     reports {
@@ -90,7 +96,12 @@ jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
 jacocoTestCoverageVerification {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'no/bibsys/alma/rest/**')
+            fileTree(dir: it, exclude:  [
+                    'no/bibsys/alma/rest/**',
+                    'no/unit/alma/bibs/**',
+                    'no/unit/alma/commons/**',
+                    'org/w3/_2001/xmlschema/**',
+            ])
         }))
     }
     violationRules {
@@ -98,7 +109,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'METHOD'
                 value = 'COVEREDRATIO'
-                minimum = 0.00
+                minimum = 1.00
             }
         }
 
@@ -106,7 +117,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'CLASS'
                 value = 'COVEREDRATIO'
-                minimum = 0.00
+                minimum = 1.00
             }
         }
     }
