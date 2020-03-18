@@ -7,9 +7,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.junit.jupiter.api.Test;
+
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
+import no.bibsys.alma.rest.bibs.Bibs;
+
 public class ApiHelper {
+
+    @Test
+    void testReadBibs() {
+        try {
+            Bibs bib = readXmlFromFile("src/test/resources/bibs.xml", Bibs.class);
+            System.out.println(bib);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static <T> T readXmlFromFile(String fileName, Class<T> type) throws IOException {
         File file = new File(fileName);
