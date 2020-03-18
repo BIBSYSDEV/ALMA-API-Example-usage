@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'checkstyle'
-//    id 'pmd'
+    id 'pmd'
     id 'jacoco'
     id "net.linguica.maven-settings" version "0.5"
 }
@@ -45,11 +45,11 @@ test {
     finalizedBy jacocoTestReport
 }
 
-//pmd {
-//    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
-//    ruleSets = []
-//    ignoreFailures = true
-//}
+pmd {
+    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
+    ruleSets = []
+    ignoreFailures = false
+}
 
 checkstyle {
     configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()

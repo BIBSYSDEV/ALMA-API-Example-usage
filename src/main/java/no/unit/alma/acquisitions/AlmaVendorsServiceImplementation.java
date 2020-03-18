@@ -12,13 +12,16 @@ import org.apache.commons.lang3.StringUtils;
 
 public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
 
-    private final WebTarget acqTarget;
+    public static final String VENDORS_PATH = "vendors";
+    public static final String ACQUISITION_PATH = "acq";
+
+    private final transient WebTarget acqTarget;
     private final String context;
     private final String contextValue;
     private final AlmaStage almaStage;
 
     public AlmaVendorsServiceImplementation(AlmaClient almaClient) {
-        this.acqTarget = almaClient.getWebTarget().path("acq");
+        this.acqTarget = almaClient.getWebTarget().path(ACQUISITION_PATH);
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
         this.almaStage = almaClient.getAlmaStage();
@@ -31,7 +34,7 @@ public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
 
     @Override
     public Vendors retrieveVendors(String q, String status, String type, int limit, int offset) {
-        WebTarget vendorsTarget = acqTarget.path("vendors");
+        WebTarget vendorsTarget = acqTarget.path(VENDORS_PATH);
 
         if (StringUtils.isEmpty(q) && StringUtils.isEmpty(status) && StringUtils.isEmpty(type)) {
             return vendorsTarget
@@ -67,7 +70,7 @@ public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
     @Override
     public Vendor getVendor(String vendorIdentifier) {
         return acqTarget
-                .path("vendors")
+                .path(VENDORS_PATH)
                 .path(vendorIdentifier)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
@@ -78,7 +81,7 @@ public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
     @Override
     public Vendor postVendor(final Vendor vendor) {
         return acqTarget
-                .path("vendors")
+                .path(VENDORS_PATH)
                 .request(MediaType.APPLICATION_XML)
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(vendor))
@@ -88,7 +91,7 @@ public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
     @Override
     public Vendor updateVendor(String vendorIdentifier, final Vendor vendor) {
         return acqTarget
-                .path("vendors")
+                .path(VENDORS_PATH)
                 .path(vendorIdentifier)
                 .request(MediaType.APPLICATION_XML)
                 .accept(MediaType.APPLICATION_XML)
@@ -99,7 +102,7 @@ public class AlmaVendorsServiceImplementation implements AlmaVendorsService {
     @Override
     public void deleteVendor(String vendorIdentifier) {
         acqTarget
-                .path("vendors")
+                .path(VENDORS_PATH)
                 .path(vendorIdentifier)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
