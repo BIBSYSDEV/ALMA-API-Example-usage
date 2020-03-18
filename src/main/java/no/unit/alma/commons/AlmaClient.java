@@ -49,7 +49,6 @@ public class AlmaClient {
         private int readTimeout = 120000;
         private String app;
         private String stage;
-        private boolean ssl = true;
         private String serviceContext;
         private VaultApiAuthorization apiAuthorization;
 
@@ -81,11 +80,6 @@ public class AlmaClient {
             return this;
         }
 
-        public AlmaClientConfigurationBuilder ssl(boolean ssl) {
-            this.ssl = ssl;
-            return this;
-        }
-
         public AlmaClientConfigurationBuilder serviceContext(String serviceContext) {
             this.serviceContext = serviceContext;
             return this;
@@ -107,15 +101,15 @@ public class AlmaClient {
                             .register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)
                             .register(new RequestResponseLogger(app, stage), 6000)
                             .register(AlmaStatusResponseFilter.class, Priorities.ENTITY_CODER)
-                            .target(buildAlmaUrl(ssl, apiAuthorization.getAlmaHost(), serviceContext)),
+                            .target(buildAlmaUrl(apiAuthorization.getAlmaHost(), serviceContext)),
                     "bibsysBibKode",
                     apiAuthorization.getOrganization(),
                     apiAuthorization.getAlmaStage()
             );
         }
 
-        private String buildAlmaUrl(boolean ssl, String host, String serviceContext) {
-            return String.format("%s://%s/%s", ssl ? "https" : "http", host, serviceContext);
+        private String buildAlmaUrl( String host, String serviceContext) {
+            return String.format("%s://%s/%s", "https", host, serviceContext);
         }
     }
 }

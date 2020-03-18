@@ -53,7 +53,6 @@ public class AlmaServiceFactory {
                 .app(config.getString("app"))
                 .stage(config.getString("stage"))
                 .apiAuthorization(apiAuthorizationService.getApiAuthorization(almaStage, bibCode))
-                .ssl(config.getBoolean("useSsl"))
                 .serviceContext(config.getString("almaServiceContext"))
                 .build();
     }
