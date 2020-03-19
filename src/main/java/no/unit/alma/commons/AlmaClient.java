@@ -1,5 +1,6 @@
 package no.unit.alma.commons;
 
+import com.typesafe.config.Config;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.moxy.xml.MoxyXmlFeature;
 
@@ -11,19 +12,26 @@ import java.util.Objects;
 public class AlmaClient {
 
     private final WebTarget webTarget;
-    private final String context;
     private final String contextValue;
     private final AlmaStage almaStage;
 
-    public static AlmaClientConfigurationBuilder builder() {
-        return new AlmaClientConfigurationBuilder();
-    }
+    private final static int connectTimeout = 10_000;
+    private final static int readTimeout = 120_000;
+    private final static String CONTEXT = "bibsysBibKode";
 
-    public AlmaClient(WebTarget webTarget, String context, String contextValue, AlmaStage almaStage) {
-        this.webTarget = webTarget;
-        this.context = context;
-        this.contextValue = contextValue;
-        this.almaStage = almaStage;
+    public AlmaClient(Config config, Client client, VaultApiAuthorization apiAuthorization) {
+        Objects.requireNonNull(apiAuthorization, "Alma API authorization is required");
+        Objects.requireNonNull(client, "JAX-RS rest client must be provided");
+        this.webTarget = client
+                .property(ClientProperties.CONNECT_TIMEOUT, connectTimeout)
+                .property(ClientProperties.READ_TIMEOUT, readTimeout)
+                .register(MoxyXmlFeature.class)
+                .register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)
+                .register(new RequestResponseLogger(config.getString("app"), config.getString("stage")), 6000)
+                .register(AlmaStatusResponseFilter.class, Priorities.ENTITY_CODER)
+                .target(buildAlmaUrl(apiAuthorization.getAlmaHost(), config.getString("almaServiceContext")));
+        this.almaStage = apiAuthorization.getAlmaStage();
+        this.contextValue = apiAuthorization.getOrganization();
     }
 
     public WebTarget getWebTarget() {
@@ -31,7 +39,7 @@ public class AlmaClient {
     }
 
     public String getContext() {
-        return context;
+        return CONTEXT;
     }
 
     public String getContextValue() {
@@ -42,74 +50,11 @@ public class AlmaClient {
         return almaStage;
     }
 
-    public static class AlmaClientConfigurationBuilder {
-
-        private Client client;
-        private int connectTimeout = 10000;
-        private int readTimeout = 120000;
-        private String app;
-        private String stage;
-        private String serviceContext;
-        private VaultApiAuthorization apiAuthorization;
-
-
-        private AlmaClientConfigurationBuilder() { }
-
-        public AlmaClientConfigurationBuilder client(Client client) {
-            this.client = client;
-            return this;
-        }
-
-        public AlmaClientConfigurationBuilder connectTimeout(int connectTimeout) {
-            this.connectTimeout = connectTimeout;
-            return this;
-        }
-
-        public AlmaClientConfigurationBuilder readTimeout(int readTimeout) {
-            this.readTimeout = readTimeout;
-            return this;
-        }
-
-        public AlmaClientConfigurationBuilder app(String app) {
-            this.app = app;
-            return this;
-        }
-
-        public AlmaClientConfigurationBuilder stage(String stage) {
-            this.stage = stage;
-            return this;
-        }
-
-        public AlmaClientConfigurationBuilder serviceContext(String serviceContext) {
-            this.serviceContext = serviceContext;
-            return this;
-        }
-
-        public AlmaClientConfigurationBuilder apiAuthorization(VaultApiAuthorization apiAuthorization) {
-            this.apiAuthorization = apiAuthorization;
-            return this;
-        }
-
-        public AlmaClient build() {
-            Objects.requireNonNull(client, "JAX-RS rest client must be provided");
-            Objects.requireNonNull(apiAuthorization, "Alma API authorization is required");
-            return new AlmaClient(
-                    client
-                            .property(ClientProperties.CONNECT_TIMEOUT, connectTimeout)
-                            .property(ClientProperties.READ_TIMEOUT, readTimeout)
-                            .register(MoxyXmlFeature.class)
-                            .register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)
-                            .register(new RequestResponseLogger(app, stage), 6000)
-                            .register(AlmaStatusResponseFilter.class, Priorities.ENTITY_CODER)
-                            .target(buildAlmaUrl(apiAuthorization.getAlmaHost(), serviceContext)),
-                    "bibsysBibKode",
-                    apiAuthorization.getOrganization(),
-                    apiAuthorization.getAlmaStage()
-            );
-        }
-
-        private String buildAlmaUrl( String host, String serviceContext) {
-            return String.format("%s://%s/%s", "https", host, serviceContext);
-        }
+    private String buildAlmaUrl(String host, String serviceContext) {
+        return String.format("%s://%s/%s", "https", host, serviceContext);
     }
 }
+
+
+
+

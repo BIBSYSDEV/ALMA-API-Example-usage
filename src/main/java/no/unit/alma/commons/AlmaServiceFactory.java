@@ -47,14 +47,8 @@ public class AlmaServiceFactory {
         this.client = client;
     }
 
-    private AlmaClient newAlmaClientInstance(String bibCode, AlmaStage almaStage) {
-        return AlmaClient.builder()
-                .client(client)
-                .app(config.getString("app"))
-                .stage(config.getString("stage"))
-                .apiAuthorization(apiAuthorizationService.getApiAuthorization(almaStage, bibCode))
-                .serviceContext(config.getString("almaServiceContext"))
-                .build();
+    AlmaClient newAlmaClientInstance(String bibCode, AlmaStage almaStage) {
+        return new AlmaClient(config, client, apiAuthorizationService.getApiAuthorization(almaStage, bibCode));
     }
 
     public AlmaBibsService getAlmaBibs(String bibCode, AlmaStage almaStage) {
