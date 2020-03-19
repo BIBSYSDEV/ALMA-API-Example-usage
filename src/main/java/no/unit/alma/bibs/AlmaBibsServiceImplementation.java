@@ -22,14 +22,16 @@ import no.unit.alma.commons.AlmaStage;
 public class AlmaBibsServiceImplementation implements AlmaBibsService {
 
     private final WebTarget bibsTarget;
-    private final WebTarget itemsTarget;
     private final String context;
     private final String contextValue;
     private final AlmaStage almaStage;
+    private final AlmaItemsService almaItemsService;
 
     public AlmaBibsServiceImplementation(AlmaClient almaClient) {
+
+        almaItemsService = new AlmaItemsServiceImplementation(almaClient);
+
         this.bibsTarget = almaClient.getWebTarget().path("bibs");
-        this.itemsTarget = almaClient.getWebTarget().path("items");
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
         this.almaStage = almaClient.getAlmaStage();
@@ -63,7 +65,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
                 .path("collections")
                 .path(collectionId)
                 .path("bibs")
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(bibXmlString))
                 .invoke()
@@ -82,7 +84,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
     public Bib createLinkedRecord(String mmsId) {
         return bibsTarget
                 .queryParam("from_nz_mms_id", mmsId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(new Bib()))
                 .invoke(Bib.class);
@@ -92,7 +94,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
     public Bib updateBib(final Bib bib) {
         return bibsTarget
                 .path(bib.getMmsId())
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(bib))
                 .invoke(Bib.class);
@@ -121,7 +123,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
         return bibsTarget
                 .path(mmsId)
                 .path("representations")
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(representation))
                 .invoke(Representation.class);
@@ -130,7 +132,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
     @Override
     public Representation createRemotePresentation(String barcode, String access, String digitalRepositoryId,
             String url, String libraryCode) {
-        final Item item = getItem(barcode);
+        final Item item = almaItemsService.getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
         final Representation input = new Representation();
         input.setIsRemote(true);
@@ -154,7 +156,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
     }
 
     @Override
-    public Representation createRemotePresentation(String mmsId, String barcode, String access,
+    public Representation createRemoteRepresentation(String mmsId, String barcode, String access,
             String digitalRepositoryId, String url, String libraryCode) {
         final Representation input = new Representation();
         input.setIsRemote(true);
@@ -176,7 +178,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
     }
 
     @Override
-    public Representation createRemotePresentation(long mmsId, String access, String remoteRepositoryId,
+    public Representation createRemoteRepresentation(long mmsId, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
         final String mmsIdAsString = Long.toString(mmsId);
@@ -208,10 +210,10 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
     }
 
     @Override
-    public Representation createRemotePresentation(String barcode, String access, String remoteRepositoryId,
+    public Representation createRemoteRepresentation(String barcode, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
-        final Item item = getItem(barcode);
+        final Item item = almaItemsService.getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
         final Representation input = new Representation();
         input.setIsRemote(true);
@@ -241,10 +243,10 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
     }
 
     @Override
-    public Representation createRemotePresentation(String barcode, String label, String access,
+    public Representation createRemoteRepresentation(String barcode, String label, String access,
             String remoteRepositoryId, String libraryCode, String url, String year, String month, String day,
             String volume, String issue, String number) {
-        final Item item = getItem(barcode);
+        final Item item = almaItemsService.getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
         final Representation input = new Representation();
         input.setIsRemote(true);
@@ -272,15 +274,6 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-    private Item getItem(String barcode) {
-        return itemsTarget
-                .queryParam("item_barcode", barcode)
-                .request()
-                .accept(MediaType.APPLICATION_XML)
-                .buildGet()
-                .invoke(Item.class);
-    }
-
     @Override
     public Representations getRemoteRepresentationsFromMmsId(String mmsId, int limit, int offset) {
         return bibsTarget
@@ -296,7 +289,8 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
 
     @Override
     public Representation getSingleRemoteRepresentationFromBarcode(String barcode, String representationId) {
-        final Item item = getItem(barcode);
+
+        final Item item = almaItemsService.getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
         return getSingleRemoteRepresentationFromMmsId(mmsId, representationId);
     }
