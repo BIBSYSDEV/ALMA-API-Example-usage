@@ -89,7 +89,7 @@
     </appender> 
 	
 	  <!-- Conditional processing and JaninoEventEvaluator require the Janino library -->
-    <root level="${root.level:-debug}"> <!-- override in ${PROJECT_BASEDIR}/logback-local.properties -->
+    <root level="${root.level:-trace}"> <!-- override in ${PROJECT_BASEDIR}/logback-local.properties -->
 
         <appender-ref ref="CONSOLE" />
 
