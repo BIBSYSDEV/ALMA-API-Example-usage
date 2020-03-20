@@ -1,0 +1,68 @@
+{
+  "total_record_count": "",
+  "representation": [
+    {
+      "is_remote": "false",
+      "link": "",
+      "id": "3244229950001021",
+      "library": {
+        "desc": "string",
+        "value": "LAW"
+      },
+      "label": "North and South",
+      "public_note": "public note example",
+      "usage_type": {
+        "desc": "string",
+        "value": "PRESERVATION_MASTER"
+      },
+      "active": {
+        "desc": "string",
+        "value": ""
+      },
+      "entity_type": {
+        "desc": "string",
+        "value": "ISSUE"
+      },
+      "author": "John Smith",
+      "title": "Representation title",
+      "volume": "volume example",
+      "issue": "issue example",
+      "date": "2017-11-11Z",
+      "start_page": "10",
+      "end_page": "50",
+      "track": "track example",
+      "start_time": "",
+      "end_time": "",
+      "number": "100",
+      "year": "2010",
+      "season_month": "3",
+      "day_in_month": "10",
+      "access_rights_policy_id": {
+        "desc": "string",
+        "value": ""
+      },
+      "delivery_url": "2144/3",
+      "thumbnail_url": "",
+      "request_id": "1230012884132",
+      "deposit_id": "14611712810",
+      "repository": {
+        "desc": "string",
+        "value": "EQUELLA_OAI_DC1"
+      },
+      "originating_record_id": "originating_record_id3",
+      "linking_parameter_1": "2144/3",
+      "linking_parameter_2": "",
+      "linking_parameter_3": "",
+      "linking_parameter_4": "",
+      "linking_parameter_5": "",
+      "created_by": "exl_impl",
+      "created_date": "2015-01-22Z",
+      "last_modified_by": "exl_impl",
+      "last_modified_date": "2015-01-22Z",
+      "files": {
+        "total_record_count": "string",
+        "value": ""
+      }
+    }
+  ]
+}

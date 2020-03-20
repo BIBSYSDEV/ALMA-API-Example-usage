@@ -1,0 +1,78 @@
+{
+  "total_record_count": "",
+  "user_request": [
+    {
+      "user_primary_id": "100005",
+      "request_id": "950621550000121",
+      "request_type": "HOLD",
+      "request_sub_type": {
+        "desc": "Patron physical item request",
+        "value": "PATRON_PHYSICAL"
+      },
+      "mms_id": "1244570001021",
+      "title": "University of New Hampshire law review",
+      "author": "John Smith",
+      "description": "",
+      "manual_description": "",
+      "pickup_location": "Resource Sharing Library",
+      "pickup_location_type": "LIBRARY",
+      "pickup_location_library": "RES_SHARE",
+      "pickup_location_circulation_desk": "",
+      "target_destination": {
+        "desc": "string",
+        "value": "DIGI_DEPT_INST"
+      },
+      "material_type": {
+        "desc": "string",
+        "value": ""
+      },
+      "last_interest_date": "2013-12-13Z",
+      "partial_digitization": "true",
+      "chapter_or_article_title": "",
+      "chapter_or_article_author": "John Smith",
+      "required_pages_range": [
+        {
+          "from_page": "",
+          "to_page": ""
+        }
+      ],
+      "full_chapter": "",
+      "comment": "your request is important to us.",
+      "request_status": "In Process",
+      "place_in_queue": "1",
+      "request_date": "2013-11-12Z",
+      "request_time": "2013-11-12T14:59:59.000Z",
+      "task_name": "",
+      "expiry_date": "2030-01-16Z",
+      "booking_start_date": "2019-12-13T14:36:48.659Z",
+      "booking_end_date": "2019-12-18T14:36:48.659Z",
+      "adjusted_booking_start_date": "2019-12-18T14:36:48.659Z",
+      "adjusted_booking_end_date": "2019-12-18T14:36:48.659Z",
+      "destination_location": {
+        "desc": "string",
+        "value": ""
+      },
+      "call_number_type": {
+        "desc": "string",
+        "value": "1"
+      },
+      "call_number": "1",
+      "item_policy": {
+        "desc": "string",
+        "value": "09"
+      },
+      "due_back_date": "2020-05-01Z",
+      "item_id": "4583210001021",
+      "barcode": "00023705571000021",
+      "resource_sharing": {
+        "link": "",
+        "id": "321100452871021",
+        "status": {
+          "desc": "string",
+          "value": "ACTIVE"
+        }
+      },
+      "copyrights_declaration_signed_by_patron": "false"
+    }
+  ]
+}
