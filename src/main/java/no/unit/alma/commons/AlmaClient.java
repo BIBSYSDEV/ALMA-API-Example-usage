@@ -50,7 +50,7 @@ public class AlmaClient {
         return almaStage;
     }
 
-    private String buildAlmaUrl(String host, String serviceContext) {
+    static  String buildAlmaUrl(String host, String serviceContext) {
         return String.format("%s://%s/%s", "https", host, serviceContext);
     }
 }
