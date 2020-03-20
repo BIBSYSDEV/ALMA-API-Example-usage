@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<user_requests total_record_count="0"/>
+<user_requests total_record_count="1">
+    <user_request>
+        <user_primary_id>000-000000</user_primary_id>
+        <request_id>6738011730002205</request_id>
+        <request_type>HOLD</request_type>
+        <request_sub_type desc="Patron physical item request">PATRON_PHYSICAL</request_sub_type>
+        <mms_id>990701013294702205</mms_id>
+        <title>Metode og oppgaveskriving for studenter Olav Dalland</title>
+        <author>Dalland, Olav 1940-</author>
+        <pickup_location>UiT Altabiblioteket</pickup_location>
+        <pickup_location_type>LIBRARY</pickup_location_type>
+        <pickup_location_library>1201201</pickup_location_library>
+        <material_type desc="Book">BOOK</material_type>
+        <request_status>In Process</request_status>
+        <request_date>2020-03-09Z</request_date>
+        <request_time>2020-03-09T09:47:13.587Z</request_time>
+        <task_name>Transit Item</task_name>
+        <expiry_date>2020-03-13Z</expiry_date>
+        <item_id>2395304190002205</item_id>
+        <barcode>005317xf0</barcode>
+    </user_request>
+</user_requests>
