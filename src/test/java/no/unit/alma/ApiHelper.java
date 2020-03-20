@@ -16,6 +16,11 @@ import org.junit.jupiter.api.Test;
 
 import no.bibsys.alma.rest.bibs.Bib;
 import no.bibsys.alma.rest.bibs.Bibs;
+import no.bibsys.alma.rest.holding.Holding;
+import no.bibsys.alma.rest.holdings.Holdings;
+import no.bibsys.alma.rest.items.Item;
+import no.bibsys.alma.rest.items.Items;
+import no.bibsys.alma.rest.vendor.Vendor;
 
 public class ApiHelper {
 
@@ -25,15 +30,38 @@ public class ApiHelper {
         String bibsFileName = "src/test/resources/bibs.xml";
         try {
             Bib bib = readXmlFromFile(fileName, Bib.class);
-            System.out.println(writeObject(bib));
+            writeObject(bib);
             Bibs bibs = readXmlFromFile(bibsFileName, Bibs.class);
-            System.out.println(writeObject(bibs));
+            writeObject(bibs);
         } catch (IOException e) {
             e.printStackTrace();
             fail(String.format("Error reading file %s", fileName));
         } catch (JAXBException e) {
             e.printStackTrace();
             fail(String.format("Error unmarshalling file %s", fileName));
+        }
+    }
+
+    @Test
+    void testReadExampleFiles() {
+        readExampleFile("bib", Bib.class);
+        readExampleFile("bibs", Bibs.class);
+        readExampleFile("holding", Holding.class);
+        readExampleFile("holdings", Holdings.class);
+        readExampleFile("item", Item.class);
+        readExampleFile("items", Items.class);
+        readExampleFile("vendor", Vendor.class);
+    }
+
+    private void readExampleFile(String fileName, Class<?> type) {
+        String path = "src/test/resources/%s.xml";
+        path = String.format(path, fileName);
+        try {
+            readXmlFromFile(path, type);
+        } catch (IOException | JAXBException e) {
+            e.printStackTrace();
+            System.out.printf("Failed to read from file %s%n", fileName);
+            fail(String.format("Failed to read from file %s", fileName));
         }
     }
 
