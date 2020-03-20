@@ -31,7 +31,7 @@ class AlmaClientTest {
 
     @Test
     void testInitAlmaClient() {
-        final String ORGANIZATON = "someOrg";
+        //final String ORGANIZATON = "someOrg";
         final AlmaStage STAGE = AlmaStage.SANDBOX2;
         final String HOST = "someHost";
         final String STAGE_STRING = AlmaStage.SANDBOX2.getVaultAlmaStageName();

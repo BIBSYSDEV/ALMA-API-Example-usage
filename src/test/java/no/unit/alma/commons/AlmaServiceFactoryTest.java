@@ -18,27 +18,23 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AlmaServiceFactoryTest {
 
-//
-//    @Mock
-//    Client client;
+    @Mock
+    Client client;
+
 //    @Mock
 //    AlmaClient almaClient;
-//    @Mock
-//    ApiAuthorizationService apiAuthorizationService;
-//    @Mock
-//    Config config;
-//
-//    @InjectMocks
-//    AlmaServiceFactory almaServiceFactory;
+
+    @Mock
+    ApiAuthorizationService apiAuthorizationService;
+
+    @Mock
+    Config config;
 
     @Test
     void testGetAlmaVendors() {
-//        AlmaServiceFactory almaServiceFactory = new AlmaServiceFactory(client,config, apiAuthorizationService);
-
-//        when(almaServiceFactory.newAlmaClientInstance("b", AlmaStage.SANDBOX2)).thenReturn(almaClient);
-//
-//        almaServiceFactory = new AlmaServiceFactory(client, config, apiAuthorizationService);
-//
-//        AlmaVendorsService almaVendorsService = almaServiceFactory.getAlmaVendors("b", AlmaStage.SANDBOX1);
+        AlmaServiceFactory almaServiceFactory = new AlmaServiceFactory(client, config, apiAuthorizationService);
+        //when(almaServiceFactory.newAlmaClientInstance("b", AlmaStage.SANDBOX1)).thenReturn(almaClient);
+        //almaServiceFactory = new AlmaServiceFactory(client, config, apiAuthorizationService);
+        //AlmaVendorsService almaVendorsService = almaServiceFactory.getAlmaVendors("b", AlmaStage.SANDBOX1);
     }
 }
