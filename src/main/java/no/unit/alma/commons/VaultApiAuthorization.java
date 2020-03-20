@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
-public class VaultApiAuthorization implements ApiAuthorization {
+public class VaultApiAuthorization  {
 
     private static final transient Logger log = LoggerFactory.getLogger(ApiAuthorizationService.class);
 
@@ -44,12 +44,8 @@ public class VaultApiAuthorization implements ApiAuthorization {
         return almaStage;
     }
 
-    @Override
-    public final String getOrganization() {
-        return organization;
-    }
+    public String getOrganization() { return organization; }
 
-    @Override
     public String asAPIKey() {
         return "apikey " + getApiKey();
     }

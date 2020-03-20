@@ -31,7 +31,7 @@ class AlmaClientTest {
 
     @Test
     void testInitAlmaClient() {
-        //final String ORGANIZATON = "someOrg";
+        final String ORGANIZATION = "someOrg";
         final AlmaStage STAGE = AlmaStage.SANDBOX2;
         final String HOST = "someHost";
         final String STAGE_STRING = AlmaStage.SANDBOX2.getVaultAlmaStageName();
@@ -40,7 +40,7 @@ class AlmaClientTest {
         final String CONTEXT = "bibsysBibKode";
 
 
-        //when(vaultApiAuthorization.getOrganization()).thenReturn(ORGANIZATON); //funker ikke pga @overide. mangler løsning
+        when(vaultApiAuthorization.getOrganization()).thenReturn(ORGANIZATION);
         when(vaultApiAuthorization.getAlmaHost()).thenReturn(HOST);
         when(vaultApiAuthorization.getAlmaStage()).thenReturn(STAGE);
 
@@ -59,7 +59,7 @@ class AlmaClientTest {
         assertEquals(CONTEXT, almaClient.getContext());
         assertEquals(webTarget, almaClient.getWebTarget());
         assertEquals(STAGE, almaClient.getAlmaStage());
-        assertEquals(null, almaClient.getContextValue());
+        assertEquals(ORGANIZATION, almaClient.getContextValue());
     }
 
     @Test
