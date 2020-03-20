@@ -72,7 +72,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path("holdings")
                 .path(holdingsId)
                 .path("items")
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(Item.class);
@@ -86,7 +86,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(item.getHoldingData().getHoldingId())
                 .path("items")
                 .path(item.getItemData().getPid())
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(item))
                 .invoke(Item.class);
@@ -120,7 +120,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(itemData.getPid())
                 .path("loans")
                 .queryParam("user_id", user_Id)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
@@ -156,7 +156,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(itemData.getPid())
                 .path("loans")
                 .queryParam("user_id", user_Id)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
@@ -170,7 +170,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(userId)
                 .path("loans")
                 .path(loanId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);

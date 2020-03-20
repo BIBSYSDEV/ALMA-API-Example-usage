@@ -10,6 +10,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -37,34 +38,23 @@ class AlmaHoldingsServiceTest {
     private AlmaClient mockAlmaApiClient;
 
     @Mock
-    private WebTarget webTarget;
-
-    @Mock
-    private WebTarget bibsWebTarget;
-
-    @Mock
     private WebTarget holdingsWebTarget;
 
     @Mock
     private Builder holdingsBuilder;
 
     @Mock
-    private Builder itemsBuilder;
-
-    @Mock
     private Invocation holdingsInvocation;
 
-    @Mock
-    private Invocation itemsInvocation;
+    @BeforeEach
+    void init() {
+        mockAlmaApi();
+    }
 
     @Test
     void testGetHoldings() {
-        mockAlmaApi();
-
-        when(webTarget.path("bibs")).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.path(any())).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.path("holdings")).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.request()).thenReturn(holdingsBuilder);
+        when(holdingsWebTarget.path(any())).thenReturn(holdingsWebTarget);
+        when(holdingsWebTarget.request()).thenReturn(holdingsBuilder);
         when(holdingsBuilder.accept(anyString())).thenReturn(holdingsBuilder);
         when(holdingsBuilder.buildGet()).thenReturn(holdingsInvocation);
         Holdings tempHoldings = new Holdings();
@@ -80,12 +70,8 @@ class AlmaHoldingsServiceTest {
 
     @Test
     void testGetHolding() {
-        mockAlmaApi();
-
-        when(webTarget.path("bibs")).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.path(any())).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.path("holdings")).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.request()).thenReturn(holdingsBuilder);
+        when(holdingsWebTarget.path(any())).thenReturn(holdingsWebTarget);
+        when(holdingsWebTarget.request()).thenReturn(holdingsBuilder);
         when(holdingsBuilder.accept(anyString())).thenReturn(holdingsBuilder);
         when(holdingsBuilder.buildGet()).thenReturn(holdingsInvocation);
         Holding tempHolding = new Holding();
@@ -100,12 +86,8 @@ class AlmaHoldingsServiceTest {
 
     @Test
     void testUpdateHolding() {
-        mockAlmaApi();
-
-        when(webTarget.path("bibs")).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.path(any())).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.path("holdings")).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.request()).thenReturn(holdingsBuilder);
+        when(holdingsWebTarget.path(any())).thenReturn(holdingsWebTarget);
+        when(holdingsWebTarget.request()).thenReturn(holdingsBuilder);
         when(holdingsBuilder.accept(anyString())).thenReturn(holdingsBuilder);
 
         Holding tempHolding = new Holding();
@@ -121,13 +103,9 @@ class AlmaHoldingsServiceTest {
 
     @Test
     void testGetItems() {
-        mockAlmaApi();
-
-        when(webTarget.path("bibs")).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.path(any())).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.path("holdings")).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.queryParam(anyString(), any())).thenReturn(bibsWebTarget);
-        when(bibsWebTarget.request()).thenReturn(holdingsBuilder);
+        when(holdingsWebTarget.path(any())).thenReturn(holdingsWebTarget);
+        when(holdingsWebTarget.queryParam(anyString(), any())).thenReturn(holdingsWebTarget);
+        when(holdingsWebTarget.request()).thenReturn(holdingsBuilder);
         when(holdingsBuilder.accept(anyString())).thenReturn(holdingsBuilder);
         when(holdingsBuilder.buildGet()).thenReturn(holdingsInvocation);
 
@@ -145,7 +123,6 @@ class AlmaHoldingsServiceTest {
 
     @Test
     void testGetAlmaStage() {
-        mockAlmaApi();
         AlmaHoldingsService almaBibsService =
                 new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
         assertEquals(STAGE.getVaultAlmaStageName(), almaBibsService
@@ -154,7 +131,6 @@ class AlmaHoldingsServiceTest {
 
     @Test
     void testGetContext() {
-        mockAlmaApi();
         AlmaHoldingsService almaBibsService =
                 new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
         assertEquals(CONTEXT, almaBibsService.getContext());
@@ -162,7 +138,6 @@ class AlmaHoldingsServiceTest {
 
     @Test
     void testGetContextValue() {
-        mockAlmaApi();
         AlmaHoldingsService almaBibsService =
                 new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
         assertEquals(CONTEXT_VALUE, almaBibsService.getContextValue());
@@ -171,7 +146,7 @@ class AlmaHoldingsServiceTest {
     private void mockAlmaApi() {
 
         when(mockAlmaApiClient.getWebTarget())
-                .thenReturn(webTarget);
+                .thenReturn(holdingsWebTarget);
         when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
