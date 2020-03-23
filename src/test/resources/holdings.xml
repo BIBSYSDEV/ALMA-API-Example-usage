@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<holdings total_record_count="1">
+    <holding link="https://api-eu.hosted.exlibrisgroup.com/almaws/v1/bibs/99939650000541/holdings/224075410000541">
+        <holding_id>224075410000541</holding_id>
+        <library desc="Main Library">MAIN</library>
+        <location desc="Stacks">main</location>
+        <call_number>PG3366 .V6 1984</call_number>
+        <suppress_from_publishing>false</suppress_from_publishing>
+    </holding>
+    <bib_data link="https://api-eu.hosted.exlibrisgroup.com/almaws/v1/bibs/99939650000541">
+        <mms_id>99939650000541</mms_id>
+        <title>War and peace /</title>
+        <author>Tolstoy, Leo,</author>
+        <network_numbers>
+            <network_number>(TrN)22133-train20072_c2db</network_number>
+            <network_number>CNV02431156 //r89</network_number>
+        </network_numbers>
+        <place_of_publication>New York :</place_of_publication>
+        <date_of_publication>1942.</date_of_publication>
+        <publisher>Simon and Schuster</publisher>
+    </bib_data>
+</holdings>

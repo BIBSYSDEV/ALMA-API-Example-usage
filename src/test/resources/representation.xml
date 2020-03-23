@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<representation is_remote="true">
+    <id>32237507520002202</id>
+    <library desc="NBDigital">0183306</library>
+    <label></label>
+    <public_note>bokhylla</public_note>
+    <usage_type desc="Derivative">DERIVATIVE_COPY</usage_type>
+    <active desc="Active">true</active>
+    <delivery_url>http://urn.nb.no/URN:NBN:no-nb_digibok_2017101048129</delivery_url>
+    <thumbnail_url></thumbnail_url>
+    <repository desc="NB Digital">NBDIGITAL</repository>
+    <originating_record_id>URN:NBN:no-nb_digibok_2017101048129</originating_record_id>
+    <linking_parameter_1>URN:NBN:no-nb_digibok_2017101048129</linking_parameter_1>
+    <linking_parameter_2></linking_parameter_2>
+    <linking_parameter_3></linking_parameter_3>
+    <linking_parameter_4>13G134447</linking_parameter_4>
+    <linking_parameter_5></linking_parameter_5>
+    <created_by>exl_api</created_by>
+    <created_date>2017-12-05Z</created_date>
+    <last_modified_by>exl_api</last_modified_by>
+    <last_modified_date>2020-03-06Z</last_modified_date>
+</representation>
