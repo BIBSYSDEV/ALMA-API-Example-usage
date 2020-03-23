@@ -3,6 +3,7 @@ plugins {
     id 'checkstyle'
     id 'pmd'
     id 'jacoco'
+    id 'org.unbroken-dome.xjc' version '1.4.3'
     id "net.linguica.maven-settings" version "0.5"
 }
 
@@ -12,11 +13,29 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_11  // source-code version and must be <= targetCompatibility
 targetCompatibility = JavaVersion.VERSION_11 // bytecode target version
 
+
+xjc {
+    includeInMainCompilation = false
+}
+
+sourceSets {
+    main { java { srcDir xjcGenerate.outputDirectory } }
+}
+
+compileJava {
+    dependsOn xjcGenerate
+}
+
+
 repositories {
     mavenCentral()
     mavenLocal()
     maven {
         url = 'https://artifactory.unit.no/artifactory/libs-releases'
+        credentials(PasswordCredentials) {
+            username = "bibsysdevel"
+            password = "hhG43"
+        }
     }
 }
 
