@@ -23,6 +23,10 @@ class AlmaClientTest {
     @Mock
     VaultApiAuthorization vaultApiAuthorization;
 
+
+    @Mock
+    ApiAuthorizationService apiAuthorizationService;
+
     @Mock
     Config config;
 
@@ -32,21 +36,21 @@ class AlmaClientTest {
     @Test
     void testInitAlmaClient() {
         final String ORGANIZATION = "someOrg";
-        final AlmaStage STAGE = AlmaStage.SANDBOX2;
+        final String STAGE = "alma-sandbox2";
         final String HOST = "someHost";
-        final String STAGE_STRING = AlmaStage.SANDBOX2.getVaultAlmaStageName();
         final String SERVICE_CONTEXT = "path1/path2";
         final String APP = "app";
         final String CONTEXT = "bibsysBibKode";
+        final String BIBCODE = "b";
 
+        when(apiAuthorizationService.getApiAuthorization(anyString(),anyString())).thenReturn(vaultApiAuthorization);
 
         when(vaultApiAuthorization.getOrganization()).thenReturn(ORGANIZATION);
         when(vaultApiAuthorization.getAlmaHost()).thenReturn(HOST);
-        when(vaultApiAuthorization.getAlmaStage()).thenReturn(STAGE);
 
         when(config.getString(eq("almaServiceContext"))).thenReturn(SERVICE_CONTEXT);
         when(config.getString(eq(APP))).thenReturn(APP);
-        when(config.getString(eq("stage"))).thenReturn(STAGE_STRING);
+        when(config.getString(eq("stage"))).thenReturn(STAGE);
         when(client.property(any(), any())).thenReturn(client);
         when(client.register(any())).thenReturn(client);
         when(client.register(any(AlmaAuthorizationRequestFilter.class), anyInt())).thenReturn(client);
@@ -54,7 +58,7 @@ class AlmaClientTest {
         when(client.register(any(), anyInt())).thenReturn(client);
         when(client.target(anyString())).thenReturn(webTarget);
 
-        AlmaClient almaClient = new AlmaClient(config, client, vaultApiAuthorization);
+        AlmaClient almaClient = new AlmaClient( client,config,  apiAuthorizationService, BIBCODE);
 
         assertEquals(CONTEXT, almaClient.getContext());
         assertEquals(webTarget, almaClient.getWebTarget());

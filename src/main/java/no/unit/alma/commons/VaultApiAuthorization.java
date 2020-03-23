@@ -13,10 +13,10 @@ public class VaultApiAuthorization  {
 
     private final VaultClient vaultClient;
     private final String environment;
-    private final AlmaStage almaStage;
+    private final String almaStage;
     private final String organization;
 
-    public VaultApiAuthorization(VaultClient vaultClient, String environment, AlmaStage almaStage, String organization) {
+    public VaultApiAuthorization(VaultClient vaultClient, String environment, String almaStage, String organization) {
         Objects.requireNonNull(vaultClient, "Vault client is required");
         if (StringUtils.isEmpty(environment)) {
             throw new NullPointerException("Environment is required");
@@ -40,7 +40,7 @@ public class VaultApiAuthorization  {
         return environment;
     }
 
-    public AlmaStage getAlmaStage() {
+    public String getAlmaStage() {
         return almaStage;
     }
 
@@ -59,7 +59,7 @@ public class VaultApiAuthorization  {
     }
 
     private String getSecret(String type, String key) {
-        String secretPath = String.format("secret/service/alma/apikey/%s/%s/%s#value", environment, almaStage.getVaultAlmaStageName(), key);
+        String secretPath = String.format("secret/service/alma/apikey/%s/%s/%s#value", environment, almaStage, key);
         log.trace("Vault secret path for Environment '{}', Alma stage '{}', Context '{}', Value '{}': {}", environment, almaStage, type, key, secretPath);
         final String secret = vaultClient.read(secretPath);
         if (secret == null) {
