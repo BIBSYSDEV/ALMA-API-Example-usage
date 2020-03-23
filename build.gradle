@@ -25,12 +25,17 @@ compileJava {
     dependsOn xjcGenerate
 }
 
+xjcGenerate {
+    source = fileTree('src/main/xsd') { include '*.url' }
+    outputDirectory = file('src/main/java')
+    targetPackage = 'no.unit.alma.generated'
+}
+
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven {
-        url = 'http://artifactory.unit.no/artifactory/libs-releases'
+        url = 'https://artifactory.unit.no/artifactory/libs-releases'
     }
 }
 
@@ -43,12 +48,12 @@ dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
     implementation group: 'org.jvnet.jaxb2_commons', name: 'jaxb2-basics-runtime', version: '1.11.1'
-    implementation 'no.bibsys:vault-client:1.0.8'
+    implementation group: 'no.bibsys', name: 'vault-client', version: '1.0.8'
     implementation group: 'com.typesafe', name: 'config', version: '1.4.0'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.0'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.3.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.0'
 }
 
 
@@ -58,7 +63,7 @@ test {
     finalizedBy jacocoTestReport
 }
 
-pmdMain { exclude 'no/bibsys/alma/rest/**', 'org/w3/_2001/xmlschema/**' }
+pmdMain { exclude 'no/unit/alma/generated/**', 'no/bibsys/alma/rest/**', 'org/w3/_2001/xmlschema/**' }
 
 pmd {
     ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
@@ -72,7 +77,7 @@ checkstyle {
 }
 
 tasks.withType(Checkstyle) {
-    exclude 'no/bibsys/alma/rest/**', 'org/w3/_2001/xmlschema/**'
+    exclude 'no/unit/alma/generated/**', 'no/bibsys/alma/rest/**', 'org/w3/_2001/xmlschema/**'
     reports {
         xml.enabled false
         html.enabled true
@@ -84,6 +89,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: 'no/bibsys/alma/rest/**')
+            fileTree(dir: it, exclude: 'no/unit/alma/generated/**')
         }))
     }
     reports {
