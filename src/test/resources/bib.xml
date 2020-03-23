@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bib>
+    <mms_id>99939650000541</mms_id>
+    <record_format>marc21</record_format>
+    <linked_record_id/>
+    <title>War and peace /</title>
+    <author>Tolstoy, Leo,</author>
+    <network_numbers>
+        <network_number>(TrN)22133-train20072_c2db</network_number>
+        <network_number>CNV02431156 //r89</network_number>
+    </network_numbers>
+    <place_of_publication>New York :</place_of_publication>
+    <date_of_publication>1942.</date_of_publication>
+    <publisher_const>Simon and Schuster</publisher_const>
+    <holdings link="https://api-eu.hosted.exlibrisgroup.com/almaws/v1/bibs/99939650000541/holdings"/>
+    <created_by>import</created_by>
+    <created_date>2011-12-17Z</created_date>
+    <last_modified_by>OPR-RECALCULATION</last_modified_by>
+    <last_modified_date>2016-07-08Z</last_modified_date>
+    <suppress_from_publishing>false</suppress_from_publishing>
+    <suppress_from_external_search>false</suppress_from_external_search>
+    <sync_with_oclc>NONE</sync_with_oclc>
+    <originating_system>ILS</originating_system>
+    <originating_system_id>22133-train20072_c2db</originating_system_id>
+    <record>
+        <leader>00783cam a2200241 a 4500</leader>
+        <controlfield tag="001">99939650000541</controlfield>
+        <controlfield tag="008">841221s1942    paua          000 1 eng</controlfield>
+        <controlfield tag="005">20160708100524.0</controlfield>
+        <datafield ind1=" " ind2=" " tag="035">
+            <subfield code="a">CNV02431156 //r89</subfield>
+        </datafield>
+        <datafield ind1=" " ind2=" " tag="035">
+            <subfield code="a">(TrN)22133-train20072_c2db</subfield>
+        </datafield>
+        <datafield ind1=" " ind2=" " tag="049">
+            <subfield code="a">SHCM</subfield>
+        </datafield>
+        <datafield ind1="0" ind2=" " tag="050">
+            <subfield code="a">PG3366</subfield>
+            <subfield code="b">.V6 1984</subfield>
+        </datafield>
+        <datafield ind1="0" ind2=" " tag="082">
+            <subfield code="a">891.73/3</subfield>
+            <subfield code="2">19</subfield>
+        </datafield>
+        <datafield ind1=" " ind2=" " tag="092">
+            <subfield code="a">891.7 T654w</subfield>
+        </datafield>
+        <datafield ind1="1" ind2=" " tag="100">
+            <subfield code="a">Tolstoy, Leo,</subfield>
+            <subfield code="c">graf,</subfield>
+            <subfield code="d">1828-1910.</subfield>
+        </datafield>
+        <datafield ind1="1" ind2="0" tag="240">
+            <subfield code="a">Voĭna i mir.</subfield>
+            <subfield code="l">English</subfield>
+        </datafield>
+        <datafield ind1="1" ind2="0" tag="245">
+            <subfield code="a">War and peace /</subfield>
+            <subfield code="c">Leo Tolstoy.</subfield>
+        </datafield>
+        <datafield ind1=" " ind2=" " tag="260">
+            <subfield code="a">New York :</subfield>
+            <subfield code="b">Simon and Schuster,</subfield>
+            <subfield code="c">1942.</subfield>
+        </datafield>
+        <datafield ind1=" " ind2=" " tag="300">
+            <subfield code="a">1370 p. :</subfield>
+            <subfield code="b">illus.</subfield>
+        </datafield>
+        <datafield ind1=" " ind2=" " tag="500">
+            <subfield code="a">Translation of: Voĭna i mir.</subfield>
+        </datafield>
+        <datafield ind1=" " ind2=" " tag="500">
+            <subfield code="a">"Inner sanctum edition."</subfield>
+        </datafield>
+        <datafield ind1=" " ind2="0" tag="650">
+            <subfield code="a">Napoleonic Wars, 1800-1815</subfield>
+            <subfield code="x">Campaigns</subfield>
+            <subfield code="z">Russia</subfield>
+            <subfield code="x">Fiction.</subfield>
+        </datafield>
+        <datafield ind1=" " ind2="0" tag="651">
+            <subfield code="a">Russia</subfield>
+            <subfield code="x">History</subfield>
+            <subfield code="y">Alexander I, 1801-1825</subfield>
+            <subfield code="x">Fiction.</subfield>
+        </datafield>
+    </record>
+</bib>

@@ -16,7 +16,7 @@ public class VaultApiAuthorization implements ApiAuthorization {
     private final AlmaStage almaStage;
     private final String organization;
 
-    VaultApiAuthorization(VaultClient vaultClient, String environment, AlmaStage almaStage, String organization) {
+    public VaultApiAuthorization(VaultClient vaultClient, String environment, AlmaStage almaStage, String organization) {
         Objects.requireNonNull(vaultClient, "Vault client is required");
         if (StringUtils.isEmpty(environment)) {
             throw new NullPointerException("Environment is required");
