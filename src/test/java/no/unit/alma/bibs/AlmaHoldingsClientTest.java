@@ -23,7 +23,7 @@ import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
-class AlmaHoldingsServiceTest {
+class AlmaHoldingsClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
