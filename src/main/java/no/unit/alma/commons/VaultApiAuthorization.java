@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class VaultApiAuthorization  {
 
-    private static final transient Logger log = LoggerFactory.getLogger(ApiAuthorizationService.class);
+    private static final transient Logger log = LoggerFactory.getLogger(VaultApiAuthorization.class);
 
     private final VaultClient vaultClient;
     private final String environment;
