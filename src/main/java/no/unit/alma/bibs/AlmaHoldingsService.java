@@ -13,4 +13,6 @@ public interface AlmaHoldingsService extends AlmaContext {
     Holding updateHolding(String mmsId, Holding holding);
 
     Items getItems(String mmsId, String holdingsId, long limit, long offset);
+
+    Items getAllItems(String mmsId, String holdingsId);
 }
