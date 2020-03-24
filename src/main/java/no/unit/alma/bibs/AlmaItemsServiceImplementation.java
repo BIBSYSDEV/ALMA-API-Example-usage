@@ -101,35 +101,8 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
     @Override
     public ItemLoan createUserLoanOnItem(final String barcode, final String user_Id, final String library,
             final String circulationDesk) {
-        final Item item = getItem(barcode);
-        final BibData bibData = item.getBibData();
-        final HoldingData holdingData = item.getHoldingData();
-        final ItemData itemData = item.getItemData();
-        if (bibData == null || holdingData == null || itemData == null) {
-            throw new IllegalStateException("Cannot create user loan on empty Item");
-        }
-        final ItemLoan itemLoan = new ItemLoan();
-        itemLoan.setItemBarcode(barcode);
-        itemLoan.setUserId(user_Id);
-        final ItemLoan.Library loanLibrary = new ItemLoan.Library();
-        loanLibrary.setValue(library);
-        itemLoan.setLibrary(loanLibrary);
-        final ItemLoan.CircDesk circDesk = new ItemLoan.CircDesk();
-        circDesk.setValue(circulationDesk);
-        itemLoan.setCircDesk(circDesk);
 
-        return bibsTarget
-                .path(bibData.getMmsId())
-                .path("holdings")
-                .path(holdingData.getHoldingId())
-                .path("items")
-                .path(itemData.getPid())
-                .path("loans")
-                .queryParam("user_id", user_Id)
-                .request()
-                .accept(MediaType.APPLICATION_XML)
-                .buildPost(Entity.xml(itemLoan))
-                .invoke(ItemLoan.class);
+        return createUserLoanOnItem(barcode, user_Id, library, circulationDesk, 0, null);
     }
 
     @Override
@@ -241,7 +214,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
         if (bibData == null || holdingData == null || itemData == null) {
             throw new IllegalArgumentException("Cannot create digitization request for empty Item");
         }
-        if (StringUtils.isEmpty(userId)) {
+        if (userId == null || StringUtils.isEmpty(userId)) {
             throw new IllegalArgumentException(
                     "No ltId provided for barcode=" + item.getItemData().getBarcode() + ", could not create request");
         }
