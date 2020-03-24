@@ -360,7 +360,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
                         .map(chronology -> chronology.trim())
                         .collect(Collectors.toList());
 
-        String label = "" + enumerationA;
+        String label = enumerationA != null ? enumerationA.trim() : "";
 
         if (chronologyI != null && !chronologyI.isBlank()) {
 
@@ -370,7 +370,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
             label = String.format("%s %s", label, String.join(",", enumerationList.toArray(new String[] {})));
         }
 
-        System.out.printf("label: #S", label);
+        System.out.printf("label: %S%n", label);
 
         return label;
     }
