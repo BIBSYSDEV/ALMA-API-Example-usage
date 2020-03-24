@@ -1,6 +1,7 @@
 package no.unit.alma.bibs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -24,6 +25,7 @@ import no.bibsys.alma.rest.items.BibData;
 import no.bibsys.alma.rest.items.HoldingData;
 import no.bibsys.alma.rest.items.Item;
 import no.bibsys.alma.rest.items.ItemData;
+import no.bibsys.alma.rest.items.ItemData.PhysicalMaterialType;
 import no.bibsys.alma.rest.representations.Representation;
 import no.bibsys.alma.rest.user_request.UserRequest;
 import no.bibsys.alma.rest.user_request.UserRequest.TargetDestination;
@@ -177,8 +179,19 @@ class AlmaItemsClientTest {
 
         ItemLoan tempItemLoan = new ItemLoan();
         tempItemLoan.setItemBarcode(TEST_BARCODE);
+
+        Item testItemNoBibData = createTestItem();
+        testItemNoBibData.setBibData(null);
+
+        Item testItemNoHoldingData = createTestItem();
+        testItemNoHoldingData.setHoldingData(null);
+
+        Item testItemNoItemData = createTestItem();
+        testItemNoItemData.setItemData(null);
+
         when(invocation.invoke(ItemLoan.class)).thenReturn(tempItemLoan);
-        when(getInvocation.invoke(Item.class)).thenReturn(tempItem);
+        when(getInvocation.invoke(Item.class)).thenReturn(tempItem, tempItem, testItemNoBibData, testItemNoHoldingData,
+                testItemNoItemData);
         AlmaItemsService almaItemsService =
                 new AlmaItemsServiceImplementation(mockAlmaApiClient);
 
@@ -189,8 +202,27 @@ class AlmaItemsClientTest {
                 almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK,
                         TEST_FINE, TEST_LOAN_STATUS);
         assertEquals(TEST_BARCODE, resultItemLoan.getItemBarcode());
+        try {
+            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK);
+            fail("BibData == null in Item should throw exception");
+        } catch (IllegalStateException e) {
+        }
+
+        try {
+            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK);
+            fail("HoldingData == null in Item should throw exception");
+        } catch (IllegalStateException e) {
+        }
+
+        try {
+            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK);
+            fail("ItemData == null in Item should throw exception");
+        } catch (IllegalStateException e) {
+        }
+
     }
 
+    @Test
     void testUpdateUserLoanAndChangeDueDate() {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
@@ -256,11 +288,16 @@ class AlmaItemsClientTest {
         when(builder.buildGet()).thenReturn(getInvocation);
 
         UserRequest tempUserRequest = new UserRequest();
+
         tempUserRequest.setBarcode(TEST_BARCODE);
         when(invocation.invoke(UserRequest.class)).thenReturn(tempUserRequest);
 
         Item testGetItem = createTestItem();
-        when(getInvocation.invoke(Item.class)).thenReturn(testGetItem);
+
+        Item testItemNoItemData = createTestItem();
+        testItemNoItemData.setItemData(null);
+
+        when(getInvocation.invoke(Item.class)).thenReturn(testGetItem, testItemNoItemData);
         AlmaItemsService almaItemsService =
                 new AlmaItemsServiceImplementation(mockAlmaApiClient);
 
@@ -269,12 +306,65 @@ class AlmaItemsClientTest {
                 almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
         assertEquals(TEST_BARCODE, resultPatronRequest.getBarcode());
 
+        try {
+            almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, null);
+            fail("userId == null in createPatronRequest should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+
+        try {
+            almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, "");
+            fail("userId == \"\" in createPatronRequest should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+
+        Item noItemData = createTestItem();
+        noItemData.setItemData(null);
+        try {
+            almaItemsService.createPatronRequest(noItemData, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
+            fail("ItemData == null in Item should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+
+        Item noHoldingData = createTestItem();
+        noHoldingData.setHoldingData(null);
+        try {
+            almaItemsService.createPatronRequest(noHoldingData, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
+            fail("HoldingData == null in Item should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+
+        Item noBibData = createTestItem();
+        noBibData.setBibData(null);
+        try {
+            almaItemsService.createPatronRequest(noBibData, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
+            fail("BibData == null in Item should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+
         resultPatronRequest = almaItemsService.createPatronRequest(TEST_MMS_ID, TEST_USER_ID, tempUserRequest);
         assertEquals(TEST_BARCODE, resultPatronRequest.getBarcode());
+
+        try {
+            almaItemsService.createPatronRequest(TEST_MMS_ID, null, tempUserRequest);
+            fail("userId == null in createPatronRequest should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            almaItemsService.createPatronRequest(TEST_MMS_ID, "", tempUserRequest);
+            fail("userId == \"\" in createPatronRequest should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
 
         resultPatronRequest =
                 almaItemsService.createPatronRequest(TEST_BARCODE, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_LT_ID);
         assertEquals(TEST_BARCODE, resultPatronRequest.getBarcode());
+
+        try {
+            almaItemsService.createPatronRequest(TEST_BARCODE, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_LT_ID);
+            fail("ItemData == null in Item should throw exception");
+        } catch (IllegalStateException e) {
+        }
     }
 
     @Test
@@ -290,19 +380,48 @@ class AlmaItemsClientTest {
         tempUserRequest.setBarcode(TEST_BARCODE);
         when(invocation.invoke(UserRequest.class)).thenReturn(tempUserRequest);
 
-        Item testGetItem = createTestItem();
-        when(getInvocation.invoke(Item.class)).thenReturn(testGetItem);
         AlmaItemsService almaItemsService =
                 new AlmaItemsServiceImplementation(mockAlmaApiClient);
+
+        Item testItem = createTestItem();
         UserRequest resultUserRequest =
-                almaItemsService.createDigitizationRequest(testGetItem, TEST_TARGET_DESTINATION, TEST_MESSAGE);
+                almaItemsService.createDigitizationRequest(testItem, TEST_TARGET_DESTINATION, TEST_MESSAGE,
+                        TEST_USER_ID);
         assertEquals(TEST_BARCODE, resultUserRequest.getBarcode());
+
+        resultUserRequest =
+                almaItemsService.createDigitizationRequest(testItem, TEST_TARGET_DESTINATION, TEST_MESSAGE);
+        assertEquals(TEST_BARCODE, resultUserRequest.getBarcode());
+
+        Item noBibData = createTestItem();
+        noBibData.setBibData(null);
+        try {
+            almaItemsService.createDigitizationRequest(noBibData, TEST_TARGET_DESTINATION, TEST_MESSAGE);
+            fail("BibData == null in Item should throw exceptrion");
+        } catch (IllegalArgumentException e) {
+        }
+
+        Item noHoldingData = createTestItem();
+        noHoldingData.setHoldingData(null);
+        try {
+            almaItemsService.createDigitizationRequest(noHoldingData, TEST_TARGET_DESTINATION, TEST_MESSAGE);
+            fail("BibData == null in Item should throw exceptrion");
+        } catch (IllegalArgumentException e) {
+        }
+
+        Item noItemData = createTestItem();
+        noItemData.setItemData(null);
+        try {
+            almaItemsService.createDigitizationRequest(noItemData, TEST_TARGET_DESTINATION, TEST_MESSAGE);
+            fail("BibData == null in Item should throw exceptrion");
+        } catch (IllegalArgumentException e) {
+        }
+
+        Item testGetItem = createTestItem();
+        when(getInvocation.invoke(Item.class)).thenReturn(testGetItem);
+
         resultUserRequest =
                 almaItemsService.createDigitizationRequest(TEST_BARCODE, TEST_TARGET_DESTINATION, TEST_MESSAGE);
-        assertEquals(TEST_BARCODE, resultUserRequest.getBarcode());
-        resultUserRequest =
-                almaItemsService.createDigitizationRequest(testGetItem, TEST_TARGET_DESTINATION, TEST_MESSAGE,
-                        TEST_USER_ID);
         assertEquals(TEST_BARCODE, resultUserRequest.getBarcode());
     }
 
@@ -361,16 +480,30 @@ class AlmaItemsClientTest {
 
         UserRequests testUserRequests = new UserRequests();
         testUserRequests.getUserRequest().add(testUserRequest);
-        when(getInvocation.invoke(UserRequests.class)).thenReturn(testUserRequests);
+
+        UserRequests emptyUserRequests = new UserRequests();
+        UserRequest emptyUserRequest = new UserRequest();
+        emptyUserRequests.getUserRequest().add(emptyUserRequest);
+        emptyUserRequest.setRequestId("");
+        when(getInvocation.invoke(UserRequests.class)).thenReturn(testUserRequests, testUserRequests,
+                emptyUserRequests);
         Item testItem = createTestItem();
         when(getInvocation.invoke(Item.class)).thenReturn(testItem);
 
         AlmaItemsService almaItemsService = new AlmaItemsServiceImplementation(mockAlmaApiClient);
+
         UserRequest resultUserRequest =
                 almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, false);
         assertEquals(String.format(COMMENT_FORMAT, TEST_COMMENT), resultUserRequest.getComment());
+
         resultUserRequest = almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true);
         assertEquals(String.format(APPENDED_COMMENT_FORMAT, TEST_COMMENT), resultUserRequest.getComment());
+
+        try {
+            almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true);
+            fail("When updateCommentOnRequest on non-existing request id should throw exception");
+        } catch (IllegalStateException e) {
+        }
     }
 
     @Test
@@ -497,6 +630,10 @@ class AlmaItemsClientTest {
         holdingData.setHoldingId(TEST_HOLDINGS_ID);
         ItemData itemData = new ItemData();
         itemData.setPid(TEST_ITEMS_ID);
+        PhysicalMaterialType physicalMaterialType = new PhysicalMaterialType();
+        String TEST_PHYSICALMATERIAL_TYPE = "physical material type";
+        physicalMaterialType.setValue(TEST_PHYSICALMATERIAL_TYPE);
+        itemData.setPhysicalMaterialType(physicalMaterialType);
         tempItem.setBibData(bibData);
         tempItem.setHoldingData(holdingData);
         tempItem.setItemData(itemData);
