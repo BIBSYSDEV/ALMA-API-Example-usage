@@ -3,7 +3,6 @@ package no.unit.alma;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
@@ -12,9 +11,13 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.stream.StreamSource;
 
+import no.unit.alma.generated.holdings.Holding;
+import no.unit.alma.generated.holdings.Holdings;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.items.Items;
+import no.unit.alma.generated.vendors.Vendor;
 import org.junit.jupiter.api.Test;
 
 import no.unit.alma.generated.bibs.Bib;
@@ -31,9 +34,6 @@ public class ApiHelper {
             writeObject(bib, Bib.class);
             Bibs bibs = readXmlFromFile(bibsFileName, Bibs.class);
             writeObject(bibs, Bibs.class);
-        } catch (XMLStreamException | FileNotFoundException e) {
-            e.printStackTrace();
-            fail(String.format("Error reading file %s", fileName));
         } catch (JAXBException e) {
             e.printStackTrace();
             fail(String.format("Error unmarshalling file %s", fileName));
@@ -56,7 +56,7 @@ public class ApiHelper {
         path = String.format(path, fileName);
         try {
             readXmlFromFile(path, type);
-        } catch (IOException | JAXBException e) {
+        } catch (JAXBException e) {
             e.printStackTrace();
             System.out.printf("Failed to read from file %s%n", fileName);
             fail(String.format("Failed to read from file %s", fileName));
@@ -78,16 +78,10 @@ public class ApiHelper {
         return sw.toString();
     }
 
-    public static <T> T readXmlFromFile(String fileName, Class<T> type) throws JAXBException, FileNotFoundException, XMLStreamException {
-
+    public static <T> T readXmlFromFile(String fileName, Class<T> type) throws JAXBException {
         File file = new File(fileName);
         JAXBContext jaxbContext = JAXBContext.newInstance(type);
-//        JAXBIntrospector jaxbIntrospector = jaxbContext.createJAXBIntrospector();
-
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-//        T unmarshalledObject = (T) jaxbIntrospector.getValue(jaxbUnmarshaller.unmarshal(parser, type));
-
         JAXBElement<T> root = jaxbUnmarshaller.unmarshal(new StreamSource(file), type);
 
         return root.getValue();

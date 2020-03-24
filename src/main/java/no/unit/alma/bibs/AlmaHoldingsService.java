@@ -1,7 +1,7 @@
 package no.unit.alma.bibs;
 
 import no.unit.alma.generated.items.Items;
-import no.unit.alma.generated.holdings.Holding;
+import no.unit.alma.generated.holding.Holding;
 import no.unit.alma.generated.holdings.Holdings;
 
 import no.unit.alma.commons.AlmaContext;

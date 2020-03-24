@@ -16,9 +16,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bibsys.alma.rest.holding.Holding;
-import no.bibsys.alma.rest.holdings.Holdings;
-import no.bibsys.alma.rest.items.Items;
+import no.unit.alma.generated.holding.Holding;
+import no.unit.alma.generated.holdings.Holdings;
+import no.unit.alma.generated.items.Items;
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
 
@@ -80,7 +80,7 @@ class AlmaHoldingsClientTest {
         AlmaHoldingsService almaHoldingsService =
                 new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
 
-        Holding resultHolding = almaHoldingsService.getHolding(TEST_MMS_ID, TEST_HOLDING_ID);
+        no.unit.alma.generated.holding.Holding resultHolding = almaHoldingsService.getHolding(TEST_MMS_ID, TEST_HOLDING_ID);
         assertEquals(TEST_ORIGINATING_SYSTEM, resultHolding.getOriginatingSystem());
     }
 

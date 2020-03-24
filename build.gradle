@@ -45,6 +45,14 @@ task xjcGenerateBibs(type: XjcGenerate) {
     episodeTargetFile = file('build/xjc/bibs.episode')
 }
 
+task xjcGenerateHolding(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'holding_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/holding.episode')
+    targetPackage = 'no.unit.alma.generated.holding'
+}
+
 task xjcGenerateHoldings(type: XjcGenerate) {
     urlSources = fileTree('src/main/schema') { include 'holdings_xsd.url' }
     outputDirectory = file('src/main/java')
