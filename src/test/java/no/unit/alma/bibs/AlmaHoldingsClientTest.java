@@ -130,11 +130,11 @@ class AlmaHoldingsClientTest {
 
     @Test
     void testGetAllItems() {
-        int totalRecordCount = 24;
+        int totalRecordCount = 240;
         List<Items> responses = new CopyOnWriteArrayList<Items>();
-        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 10, totalRecordCount));
-        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 10, totalRecordCount));
-        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 4, totalRecordCount));
+        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 100, totalRecordCount));
+        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 100, totalRecordCount));
+        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 40, totalRecordCount));
         for (Items items : responses) {
             items.setTotalRecordCount(totalRecordCount);
         }
