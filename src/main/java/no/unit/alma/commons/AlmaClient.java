@@ -74,7 +74,7 @@ public class AlmaClient {
         return almaStage;
     }
 
-    static  String buildAlmaUrl(String host, String serviceContext) {
+    protected static  String buildAlmaUrl(String host, String serviceContext) {
         return String.format("%s://%s/%s", "https", host, serviceContext);
     }
 }
