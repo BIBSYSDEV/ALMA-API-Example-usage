@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<representations total_record_count="1">
+    <representation is_remote="true" link="https://api-eu.hosted.exlibrisgroup.com/almaws/v1/bibs/991334666044702202/representations/32237507520002202">
+        <id>32237507520002202</id>
+        <label></label>
+        <active desc="Active">true</active>
+        <repository desc="NB Digital">NBDIGITAL</repository>
+        <originating_record_id>URN:NBN:no-nb_digibok_2017101048129</originating_record_id>
+    </representation>
+</representations>

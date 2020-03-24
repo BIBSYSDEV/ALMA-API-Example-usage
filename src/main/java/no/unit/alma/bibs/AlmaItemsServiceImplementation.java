@@ -78,7 +78,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path("holdings")
                 .path(holdingsId)
                 .path("items")
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(Item.class);
@@ -92,7 +92,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(item.getHoldingData().getHoldingId())
                 .path("items")
                 .path(item.getItemData().getPid())
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(item))
                 .invoke(Item.class);
@@ -126,7 +126,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(itemData.getPid())
                 .path("loans")
                 .queryParam("user_id", user_Id)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
@@ -162,7 +162,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(itemData.getPid())
                 .path("loans")
                 .queryParam("user_id", user_Id)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
@@ -179,7 +179,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(userId)
                 .path("loans")
                 .path(loanId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
@@ -261,7 +261,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(itemData.getPid())
                 .path("requests")
                 .queryParam("user_id", userId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(newRequest))
                 .invoke(UserRequest.class);
@@ -276,7 +276,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(mmsId)
                 .path("requests")
                 .queryParam("user_id", userId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(newRequest))
                 .invoke(UserRequest.class);
@@ -332,7 +332,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                             .queryParam("user_id", userId);
         }
         return digitizationTarget
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(newRequest))
                 .invoke(UserRequest.class);
@@ -362,23 +362,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
         final String recordId = item.getBibData().getMmsId();
         final String holdingsId = item.getHoldingData().getHoldingId();
         final String itemId = item.getItemData().getPid();
-        WebTarget deleteTarget =
-                bibsTarget
-                        .path(recordId)
-                        .path("holdings")
-                        .path(holdingsId)
-                        .path("items")
-                        .path(itemId)
-                        .queryParam("holdings", holdingsRecord.toString());
-        if (override) {
-            deleteTarget = deleteTarget.queryParam("override", true);
-        }
-        deleteTarget
-                .request()
-                .accept(MediaType.APPLICATION_XML)
-                .buildDelete()
-                .invoke()
-                .close();
+        deleteItem(recordId, holdingsId, itemId, override, holdingsRecord);
     }
 
     @Override
@@ -448,7 +432,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(itemId)
                 .path("requests")
                 .path(recordId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(requestToUpdate))
                 .invoke(UserRequest.class);
@@ -473,7 +457,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path("requests")
                 .path(requestId)
                 .queryParam("op", action)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(UserRequest.class);
@@ -496,7 +480,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .queryParam("department", department)
                 .queryParam("circ_desk", circDesk)
                 .queryParam("library", library)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(Item.class);
@@ -517,7 +501,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .queryParam("op", "scan")
                 .queryParam("circ_desk", circDesk)
                 .queryParam("library", library)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(Item.class);
@@ -529,7 +513,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(mmsId)
                 .path("representations")
                 .path(representationId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(digitalItem))
                 .invoke(Representation.class);
@@ -543,7 +527,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(item.getHoldingData().getHoldingId())
                 .path("items")
                 .path(item.getItemData().getPid())
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(new ObjectFactory().createItem(item)))
                 .invoke(Item.class);
