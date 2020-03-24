@@ -5,11 +5,11 @@
 // Generated on: 2020.03.12 at 09:27:58 AM CET 
 //
 
-
 package no.bibsys.alma.rest.bibs;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.jvnet.jaxb2_commons.lang.Equals2;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy2;
 import org.jvnet.jaxb2_commons.lang.HashCode2;
@@ -33,13 +34,15 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 import org.w3c.dom.Element;
 
-
 /**
  * Bibliographic record object
  * 
- * <p>Java class for bib complex type.
+ * <p>
+ * Java class for bib complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="bib"&gt;
@@ -113,34 +116,33 @@ import org.w3c.dom.Element;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bib", propOrder = {
-    "mmsId",
-    "recordFormat",
-    "linkedRecordId",
-    "title",
-    "author",
-    "issn",
-    "isbn",
-    "completeEdition",
-    "networkNumbers",
-    "placeOfPublication",
-    "dateOfPublication",
-    "publisherConst",
-    "holdings",
-    "createdBy",
-    "createdDate",
-    "lastModifiedBy",
-    "lastModifiedDate",
-    "suppressFromPublishing",
-    "originatingSystem",
-    "originatingSystemId",
-    "catalogingLevel",
-    "any",
-    "warnings",
-    "requests"
+        "mmsId",
+        "recordFormat",
+        "linkedRecordId",
+        "title",
+        "author",
+        "issn",
+        "isbn",
+        "completeEdition",
+        "networkNumbers",
+        "placeOfPublication",
+        "dateOfPublication",
+        "publisherConst",
+        "holdings",
+        "createdBy",
+        "createdDate",
+        "lastModifiedBy",
+        "lastModifiedDate",
+        "suppressFromPublishing",
+        "originatingSystem",
+        "originatingSystemId",
+        "catalogingLevel",
+        "any",
+        "warnings",
+        "requests"
 })
 @XmlRootElement(name = "bib")
-public class Bib implements Equals2, HashCode2, ToString2
-{
+public class Bib implements Equals2, HashCode2, ToString2 {
 
     @XmlElement(name = "mms_id")
     protected String mmsId;
@@ -188,13 +190,19 @@ public class Bib implements Equals2, HashCode2, ToString2
     @XmlAttribute(name = "link")
     protected String link;
 
+//    public Bib() {
+//        super();
+//    }
+//    
+//    public Bib(String mmsId) {
+//        super();
+//    }
+
     /**
      * Gets the value of the mmsId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getMmsId() {
         return mmsId;
@@ -203,10 +211,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the mmsId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setMmsId(String value) {
         this.mmsId = value;
@@ -215,10 +221,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the recordFormat property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getRecordFormat() {
         return recordFormat;
@@ -227,10 +231,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the recordFormat property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setRecordFormat(String value) {
         this.recordFormat = value;
@@ -239,10 +241,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the linkedRecordId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link LinkedRecordId }
-     *     
+     * @return possible object is {@link LinkedRecordId }
+     * 
      */
     public LinkedRecordId getLinkedRecordId() {
         return linkedRecordId;
@@ -251,10 +251,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the linkedRecordId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LinkedRecordId }
-     *     
+     * @param value allowed object is {@link LinkedRecordId }
+     * 
      */
     public void setLinkedRecordId(LinkedRecordId value) {
         this.linkedRecordId = value;
@@ -263,10 +261,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the title property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getTitle() {
         return title;
@@ -275,10 +271,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the title property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setTitle(String value) {
         this.title = value;
@@ -287,10 +281,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the author property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getAuthor() {
         return author;
@@ -299,10 +291,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the author property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setAuthor(String value) {
         this.author = value;
@@ -311,10 +301,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the issn property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getIssn() {
         return issn;
@@ -323,10 +311,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the issn property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setIssn(String value) {
         this.issn = value;
@@ -335,10 +321,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the isbn property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getIsbn() {
         return isbn;
@@ -347,10 +331,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the isbn property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setIsbn(String value) {
         this.isbn = value;
@@ -359,10 +341,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the completeEdition property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getCompleteEdition() {
         return completeEdition;
@@ -371,10 +351,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the completeEdition property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setCompleteEdition(String value) {
         this.completeEdition = value;
@@ -383,10 +361,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the networkNumbers property.
      * 
-     * @return
-     *     possible object is
-     *     {@link NetworkNumbers }
-     *     
+     * @return possible object is {@link NetworkNumbers }
+     * 
      */
     public NetworkNumbers getNetworkNumbers() {
         return networkNumbers;
@@ -395,10 +371,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the networkNumbers property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link NetworkNumbers }
-     *     
+     * @param value allowed object is {@link NetworkNumbers }
+     * 
      */
     public void setNetworkNumbers(NetworkNumbers value) {
         this.networkNumbers = value;
@@ -407,10 +381,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the placeOfPublication property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getPlaceOfPublication() {
         return placeOfPublication;
@@ -419,10 +391,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the placeOfPublication property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setPlaceOfPublication(String value) {
         this.placeOfPublication = value;
@@ -431,10 +401,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the dateOfPublication property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getDateOfPublication() {
         return dateOfPublication;
@@ -443,10 +411,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the dateOfPublication property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setDateOfPublication(String value) {
         this.dateOfPublication = value;
@@ -455,10 +421,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the publisherConst property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getPublisherConst() {
         return publisherConst;
@@ -467,10 +431,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the publisherConst property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setPublisherConst(String value) {
         this.publisherConst = value;
@@ -479,10 +441,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the holdings property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Holdings }
-     *     
+     * @return possible object is {@link Holdings }
+     * 
      */
     public Holdings getHoldings() {
         return holdings;
@@ -491,10 +451,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the holdings property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Holdings }
-     *     
+     * @param value allowed object is {@link Holdings }
+     * 
      */
     public void setHoldings(Holdings value) {
         this.holdings = value;
@@ -503,10 +461,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the createdBy property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getCreatedBy() {
         return createdBy;
@@ -515,10 +471,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the createdBy property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setCreatedBy(String value) {
         this.createdBy = value;
@@ -527,10 +481,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the createdDate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @return possible object is {@link XMLGregorianCalendar }
+     * 
      */
     public XMLGregorianCalendar getCreatedDate() {
         return createdDate;
@@ -539,10 +491,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the createdDate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @param value allowed object is {@link XMLGregorianCalendar }
+     * 
      */
     public void setCreatedDate(XMLGregorianCalendar value) {
         this.createdDate = value;
@@ -551,10 +501,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the lastModifiedBy property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getLastModifiedBy() {
         return lastModifiedBy;
@@ -563,10 +511,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the lastModifiedBy property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setLastModifiedBy(String value) {
         this.lastModifiedBy = value;
@@ -575,10 +521,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the lastModifiedDate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @return possible object is {@link XMLGregorianCalendar }
+     * 
      */
     public XMLGregorianCalendar getLastModifiedDate() {
         return lastModifiedDate;
@@ -587,10 +531,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the lastModifiedDate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
+     * @param value allowed object is {@link XMLGregorianCalendar }
+     * 
      */
     public void setLastModifiedDate(XMLGregorianCalendar value) {
         this.lastModifiedDate = value;
@@ -599,10 +541,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the suppressFromPublishing property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getSuppressFromPublishing() {
         return suppressFromPublishing;
@@ -611,10 +551,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the suppressFromPublishing property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setSuppressFromPublishing(String value) {
         this.suppressFromPublishing = value;
@@ -623,10 +561,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the originatingSystem property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getOriginatingSystem() {
         return originatingSystem;
@@ -635,10 +571,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the originatingSystem property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setOriginatingSystem(String value) {
         this.originatingSystem = value;
@@ -647,10 +581,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the originatingSystemId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getOriginatingSystemId() {
         return originatingSystemId;
@@ -659,10 +591,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the originatingSystemId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setOriginatingSystemId(String value) {
         this.originatingSystemId = value;
@@ -671,10 +601,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the catalogingLevel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CatalogingLevel }
-     *     
+     * @return possible object is {@link CatalogingLevel }
+     * 
      */
     public CatalogingLevel getCatalogingLevel() {
         return catalogingLevel;
@@ -683,10 +611,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the catalogingLevel property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CatalogingLevel }
-     *     
+     * @param value allowed object is {@link CatalogingLevel }
+     * 
      */
     public void setCatalogingLevel(CatalogingLevel value) {
         this.catalogingLevel = value;
@@ -696,21 +622,21 @@ public class Bib implements Equals2, HashCode2, ToString2
      * Gets the value of the any property.
      * 
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the any property.
+     * This accessor method returns a reference to the live list, not a snapshot.
+     * Therefore any modification you make to the returned list will be present
+     * inside the JAXB object. This is why there is not a <CODE>set</CODE> method
+     * for the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
+     * 
      * <pre>
-     *    getAny().add(newItem);
+     * getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Object }
+     * Objects of the following type(s) are allowed in the list {@link Object }
      * {@link Element }
      * 
      * 
@@ -725,10 +651,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the warnings property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Warnings }
-     *     
+     * @return possible object is {@link Warnings }
+     * 
      */
     public Warnings getWarnings() {
         return warnings;
@@ -737,10 +661,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the warnings property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Warnings }
-     *     
+     * @param value allowed object is {@link Warnings }
+     * 
      */
     public void setWarnings(Warnings value) {
         this.warnings = value;
@@ -749,10 +671,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the requests property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Requests }
-     *     
+     * @return possible object is {@link Requests }
+     * 
      */
     public Requests getRequests() {
         return requests;
@@ -761,10 +681,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the requests property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Requests }
-     *     
+     * @param value allowed object is {@link Requests }
+     * 
      */
     public void setRequests(Requests value) {
         this.requests = value;
@@ -773,10 +691,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Gets the value of the link property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     * @return possible object is {@link String }
+     * 
      */
     public String getLink() {
         return link;
@@ -785,10 +701,8 @@ public class Bib implements Equals2, HashCode2, ToString2
     /**
      * Sets the value of the link property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * @param value allowed object is {@link String }
+     * 
      */
     public void setLink(String value) {
         this.link = value;
@@ -799,127 +713,178 @@ public class Bib implements Equals2, HashCode2, ToString2
         {
             String theMmsId;
             theMmsId = this.getMmsId();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "mmsId", theMmsId), currentHashCode, theMmsId, (this.mmsId!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "mmsId", theMmsId), currentHashCode, theMmsId,
+                            (this.mmsId != null));
         }
         {
             String theRecordFormat;
             theRecordFormat = this.getRecordFormat();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "recordFormat", theRecordFormat), currentHashCode, theRecordFormat, (this.recordFormat!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "recordFormat", theRecordFormat), currentHashCode,
+                            theRecordFormat, (this.recordFormat != null));
         }
         {
             LinkedRecordId theLinkedRecordId;
             theLinkedRecordId = this.getLinkedRecordId();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "linkedRecordId", theLinkedRecordId), currentHashCode, theLinkedRecordId, (this.linkedRecordId!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "linkedRecordId", theLinkedRecordId),
+                            currentHashCode, theLinkedRecordId, (this.linkedRecordId != null));
         }
         {
             String theTitle;
             theTitle = this.getTitle();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "title", theTitle), currentHashCode, theTitle, (this.title!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "title", theTitle), currentHashCode, theTitle,
+                            (this.title != null));
         }
         {
             String theAuthor;
             theAuthor = this.getAuthor();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "author", theAuthor), currentHashCode, theAuthor, (this.author!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "author", theAuthor), currentHashCode, theAuthor,
+                            (this.author != null));
         }
         {
             String theIssn;
             theIssn = this.getIssn();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "issn", theIssn), currentHashCode, theIssn, (this.issn!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "issn", theIssn), currentHashCode, theIssn,
+                            (this.issn != null));
         }
         {
             String theIsbn;
             theIsbn = this.getIsbn();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "isbn", theIsbn), currentHashCode, theIsbn, (this.isbn!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "isbn", theIsbn), currentHashCode, theIsbn,
+                            (this.isbn != null));
         }
         {
             String theCompleteEdition;
             theCompleteEdition = this.getCompleteEdition();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "completeEdition", theCompleteEdition), currentHashCode, theCompleteEdition, (this.completeEdition!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "completeEdition", theCompleteEdition),
+                            currentHashCode, theCompleteEdition, (this.completeEdition != null));
         }
         {
             NetworkNumbers theNetworkNumbers;
             theNetworkNumbers = this.getNetworkNumbers();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "networkNumbers", theNetworkNumbers), currentHashCode, theNetworkNumbers, (this.networkNumbers!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "networkNumbers", theNetworkNumbers),
+                            currentHashCode, theNetworkNumbers, (this.networkNumbers != null));
         }
         {
             String thePlaceOfPublication;
             thePlaceOfPublication = this.getPlaceOfPublication();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "placeOfPublication", thePlaceOfPublication), currentHashCode, thePlaceOfPublication, (this.placeOfPublication!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "placeOfPublication", thePlaceOfPublication),
+                            currentHashCode, thePlaceOfPublication, (this.placeOfPublication != null));
         }
         {
             String theDateOfPublication;
             theDateOfPublication = this.getDateOfPublication();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "dateOfPublication", theDateOfPublication), currentHashCode, theDateOfPublication, (this.dateOfPublication!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "dateOfPublication", theDateOfPublication),
+                            currentHashCode, theDateOfPublication, (this.dateOfPublication != null));
         }
         {
             String thePublisherConst;
             thePublisherConst = this.getPublisherConst();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "publisherConst", thePublisherConst), currentHashCode, thePublisherConst, (this.publisherConst!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "publisherConst", thePublisherConst),
+                            currentHashCode, thePublisherConst, (this.publisherConst != null));
         }
         {
             Holdings theHoldings;
             theHoldings = this.getHoldings();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "holdings", theHoldings), currentHashCode, theHoldings, (this.holdings!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "holdings", theHoldings), currentHashCode,
+                            theHoldings, (this.holdings != null));
         }
         {
             String theCreatedBy;
             theCreatedBy = this.getCreatedBy();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "createdBy", theCreatedBy), currentHashCode, theCreatedBy, (this.createdBy!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "createdBy", theCreatedBy), currentHashCode,
+                            theCreatedBy, (this.createdBy != null));
         }
         {
             XMLGregorianCalendar theCreatedDate;
             theCreatedDate = this.getCreatedDate();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "createdDate", theCreatedDate), currentHashCode, theCreatedDate, (this.createdDate!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "createdDate", theCreatedDate), currentHashCode,
+                            theCreatedDate, (this.createdDate != null));
         }
         {
             String theLastModifiedBy;
             theLastModifiedBy = this.getLastModifiedBy();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "lastModifiedBy", theLastModifiedBy), currentHashCode, theLastModifiedBy, (this.lastModifiedBy!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "lastModifiedBy", theLastModifiedBy),
+                            currentHashCode, theLastModifiedBy, (this.lastModifiedBy != null));
         }
         {
             XMLGregorianCalendar theLastModifiedDate;
             theLastModifiedDate = this.getLastModifiedDate();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "lastModifiedDate", theLastModifiedDate), currentHashCode, theLastModifiedDate, (this.lastModifiedDate!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "lastModifiedDate", theLastModifiedDate),
+                            currentHashCode, theLastModifiedDate, (this.lastModifiedDate != null));
         }
         {
             String theSuppressFromPublishing;
             theSuppressFromPublishing = this.getSuppressFromPublishing();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "suppressFromPublishing", theSuppressFromPublishing), currentHashCode, theSuppressFromPublishing, (this.suppressFromPublishing!= null));
+            currentHashCode =
+                    strategy.hashCode(
+                            LocatorUtils.property(locator, "suppressFromPublishing", theSuppressFromPublishing),
+                            currentHashCode, theSuppressFromPublishing, (this.suppressFromPublishing != null));
         }
         {
             String theOriginatingSystem;
             theOriginatingSystem = this.getOriginatingSystem();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "originatingSystem", theOriginatingSystem), currentHashCode, theOriginatingSystem, (this.originatingSystem!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "originatingSystem", theOriginatingSystem),
+                            currentHashCode, theOriginatingSystem, (this.originatingSystem != null));
         }
         {
             String theOriginatingSystemId;
             theOriginatingSystemId = this.getOriginatingSystemId();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "originatingSystemId", theOriginatingSystemId), currentHashCode, theOriginatingSystemId, (this.originatingSystemId!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "originatingSystemId", theOriginatingSystemId),
+                            currentHashCode, theOriginatingSystemId, (this.originatingSystemId != null));
         }
         {
             CatalogingLevel theCatalogingLevel;
             theCatalogingLevel = this.getCatalogingLevel();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "catalogingLevel", theCatalogingLevel), currentHashCode, theCatalogingLevel, (this.catalogingLevel!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "catalogingLevel", theCatalogingLevel),
+                            currentHashCode, theCatalogingLevel, (this.catalogingLevel != null));
         }
         {
             List<Object> theAny;
-            theAny = (((this.any!= null)&&(!this.any.isEmpty()))?this.getAny():null);
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "any", theAny), currentHashCode, theAny, ((this.any!= null)&&(!this.any.isEmpty())));
+            theAny = (((this.any != null) && (!this.any.isEmpty())) ? this.getAny() : null);
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "any", theAny), currentHashCode, theAny,
+                            ((this.any != null) && (!this.any.isEmpty())));
         }
         {
             Warnings theWarnings;
             theWarnings = this.getWarnings();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "warnings", theWarnings), currentHashCode, theWarnings, (this.warnings!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "warnings", theWarnings), currentHashCode,
+                            theWarnings, (this.warnings != null));
         }
         {
             Requests theRequests;
             theRequests = this.getRequests();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "requests", theRequests), currentHashCode, theRequests, (this.requests!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "requests", theRequests), currentHashCode,
+                            theRequests, (this.requests != null));
         }
         {
             String theLink;
             theLink = this.getLink();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "link", theLink), currentHashCode, theLink, (this.link!= null));
+            currentHashCode =
+                    strategy.hashCode(LocatorUtils.property(locator, "link", theLink), currentHashCode, theLink,
+                            (this.link != null));
         }
         return currentHashCode;
     }
@@ -929,8 +894,9 @@ public class Bib implements Equals2, HashCode2, ToString2
         return this.hashCode(null, strategy);
     }
 
-    public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy) {
-        if ((object == null)||(this.getClass()!= object.getClass())) {
+    public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object,
+            EqualsStrategy2 strategy) {
+        if ((object == null) || (this.getClass() != object.getClass())) {
             return false;
         }
         if (this == object) {
@@ -942,7 +908,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsMmsId = this.getMmsId();
             String rhsMmsId;
             rhsMmsId = that.getMmsId();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "mmsId", lhsMmsId), LocatorUtils.property(thatLocator, "mmsId", rhsMmsId), lhsMmsId, rhsMmsId, (this.mmsId!= null), (that.mmsId!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "mmsId", lhsMmsId),
+                    LocatorUtils.property(thatLocator, "mmsId", rhsMmsId), lhsMmsId, rhsMmsId, (this.mmsId != null),
+                    (that.mmsId != null))) {
                 return false;
             }
         }
@@ -951,7 +919,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsRecordFormat = this.getRecordFormat();
             String rhsRecordFormat;
             rhsRecordFormat = that.getRecordFormat();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "recordFormat", lhsRecordFormat), LocatorUtils.property(thatLocator, "recordFormat", rhsRecordFormat), lhsRecordFormat, rhsRecordFormat, (this.recordFormat!= null), (that.recordFormat!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "recordFormat", lhsRecordFormat),
+                    LocatorUtils.property(thatLocator, "recordFormat", rhsRecordFormat), lhsRecordFormat,
+                    rhsRecordFormat, (this.recordFormat != null), (that.recordFormat != null))) {
                 return false;
             }
         }
@@ -960,7 +930,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsLinkedRecordId = this.getLinkedRecordId();
             LinkedRecordId rhsLinkedRecordId;
             rhsLinkedRecordId = that.getLinkedRecordId();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "linkedRecordId", lhsLinkedRecordId), LocatorUtils.property(thatLocator, "linkedRecordId", rhsLinkedRecordId), lhsLinkedRecordId, rhsLinkedRecordId, (this.linkedRecordId!= null), (that.linkedRecordId!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "linkedRecordId", lhsLinkedRecordId),
+                    LocatorUtils.property(thatLocator, "linkedRecordId", rhsLinkedRecordId), lhsLinkedRecordId,
+                    rhsLinkedRecordId, (this.linkedRecordId != null), (that.linkedRecordId != null))) {
                 return false;
             }
         }
@@ -969,7 +941,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsTitle = this.getTitle();
             String rhsTitle;
             rhsTitle = that.getTitle();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "title", lhsTitle), LocatorUtils.property(thatLocator, "title", rhsTitle), lhsTitle, rhsTitle, (this.title!= null), (that.title!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "title", lhsTitle),
+                    LocatorUtils.property(thatLocator, "title", rhsTitle), lhsTitle, rhsTitle, (this.title != null),
+                    (that.title != null))) {
                 return false;
             }
         }
@@ -978,7 +952,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsAuthor = this.getAuthor();
             String rhsAuthor;
             rhsAuthor = that.getAuthor();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "author", lhsAuthor), LocatorUtils.property(thatLocator, "author", rhsAuthor), lhsAuthor, rhsAuthor, (this.author!= null), (that.author!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "author", lhsAuthor),
+                    LocatorUtils.property(thatLocator, "author", rhsAuthor), lhsAuthor, rhsAuthor,
+                    (this.author != null), (that.author != null))) {
                 return false;
             }
         }
@@ -987,7 +963,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsIssn = this.getIssn();
             String rhsIssn;
             rhsIssn = that.getIssn();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "issn", lhsIssn), LocatorUtils.property(thatLocator, "issn", rhsIssn), lhsIssn, rhsIssn, (this.issn!= null), (that.issn!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "issn", lhsIssn),
+                    LocatorUtils.property(thatLocator, "issn", rhsIssn), lhsIssn, rhsIssn, (this.issn != null),
+                    (that.issn != null))) {
                 return false;
             }
         }
@@ -996,7 +974,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsIsbn = this.getIsbn();
             String rhsIsbn;
             rhsIsbn = that.getIsbn();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "isbn", lhsIsbn), LocatorUtils.property(thatLocator, "isbn", rhsIsbn), lhsIsbn, rhsIsbn, (this.isbn!= null), (that.isbn!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "isbn", lhsIsbn),
+                    LocatorUtils.property(thatLocator, "isbn", rhsIsbn), lhsIsbn, rhsIsbn, (this.isbn != null),
+                    (that.isbn != null))) {
                 return false;
             }
         }
@@ -1005,7 +985,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsCompleteEdition = this.getCompleteEdition();
             String rhsCompleteEdition;
             rhsCompleteEdition = that.getCompleteEdition();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "completeEdition", lhsCompleteEdition), LocatorUtils.property(thatLocator, "completeEdition", rhsCompleteEdition), lhsCompleteEdition, rhsCompleteEdition, (this.completeEdition!= null), (that.completeEdition!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "completeEdition", lhsCompleteEdition),
+                    LocatorUtils.property(thatLocator, "completeEdition", rhsCompleteEdition), lhsCompleteEdition,
+                    rhsCompleteEdition, (this.completeEdition != null), (that.completeEdition != null))) {
                 return false;
             }
         }
@@ -1014,7 +996,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsNetworkNumbers = this.getNetworkNumbers();
             NetworkNumbers rhsNetworkNumbers;
             rhsNetworkNumbers = that.getNetworkNumbers();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "networkNumbers", lhsNetworkNumbers), LocatorUtils.property(thatLocator, "networkNumbers", rhsNetworkNumbers), lhsNetworkNumbers, rhsNetworkNumbers, (this.networkNumbers!= null), (that.networkNumbers!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "networkNumbers", lhsNetworkNumbers),
+                    LocatorUtils.property(thatLocator, "networkNumbers", rhsNetworkNumbers), lhsNetworkNumbers,
+                    rhsNetworkNumbers, (this.networkNumbers != null), (that.networkNumbers != null))) {
                 return false;
             }
         }
@@ -1023,7 +1007,10 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsPlaceOfPublication = this.getPlaceOfPublication();
             String rhsPlaceOfPublication;
             rhsPlaceOfPublication = that.getPlaceOfPublication();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "placeOfPublication", lhsPlaceOfPublication), LocatorUtils.property(thatLocator, "placeOfPublication", rhsPlaceOfPublication), lhsPlaceOfPublication, rhsPlaceOfPublication, (this.placeOfPublication!= null), (that.placeOfPublication!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "placeOfPublication", lhsPlaceOfPublication),
+                    LocatorUtils.property(thatLocator, "placeOfPublication", rhsPlaceOfPublication),
+                    lhsPlaceOfPublication, rhsPlaceOfPublication, (this.placeOfPublication != null),
+                    (that.placeOfPublication != null))) {
                 return false;
             }
         }
@@ -1032,7 +1019,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsDateOfPublication = this.getDateOfPublication();
             String rhsDateOfPublication;
             rhsDateOfPublication = that.getDateOfPublication();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "dateOfPublication", lhsDateOfPublication), LocatorUtils.property(thatLocator, "dateOfPublication", rhsDateOfPublication), lhsDateOfPublication, rhsDateOfPublication, (this.dateOfPublication!= null), (that.dateOfPublication!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "dateOfPublication", lhsDateOfPublication),
+                    LocatorUtils.property(thatLocator, "dateOfPublication", rhsDateOfPublication), lhsDateOfPublication,
+                    rhsDateOfPublication, (this.dateOfPublication != null), (that.dateOfPublication != null))) {
                 return false;
             }
         }
@@ -1041,7 +1030,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsPublisherConst = this.getPublisherConst();
             String rhsPublisherConst;
             rhsPublisherConst = that.getPublisherConst();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "publisherConst", lhsPublisherConst), LocatorUtils.property(thatLocator, "publisherConst", rhsPublisherConst), lhsPublisherConst, rhsPublisherConst, (this.publisherConst!= null), (that.publisherConst!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "publisherConst", lhsPublisherConst),
+                    LocatorUtils.property(thatLocator, "publisherConst", rhsPublisherConst), lhsPublisherConst,
+                    rhsPublisherConst, (this.publisherConst != null), (that.publisherConst != null))) {
                 return false;
             }
         }
@@ -1050,7 +1041,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsHoldings = this.getHoldings();
             Holdings rhsHoldings;
             rhsHoldings = that.getHoldings();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "holdings", lhsHoldings), LocatorUtils.property(thatLocator, "holdings", rhsHoldings), lhsHoldings, rhsHoldings, (this.holdings!= null), (that.holdings!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "holdings", lhsHoldings),
+                    LocatorUtils.property(thatLocator, "holdings", rhsHoldings), lhsHoldings, rhsHoldings,
+                    (this.holdings != null), (that.holdings != null))) {
                 return false;
             }
         }
@@ -1059,7 +1052,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsCreatedBy = this.getCreatedBy();
             String rhsCreatedBy;
             rhsCreatedBy = that.getCreatedBy();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "createdBy", lhsCreatedBy), LocatorUtils.property(thatLocator, "createdBy", rhsCreatedBy), lhsCreatedBy, rhsCreatedBy, (this.createdBy!= null), (that.createdBy!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "createdBy", lhsCreatedBy),
+                    LocatorUtils.property(thatLocator, "createdBy", rhsCreatedBy), lhsCreatedBy, rhsCreatedBy,
+                    (this.createdBy != null), (that.createdBy != null))) {
                 return false;
             }
         }
@@ -1068,7 +1063,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsCreatedDate = this.getCreatedDate();
             XMLGregorianCalendar rhsCreatedDate;
             rhsCreatedDate = that.getCreatedDate();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "createdDate", lhsCreatedDate), LocatorUtils.property(thatLocator, "createdDate", rhsCreatedDate), lhsCreatedDate, rhsCreatedDate, (this.createdDate!= null), (that.createdDate!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "createdDate", lhsCreatedDate),
+                    LocatorUtils.property(thatLocator, "createdDate", rhsCreatedDate), lhsCreatedDate, rhsCreatedDate,
+                    (this.createdDate != null), (that.createdDate != null))) {
                 return false;
             }
         }
@@ -1077,7 +1074,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsLastModifiedBy = this.getLastModifiedBy();
             String rhsLastModifiedBy;
             rhsLastModifiedBy = that.getLastModifiedBy();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "lastModifiedBy", lhsLastModifiedBy), LocatorUtils.property(thatLocator, "lastModifiedBy", rhsLastModifiedBy), lhsLastModifiedBy, rhsLastModifiedBy, (this.lastModifiedBy!= null), (that.lastModifiedBy!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "lastModifiedBy", lhsLastModifiedBy),
+                    LocatorUtils.property(thatLocator, "lastModifiedBy", rhsLastModifiedBy), lhsLastModifiedBy,
+                    rhsLastModifiedBy, (this.lastModifiedBy != null), (that.lastModifiedBy != null))) {
                 return false;
             }
         }
@@ -1086,7 +1085,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsLastModifiedDate = this.getLastModifiedDate();
             XMLGregorianCalendar rhsLastModifiedDate;
             rhsLastModifiedDate = that.getLastModifiedDate();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "lastModifiedDate", lhsLastModifiedDate), LocatorUtils.property(thatLocator, "lastModifiedDate", rhsLastModifiedDate), lhsLastModifiedDate, rhsLastModifiedDate, (this.lastModifiedDate!= null), (that.lastModifiedDate!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "lastModifiedDate", lhsLastModifiedDate),
+                    LocatorUtils.property(thatLocator, "lastModifiedDate", rhsLastModifiedDate), lhsLastModifiedDate,
+                    rhsLastModifiedDate, (this.lastModifiedDate != null), (that.lastModifiedDate != null))) {
                 return false;
             }
         }
@@ -1095,7 +1096,11 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsSuppressFromPublishing = this.getSuppressFromPublishing();
             String rhsSuppressFromPublishing;
             rhsSuppressFromPublishing = that.getSuppressFromPublishing();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "suppressFromPublishing", lhsSuppressFromPublishing), LocatorUtils.property(thatLocator, "suppressFromPublishing", rhsSuppressFromPublishing), lhsSuppressFromPublishing, rhsSuppressFromPublishing, (this.suppressFromPublishing!= null), (that.suppressFromPublishing!= null))) {
+            if (!strategy.equals(
+                    LocatorUtils.property(thisLocator, "suppressFromPublishing", lhsSuppressFromPublishing),
+                    LocatorUtils.property(thatLocator, "suppressFromPublishing", rhsSuppressFromPublishing),
+                    lhsSuppressFromPublishing, rhsSuppressFromPublishing, (this.suppressFromPublishing != null),
+                    (that.suppressFromPublishing != null))) {
                 return false;
             }
         }
@@ -1104,7 +1109,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsOriginatingSystem = this.getOriginatingSystem();
             String rhsOriginatingSystem;
             rhsOriginatingSystem = that.getOriginatingSystem();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "originatingSystem", lhsOriginatingSystem), LocatorUtils.property(thatLocator, "originatingSystem", rhsOriginatingSystem), lhsOriginatingSystem, rhsOriginatingSystem, (this.originatingSystem!= null), (that.originatingSystem!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "originatingSystem", lhsOriginatingSystem),
+                    LocatorUtils.property(thatLocator, "originatingSystem", rhsOriginatingSystem), lhsOriginatingSystem,
+                    rhsOriginatingSystem, (this.originatingSystem != null), (that.originatingSystem != null))) {
                 return false;
             }
         }
@@ -1113,7 +1120,10 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsOriginatingSystemId = this.getOriginatingSystemId();
             String rhsOriginatingSystemId;
             rhsOriginatingSystemId = that.getOriginatingSystemId();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "originatingSystemId", lhsOriginatingSystemId), LocatorUtils.property(thatLocator, "originatingSystemId", rhsOriginatingSystemId), lhsOriginatingSystemId, rhsOriginatingSystemId, (this.originatingSystemId!= null), (that.originatingSystemId!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "originatingSystemId", lhsOriginatingSystemId),
+                    LocatorUtils.property(thatLocator, "originatingSystemId", rhsOriginatingSystemId),
+                    lhsOriginatingSystemId, rhsOriginatingSystemId, (this.originatingSystemId != null),
+                    (that.originatingSystemId != null))) {
                 return false;
             }
         }
@@ -1122,16 +1132,20 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsCatalogingLevel = this.getCatalogingLevel();
             CatalogingLevel rhsCatalogingLevel;
             rhsCatalogingLevel = that.getCatalogingLevel();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "catalogingLevel", lhsCatalogingLevel), LocatorUtils.property(thatLocator, "catalogingLevel", rhsCatalogingLevel), lhsCatalogingLevel, rhsCatalogingLevel, (this.catalogingLevel!= null), (that.catalogingLevel!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "catalogingLevel", lhsCatalogingLevel),
+                    LocatorUtils.property(thatLocator, "catalogingLevel", rhsCatalogingLevel), lhsCatalogingLevel,
+                    rhsCatalogingLevel, (this.catalogingLevel != null), (that.catalogingLevel != null))) {
                 return false;
             }
         }
         {
             List<Object> lhsAny;
-            lhsAny = (((this.any!= null)&&(!this.any.isEmpty()))?this.getAny():null);
+            lhsAny = (((this.any != null) && (!this.any.isEmpty())) ? this.getAny() : null);
             List<Object> rhsAny;
-            rhsAny = (((that.any!= null)&&(!that.any.isEmpty()))?that.getAny():null);
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "any", lhsAny), LocatorUtils.property(thatLocator, "any", rhsAny), lhsAny, rhsAny, ((this.any!= null)&&(!this.any.isEmpty())), ((that.any!= null)&&(!that.any.isEmpty())))) {
+            rhsAny = (((that.any != null) && (!that.any.isEmpty())) ? that.getAny() : null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "any", lhsAny),
+                    LocatorUtils.property(thatLocator, "any", rhsAny), lhsAny, rhsAny,
+                    ((this.any != null) && (!this.any.isEmpty())), ((that.any != null) && (!that.any.isEmpty())))) {
                 return false;
             }
         }
@@ -1140,7 +1154,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsWarnings = this.getWarnings();
             Warnings rhsWarnings;
             rhsWarnings = that.getWarnings();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "warnings", lhsWarnings), LocatorUtils.property(thatLocator, "warnings", rhsWarnings), lhsWarnings, rhsWarnings, (this.warnings!= null), (that.warnings!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "warnings", lhsWarnings),
+                    LocatorUtils.property(thatLocator, "warnings", rhsWarnings), lhsWarnings, rhsWarnings,
+                    (this.warnings != null), (that.warnings != null))) {
                 return false;
             }
         }
@@ -1149,7 +1165,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsRequests = this.getRequests();
             Requests rhsRequests;
             rhsRequests = that.getRequests();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "requests", lhsRequests), LocatorUtils.property(thatLocator, "requests", rhsRequests), lhsRequests, rhsRequests, (this.requests!= null), (that.requests!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "requests", lhsRequests),
+                    LocatorUtils.property(thatLocator, "requests", rhsRequests), lhsRequests, rhsRequests,
+                    (this.requests != null), (that.requests != null))) {
                 return false;
             }
         }
@@ -1158,7 +1176,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             lhsLink = this.getLink();
             String rhsLink;
             rhsLink = that.getLink();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "link", lhsLink), LocatorUtils.property(thatLocator, "link", rhsLink), lhsLink, rhsLink, (this.link!= null), (that.link!= null))) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "link", lhsLink),
+                    LocatorUtils.property(thatLocator, "link", rhsLink), lhsLink, rhsLink, (this.link != null),
+                    (that.link != null))) {
                 return false;
             }
         }
@@ -1188,136 +1208,150 @@ public class Bib implements Equals2, HashCode2, ToString2
         {
             String theMmsId;
             theMmsId = this.getMmsId();
-            strategy.appendField(locator, this, "mmsId", buffer, theMmsId, (this.mmsId!= null));
+            strategy.appendField(locator, this, "mmsId", buffer, theMmsId, (this.mmsId != null));
         }
         {
             String theRecordFormat;
             theRecordFormat = this.getRecordFormat();
-            strategy.appendField(locator, this, "recordFormat", buffer, theRecordFormat, (this.recordFormat!= null));
+            strategy.appendField(locator, this, "recordFormat", buffer, theRecordFormat, (this.recordFormat != null));
         }
         {
             LinkedRecordId theLinkedRecordId;
             theLinkedRecordId = this.getLinkedRecordId();
-            strategy.appendField(locator, this, "linkedRecordId", buffer, theLinkedRecordId, (this.linkedRecordId!= null));
+            strategy.appendField(locator, this, "linkedRecordId", buffer, theLinkedRecordId,
+                    (this.linkedRecordId != null));
         }
         {
             String theTitle;
             theTitle = this.getTitle();
-            strategy.appendField(locator, this, "title", buffer, theTitle, (this.title!= null));
+            strategy.appendField(locator, this, "title", buffer, theTitle, (this.title != null));
         }
         {
             String theAuthor;
             theAuthor = this.getAuthor();
-            strategy.appendField(locator, this, "author", buffer, theAuthor, (this.author!= null));
+            strategy.appendField(locator, this, "author", buffer, theAuthor, (this.author != null));
         }
         {
             String theIssn;
             theIssn = this.getIssn();
-            strategy.appendField(locator, this, "issn", buffer, theIssn, (this.issn!= null));
+            strategy.appendField(locator, this, "issn", buffer, theIssn, (this.issn != null));
         }
         {
             String theIsbn;
             theIsbn = this.getIsbn();
-            strategy.appendField(locator, this, "isbn", buffer, theIsbn, (this.isbn!= null));
+            strategy.appendField(locator, this, "isbn", buffer, theIsbn, (this.isbn != null));
         }
         {
             String theCompleteEdition;
             theCompleteEdition = this.getCompleteEdition();
-            strategy.appendField(locator, this, "completeEdition", buffer, theCompleteEdition, (this.completeEdition!= null));
+            strategy.appendField(locator, this, "completeEdition", buffer, theCompleteEdition,
+                    (this.completeEdition != null));
         }
         {
             NetworkNumbers theNetworkNumbers;
             theNetworkNumbers = this.getNetworkNumbers();
-            strategy.appendField(locator, this, "networkNumbers", buffer, theNetworkNumbers, (this.networkNumbers!= null));
+            strategy.appendField(locator, this, "networkNumbers", buffer, theNetworkNumbers,
+                    (this.networkNumbers != null));
         }
         {
             String thePlaceOfPublication;
             thePlaceOfPublication = this.getPlaceOfPublication();
-            strategy.appendField(locator, this, "placeOfPublication", buffer, thePlaceOfPublication, (this.placeOfPublication!= null));
+            strategy.appendField(locator, this, "placeOfPublication", buffer, thePlaceOfPublication,
+                    (this.placeOfPublication != null));
         }
         {
             String theDateOfPublication;
             theDateOfPublication = this.getDateOfPublication();
-            strategy.appendField(locator, this, "dateOfPublication", buffer, theDateOfPublication, (this.dateOfPublication!= null));
+            strategy.appendField(locator, this, "dateOfPublication", buffer, theDateOfPublication,
+                    (this.dateOfPublication != null));
         }
         {
             String thePublisherConst;
             thePublisherConst = this.getPublisherConst();
-            strategy.appendField(locator, this, "publisherConst", buffer, thePublisherConst, (this.publisherConst!= null));
+            strategy.appendField(locator, this, "publisherConst", buffer, thePublisherConst,
+                    (this.publisherConst != null));
         }
         {
             Holdings theHoldings;
             theHoldings = this.getHoldings();
-            strategy.appendField(locator, this, "holdings", buffer, theHoldings, (this.holdings!= null));
+            strategy.appendField(locator, this, "holdings", buffer, theHoldings, (this.holdings != null));
         }
         {
             String theCreatedBy;
             theCreatedBy = this.getCreatedBy();
-            strategy.appendField(locator, this, "createdBy", buffer, theCreatedBy, (this.createdBy!= null));
+            strategy.appendField(locator, this, "createdBy", buffer, theCreatedBy, (this.createdBy != null));
         }
         {
             XMLGregorianCalendar theCreatedDate;
             theCreatedDate = this.getCreatedDate();
-            strategy.appendField(locator, this, "createdDate", buffer, theCreatedDate, (this.createdDate!= null));
+            strategy.appendField(locator, this, "createdDate", buffer, theCreatedDate, (this.createdDate != null));
         }
         {
             String theLastModifiedBy;
             theLastModifiedBy = this.getLastModifiedBy();
-            strategy.appendField(locator, this, "lastModifiedBy", buffer, theLastModifiedBy, (this.lastModifiedBy!= null));
+            strategy.appendField(locator, this, "lastModifiedBy", buffer, theLastModifiedBy,
+                    (this.lastModifiedBy != null));
         }
         {
             XMLGregorianCalendar theLastModifiedDate;
             theLastModifiedDate = this.getLastModifiedDate();
-            strategy.appendField(locator, this, "lastModifiedDate", buffer, theLastModifiedDate, (this.lastModifiedDate!= null));
+            strategy.appendField(locator, this, "lastModifiedDate", buffer, theLastModifiedDate,
+                    (this.lastModifiedDate != null));
         }
         {
             String theSuppressFromPublishing;
             theSuppressFromPublishing = this.getSuppressFromPublishing();
-            strategy.appendField(locator, this, "suppressFromPublishing", buffer, theSuppressFromPublishing, (this.suppressFromPublishing!= null));
+            strategy.appendField(locator, this, "suppressFromPublishing", buffer, theSuppressFromPublishing,
+                    (this.suppressFromPublishing != null));
         }
         {
             String theOriginatingSystem;
             theOriginatingSystem = this.getOriginatingSystem();
-            strategy.appendField(locator, this, "originatingSystem", buffer, theOriginatingSystem, (this.originatingSystem!= null));
+            strategy.appendField(locator, this, "originatingSystem", buffer, theOriginatingSystem,
+                    (this.originatingSystem != null));
         }
         {
             String theOriginatingSystemId;
             theOriginatingSystemId = this.getOriginatingSystemId();
-            strategy.appendField(locator, this, "originatingSystemId", buffer, theOriginatingSystemId, (this.originatingSystemId!= null));
+            strategy.appendField(locator, this, "originatingSystemId", buffer, theOriginatingSystemId,
+                    (this.originatingSystemId != null));
         }
         {
             CatalogingLevel theCatalogingLevel;
             theCatalogingLevel = this.getCatalogingLevel();
-            strategy.appendField(locator, this, "catalogingLevel", buffer, theCatalogingLevel, (this.catalogingLevel!= null));
+            strategy.appendField(locator, this, "catalogingLevel", buffer, theCatalogingLevel,
+                    (this.catalogingLevel != null));
         }
         {
             List<Object> theAny;
-            theAny = (((this.any!= null)&&(!this.any.isEmpty()))?this.getAny():null);
-            strategy.appendField(locator, this, "any", buffer, theAny, ((this.any!= null)&&(!this.any.isEmpty())));
+            theAny = (((this.any != null) && (!this.any.isEmpty())) ? this.getAny() : null);
+            strategy.appendField(locator, this, "any", buffer, theAny, ((this.any != null) && (!this.any.isEmpty())));
         }
         {
             Warnings theWarnings;
             theWarnings = this.getWarnings();
-            strategy.appendField(locator, this, "warnings", buffer, theWarnings, (this.warnings!= null));
+            strategy.appendField(locator, this, "warnings", buffer, theWarnings, (this.warnings != null));
         }
         {
             Requests theRequests;
             theRequests = this.getRequests();
-            strategy.appendField(locator, this, "requests", buffer, theRequests, (this.requests!= null));
+            strategy.appendField(locator, this, "requests", buffer, theRequests, (this.requests != null));
         }
         {
             String theLink;
             theLink = this.getLink();
-            strategy.appendField(locator, this, "link", buffer, theLink, (this.link!= null));
+            strategy.appendField(locator, this, "link", buffer, theLink, (this.link != null));
         }
         return buffer;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained within
+     * this class.
      * 
      * <pre>
      * &lt;complexType&gt;
@@ -1333,10 +1367,9 @@ public class Bib implements Equals2, HashCode2, ToString2
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "value"
+            "value"
     })
-    public static class CatalogingLevel implements Equals2, HashCode2, ToString2
-    {
+    public static class CatalogingLevel implements Equals2, HashCode2, ToString2 {
 
         @XmlValue
         protected String value;
@@ -1346,10 +1379,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Gets the value of the value property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getValue() {
             return value;
@@ -1358,10 +1389,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Sets the value of the value property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
         public void setValue(String value) {
             this.value = value;
@@ -1370,10 +1399,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Gets the value of the desc property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getDesc() {
             return desc;
@@ -1382,10 +1409,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Sets the value of the desc property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
         public void setDesc(String value) {
             this.desc = value;
@@ -1396,12 +1421,16 @@ public class Bib implements Equals2, HashCode2, ToString2
             {
                 String theValue;
                 theValue = this.getValue();
-                currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "value", theValue), currentHashCode, theValue, (this.value!= null));
+                currentHashCode =
+                        strategy.hashCode(LocatorUtils.property(locator, "value", theValue), currentHashCode, theValue,
+                                (this.value != null));
             }
             {
                 String theDesc;
                 theDesc = this.getDesc();
-                currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "desc", theDesc), currentHashCode, theDesc, (this.desc!= null));
+                currentHashCode =
+                        strategy.hashCode(LocatorUtils.property(locator, "desc", theDesc), currentHashCode, theDesc,
+                                (this.desc != null));
             }
             return currentHashCode;
         }
@@ -1411,8 +1440,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             return this.hashCode(null, strategy);
         }
 
-        public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy) {
-            if ((object == null)||(this.getClass()!= object.getClass())) {
+        public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object,
+                EqualsStrategy2 strategy) {
+            if ((object == null) || (this.getClass() != object.getClass())) {
                 return false;
             }
             if (this == object) {
@@ -1424,7 +1454,9 @@ public class Bib implements Equals2, HashCode2, ToString2
                 lhsValue = this.getValue();
                 String rhsValue;
                 rhsValue = that.getValue();
-                if (!strategy.equals(LocatorUtils.property(thisLocator, "value", lhsValue), LocatorUtils.property(thatLocator, "value", rhsValue), lhsValue, rhsValue, (this.value!= null), (that.value!= null))) {
+                if (!strategy.equals(LocatorUtils.property(thisLocator, "value", lhsValue),
+                        LocatorUtils.property(thatLocator, "value", rhsValue), lhsValue, rhsValue, (this.value != null),
+                        (that.value != null))) {
                     return false;
                 }
             }
@@ -1433,7 +1465,9 @@ public class Bib implements Equals2, HashCode2, ToString2
                 lhsDesc = this.getDesc();
                 String rhsDesc;
                 rhsDesc = that.getDesc();
-                if (!strategy.equals(LocatorUtils.property(thisLocator, "desc", lhsDesc), LocatorUtils.property(thatLocator, "desc", rhsDesc), lhsDesc, rhsDesc, (this.desc!= null), (that.desc!= null))) {
+                if (!strategy.equals(LocatorUtils.property(thisLocator, "desc", lhsDesc),
+                        LocatorUtils.property(thatLocator, "desc", rhsDesc), lhsDesc, rhsDesc, (this.desc != null),
+                        (that.desc != null))) {
                     return false;
                 }
             }
@@ -1463,23 +1497,25 @@ public class Bib implements Equals2, HashCode2, ToString2
             {
                 String theValue;
                 theValue = this.getValue();
-                strategy.appendField(locator, this, "value", buffer, theValue, (this.value!= null));
+                strategy.appendField(locator, this, "value", buffer, theValue, (this.value != null));
             }
             {
                 String theDesc;
                 theDesc = this.getDesc();
-                strategy.appendField(locator, this, "desc", buffer, theDesc, (this.desc!= null));
+                strategy.appendField(locator, this, "desc", buffer, theDesc, (this.desc != null));
             }
             return buffer;
         }
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained within
+     * this class.
      * 
      * <pre>
      * &lt;complexType&gt;
@@ -1495,10 +1531,9 @@ public class Bib implements Equals2, HashCode2, ToString2
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "value"
+            "value"
     })
-    public static class Holdings implements Equals2, HashCode2, ToString2
-    {
+    public static class Holdings implements Equals2, HashCode2, ToString2 {
 
         @XmlValue
         protected String value;
@@ -1508,10 +1543,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Gets the value of the value property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getValue() {
             return value;
@@ -1520,10 +1553,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Sets the value of the value property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
         public void setValue(String value) {
             this.value = value;
@@ -1532,10 +1563,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Gets the value of the link property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getLink() {
             return link;
@@ -1544,10 +1573,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Sets the value of the link property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
         public void setLink(String value) {
             this.link = value;
@@ -1558,12 +1585,16 @@ public class Bib implements Equals2, HashCode2, ToString2
             {
                 String theValue;
                 theValue = this.getValue();
-                currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "value", theValue), currentHashCode, theValue, (this.value!= null));
+                currentHashCode =
+                        strategy.hashCode(LocatorUtils.property(locator, "value", theValue), currentHashCode, theValue,
+                                (this.value != null));
             }
             {
                 String theLink;
                 theLink = this.getLink();
-                currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "link", theLink), currentHashCode, theLink, (this.link!= null));
+                currentHashCode =
+                        strategy.hashCode(LocatorUtils.property(locator, "link", theLink), currentHashCode, theLink,
+                                (this.link != null));
             }
             return currentHashCode;
         }
@@ -1573,8 +1604,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             return this.hashCode(null, strategy);
         }
 
-        public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy) {
-            if ((object == null)||(this.getClass()!= object.getClass())) {
+        public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object,
+                EqualsStrategy2 strategy) {
+            if ((object == null) || (this.getClass() != object.getClass())) {
                 return false;
             }
             if (this == object) {
@@ -1586,7 +1618,9 @@ public class Bib implements Equals2, HashCode2, ToString2
                 lhsValue = this.getValue();
                 String rhsValue;
                 rhsValue = that.getValue();
-                if (!strategy.equals(LocatorUtils.property(thisLocator, "value", lhsValue), LocatorUtils.property(thatLocator, "value", rhsValue), lhsValue, rhsValue, (this.value!= null), (that.value!= null))) {
+                if (!strategy.equals(LocatorUtils.property(thisLocator, "value", lhsValue),
+                        LocatorUtils.property(thatLocator, "value", rhsValue), lhsValue, rhsValue, (this.value != null),
+                        (that.value != null))) {
                     return false;
                 }
             }
@@ -1595,7 +1629,9 @@ public class Bib implements Equals2, HashCode2, ToString2
                 lhsLink = this.getLink();
                 String rhsLink;
                 rhsLink = that.getLink();
-                if (!strategy.equals(LocatorUtils.property(thisLocator, "link", lhsLink), LocatorUtils.property(thatLocator, "link", rhsLink), lhsLink, rhsLink, (this.link!= null), (that.link!= null))) {
+                if (!strategy.equals(LocatorUtils.property(thisLocator, "link", lhsLink),
+                        LocatorUtils.property(thatLocator, "link", rhsLink), lhsLink, rhsLink, (this.link != null),
+                        (that.link != null))) {
                     return false;
                 }
             }
@@ -1625,23 +1661,25 @@ public class Bib implements Equals2, HashCode2, ToString2
             {
                 String theValue;
                 theValue = this.getValue();
-                strategy.appendField(locator, this, "value", buffer, theValue, (this.value!= null));
+                strategy.appendField(locator, this, "value", buffer, theValue, (this.value != null));
             }
             {
                 String theLink;
                 theLink = this.getLink();
-                strategy.appendField(locator, this, "link", buffer, theLink, (this.link!= null));
+                strategy.appendField(locator, this, "link", buffer, theLink, (this.link != null));
             }
             return buffer;
         }
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained within
+     * this class.
      * 
      * <pre>
      * &lt;complexType&gt;
@@ -1657,10 +1695,9 @@ public class Bib implements Equals2, HashCode2, ToString2
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "value"
+            "value"
     })
-    public static class LinkedRecordId implements Equals2, HashCode2, ToString2
-    {
+    public static class LinkedRecordId implements Equals2, HashCode2, ToString2 {
 
         @XmlValue
         protected String value;
@@ -1670,10 +1707,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Gets the value of the value property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getValue() {
             return value;
@@ -1682,10 +1717,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Sets the value of the value property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
         public void setValue(String value) {
             this.value = value;
@@ -1694,10 +1727,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Gets the value of the type property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getType() {
             return type;
@@ -1706,10 +1737,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Sets the value of the type property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
         public void setType(String value) {
             this.type = value;
@@ -1720,12 +1749,16 @@ public class Bib implements Equals2, HashCode2, ToString2
             {
                 String theValue;
                 theValue = this.getValue();
-                currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "value", theValue), currentHashCode, theValue, (this.value!= null));
+                currentHashCode =
+                        strategy.hashCode(LocatorUtils.property(locator, "value", theValue), currentHashCode, theValue,
+                                (this.value != null));
             }
             {
                 String theType;
                 theType = this.getType();
-                currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "type", theType), currentHashCode, theType, (this.type!= null));
+                currentHashCode =
+                        strategy.hashCode(LocatorUtils.property(locator, "type", theType), currentHashCode, theType,
+                                (this.type != null));
             }
             return currentHashCode;
         }
@@ -1735,8 +1768,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             return this.hashCode(null, strategy);
         }
 
-        public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy) {
-            if ((object == null)||(this.getClass()!= object.getClass())) {
+        public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object,
+                EqualsStrategy2 strategy) {
+            if ((object == null) || (this.getClass() != object.getClass())) {
                 return false;
             }
             if (this == object) {
@@ -1748,7 +1782,9 @@ public class Bib implements Equals2, HashCode2, ToString2
                 lhsValue = this.getValue();
                 String rhsValue;
                 rhsValue = that.getValue();
-                if (!strategy.equals(LocatorUtils.property(thisLocator, "value", lhsValue), LocatorUtils.property(thatLocator, "value", rhsValue), lhsValue, rhsValue, (this.value!= null), (that.value!= null))) {
+                if (!strategy.equals(LocatorUtils.property(thisLocator, "value", lhsValue),
+                        LocatorUtils.property(thatLocator, "value", rhsValue), lhsValue, rhsValue, (this.value != null),
+                        (that.value != null))) {
                     return false;
                 }
             }
@@ -1757,7 +1793,9 @@ public class Bib implements Equals2, HashCode2, ToString2
                 lhsType = this.getType();
                 String rhsType;
                 rhsType = that.getType();
-                if (!strategy.equals(LocatorUtils.property(thisLocator, "type", lhsType), LocatorUtils.property(thatLocator, "type", rhsType), lhsType, rhsType, (this.type!= null), (that.type!= null))) {
+                if (!strategy.equals(LocatorUtils.property(thisLocator, "type", lhsType),
+                        LocatorUtils.property(thatLocator, "type", rhsType), lhsType, rhsType, (this.type != null),
+                        (that.type != null))) {
                     return false;
                 }
             }
@@ -1787,23 +1825,25 @@ public class Bib implements Equals2, HashCode2, ToString2
             {
                 String theValue;
                 theValue = this.getValue();
-                strategy.appendField(locator, this, "value", buffer, theValue, (this.value!= null));
+                strategy.appendField(locator, this, "value", buffer, theValue, (this.value != null));
             }
             {
                 String theType;
                 theType = this.getType();
-                strategy.appendField(locator, this, "type", buffer, theType, (this.type!= null));
+                strategy.appendField(locator, this, "type", buffer, theType, (this.type != null));
             }
             return buffer;
         }
 
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * <p>
+     * Java class for anonymous complex type.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
+     * <p>
+     * The following schema fragment specifies the expected content contained within
+     * this class.
      * 
      * <pre>
      * &lt;complexType&gt;
@@ -1819,10 +1859,9 @@ public class Bib implements Equals2, HashCode2, ToString2
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "value"
+            "value"
     })
-    public static class Requests implements Equals2, HashCode2, ToString2
-    {
+    public static class Requests implements Equals2, HashCode2, ToString2 {
 
         @XmlValue
         protected int value;
@@ -1848,10 +1887,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Gets the value of the link property.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
+         * @return possible object is {@link String }
+         * 
          */
         public String getLink() {
             return link;
@@ -1860,10 +1897,8 @@ public class Bib implements Equals2, HashCode2, ToString2
         /**
          * Sets the value of the link property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
+         * @param value allowed object is {@link String }
+         * 
          */
         public void setLink(String value) {
             this.link = value;
@@ -1874,12 +1909,16 @@ public class Bib implements Equals2, HashCode2, ToString2
             {
                 int theValue;
                 theValue = this.getValue();
-                currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "value", theValue), currentHashCode, theValue, true);
+                currentHashCode =
+                        strategy.hashCode(LocatorUtils.property(locator, "value", theValue), currentHashCode, theValue,
+                                true);
             }
             {
                 String theLink;
                 theLink = this.getLink();
-                currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "link", theLink), currentHashCode, theLink, (this.link!= null));
+                currentHashCode =
+                        strategy.hashCode(LocatorUtils.property(locator, "link", theLink), currentHashCode, theLink,
+                                (this.link != null));
             }
             return currentHashCode;
         }
@@ -1889,8 +1928,9 @@ public class Bib implements Equals2, HashCode2, ToString2
             return this.hashCode(null, strategy);
         }
 
-        public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy) {
-            if ((object == null)||(this.getClass()!= object.getClass())) {
+        public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object,
+                EqualsStrategy2 strategy) {
+            if ((object == null) || (this.getClass() != object.getClass())) {
                 return false;
             }
             if (this == object) {
@@ -1902,7 +1942,8 @@ public class Bib implements Equals2, HashCode2, ToString2
                 lhsValue = this.getValue();
                 int rhsValue;
                 rhsValue = that.getValue();
-                if (!strategy.equals(LocatorUtils.property(thisLocator, "value", lhsValue), LocatorUtils.property(thatLocator, "value", rhsValue), lhsValue, rhsValue, true, true)) {
+                if (!strategy.equals(LocatorUtils.property(thisLocator, "value", lhsValue),
+                        LocatorUtils.property(thatLocator, "value", rhsValue), lhsValue, rhsValue, true, true)) {
                     return false;
                 }
             }
@@ -1911,7 +1952,9 @@ public class Bib implements Equals2, HashCode2, ToString2
                 lhsLink = this.getLink();
                 String rhsLink;
                 rhsLink = that.getLink();
-                if (!strategy.equals(LocatorUtils.property(thisLocator, "link", lhsLink), LocatorUtils.property(thatLocator, "link", rhsLink), lhsLink, rhsLink, (this.link!= null), (that.link!= null))) {
+                if (!strategy.equals(LocatorUtils.property(thisLocator, "link", lhsLink),
+                        LocatorUtils.property(thatLocator, "link", rhsLink), lhsLink, rhsLink, (this.link != null),
+                        (that.link != null))) {
                     return false;
                 }
             }
@@ -1946,7 +1989,7 @@ public class Bib implements Equals2, HashCode2, ToString2
             {
                 String theLink;
                 theLink = this.getLink();
-                strategy.appendField(locator, this, "link", buffer, theLink, (this.link!= null));
+                strategy.appendField(locator, this, "link", buffer, theLink, (this.link != null));
             }
             return buffer;
         }
