@@ -17,10 +17,17 @@ public class AlmaClient {
     private final String contextValue;
     private final String almaStage;
 
-    private final static int connectTimeout = 10_000;
-    private final static int readTimeout = 120_000;
-    private final static String CONTEXT = "bibsysBibKode";
+    private final int connectTimeout = 10_000;
+    private final int readTimeout = 120_000;
+    private final String context = "bibsysBibKode";
 
+    /**
+     * Alma Client default constructor.
+     *
+     * @param client    A WS-RS-client
+     * @param config    Application config
+     * @param bibCode   An instituition bibCode
+     */
     public AlmaClient(Client client, Config config, String bibCode) {
         this(client,
                 config,
@@ -31,6 +38,15 @@ public class AlmaClient {
         );
     }
 
+
+    /**
+     * Alma Client constructor with VaultClient.
+     *
+     * @param client        A WS-RS-client
+     * @param config        Application config
+     * @param vaultClient   VaultClient
+     * @param bibCode       An instituition bibCode
+     */
     public AlmaClient(Client client, Config config, VaultClient vaultClient, String bibCode) {
         this(client,
                 config,
@@ -42,6 +58,14 @@ public class AlmaClient {
         );
     }
 
+    /**
+     * Alma Client constructor with ApiAuthorizationService.
+     *     *
+     * @param client                    A WS-RS-client
+     * @param config                    Application config
+     * @param apiAuthorizationService   ApiAuthorizationService
+     * @param bibCode                   An instituition bibCode
+     */
     public AlmaClient(Client client, Config config, ApiAuthorizationService apiAuthorizationService, String bibCode) {
         Objects.requireNonNull(client, "JAX-RS rest client must be provided");
         Objects.requireNonNull(apiAuthorizationService, "Alma API authorization is required");
@@ -63,7 +87,7 @@ public class AlmaClient {
     }
 
     public String getContext() {
-        return CONTEXT;
+        return context;
     }
 
     public String getContextValue() {

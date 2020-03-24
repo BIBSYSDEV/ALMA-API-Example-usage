@@ -13,7 +13,11 @@ import javax.ws.rs.core.Response.Status.Family;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.stream.Collectors;
 
 
@@ -22,7 +26,8 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
     private static final transient Logger log = LoggerFactory.getLogger(AlmaStatusResponseFilter.class);
 
     @Override
-    public void filter(ClientRequestContext clientRequestContext, ClientResponseContext clientResponseContext) throws IOException {
+    public void filter(ClientRequestContext clientRequestContext,
+                       ClientResponseContext clientResponseContext) throws IOException {
         if (clientResponseContext.getStatusInfo().getFamily() != Family.SUCCESSFUL) {
             log.trace("Response from alma is marked as unsuccessful.\nUri: {}\nMethod: {}\nResponse code: {}",
                 clientRequestContext.getUri(), clientRequestContext.getMethod(), clientResponseContext.getStatus());

@@ -1,7 +1,6 @@
 package no.unit.alma.commons;
 
 import com.typesafe.config.Config;
-import org.glassfish.jersey.client.ClientProperties;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -39,7 +38,6 @@ class AlmaClientTest {
         final String STAGE = "alma-sandbox2";
         final String HOST = "someHost";
         final String SERVICE_CONTEXT = "path1/path2";
-        final String APP = "app";
         final String CONTEXT = "bibsysBibKode";
         final String BIBCODE = "b";
 

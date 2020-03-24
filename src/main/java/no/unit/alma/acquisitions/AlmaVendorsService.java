@@ -19,6 +19,11 @@ public class AlmaVendorsService  {
     private final String contextValue;
     private final String almaStage;
 
+    /**
+     * Service for vendors.
+     *
+     * @param almaClient almaClient
+     */
     public AlmaVendorsService(AlmaClient almaClient) {
         this.webTarget = almaClient.getWebTarget().path(ACQUISITION_PATH);
         this.context = almaClient.getContext();
@@ -26,11 +31,26 @@ public class AlmaVendorsService  {
         this.almaStage = almaClient.getAlmaStage();
     }
 
+    /**
+     * Search for vendors.
+     * @param q     Query as Strin
+     * @return Vendors
+     */
     public Vendors searchVendor(String q) {
         return retrieveVendors(q, "ACTIVE", "material_supplier", -1, 0);
     }
 
-    
+
+    /**
+     * Retrieve Vendors.
+     *
+     * @param q         Query as String
+     * @param status    Status as String
+     * @param type      Type as String
+     * @param limit     Limit as int
+     * @param offset    Offset as int
+     * @return Vendors
+     */
     public Vendors retrieveVendors(String q, String status, String type, int limit, int offset) {
         WebTarget vendorsTarget = webTarget.path(VENDORS_PATH);
 
@@ -65,7 +85,13 @@ public class AlmaVendorsService  {
                 .invoke(Vendors.class);
     }
 
-    
+
+    /**
+     * Fetch vendor.
+     *
+     * @param vendorIdentifier as String
+     * @return Vendor
+     */
     public Vendor getVendor(String vendorIdentifier) {
         return webTarget
                 .path(VENDORS_PATH)
@@ -76,7 +102,13 @@ public class AlmaVendorsService  {
                 .invoke(Vendor.class);
     }
 
-    
+
+    /**
+     * Post new vendor.
+     *
+     * @param vendor as String
+     * @return Vendor
+     */
     public Vendor postVendor(final Vendor vendor) {
         return webTarget
                 .path(VENDORS_PATH)
@@ -86,7 +118,14 @@ public class AlmaVendorsService  {
                 .invoke(Vendor.class);
     }
 
-    
+
+    /**
+     * Update a vendor.
+     *
+     * @param vendorIdentifier  as String
+     * @param vendor            changed vendor as Vendor
+     * @return Vendor
+     */
     public Vendor updateVendor(String vendorIdentifier, final Vendor vendor) {
         return webTarget
                 .path(VENDORS_PATH)
@@ -97,7 +136,12 @@ public class AlmaVendorsService  {
                 .invoke(Vendor.class);
     }
 
-    
+
+    /**
+     * Delete vendor.
+     *
+     * @param vendorIdentifier as String
+     */
     public void deleteVendor(String vendorIdentifier) {
         webTarget
                 .path(VENDORS_PATH)
