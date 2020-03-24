@@ -212,6 +212,7 @@ class AlmaBibsClientTest {
 
         Representation representation = new Representation();
         representation.setTitle("test");
+        representation.setLabel(TEST_LABEL);
 
         when(bibsInvocation.invoke((Class<Representation>) any())).thenReturn(representation);
 
@@ -257,7 +258,7 @@ class AlmaBibsClientTest {
                 almaBibsService.createRemoteRepresentation(TEST_BARCODE, TEST_LABEL, TEST_ACCESS,
                         TEST_REMOTE_REPOSITORY_ID, TEST_LIBRARY_CODE, TEST_URL, "", "", "",
                         "", "", "");
-        assertEquals("", remotePresentation.getLabel());
+        assertEquals(TEST_LABEL, remotePresentation.getLabel());
 
     }
 

@@ -499,7 +499,11 @@ class AlmaItemsClientTest {
         resultUserRequest = almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true);
         assertEquals(String.format(APPENDED_COMMENT_FORMAT, TEST_COMMENT), resultUserRequest.getComment());
 
-        almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true);
+        try {
+            almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true);
+            fail("When updateCommentOnRequest on non-existing request id should throw exception");
+        } catch (IllegalStateException e) {
+        }
     }
 
     @Test

@@ -352,6 +352,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
                         .filter(enumeration -> enumeration != null && !enumeration.isBlank())
                         .map(enumeration -> enumeration.trim())
                         .collect(Collectors.toList());
+        System.out.println(enumerationList);
 
         List<String> chronologyList =
                 Arrays.asList(new String[] { chronologyI, chronologyJ, chronologyK, chronologyL })
@@ -359,6 +360,8 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
                         .filter(chronology -> chronology != null && !chronology.isBlank())
                         .map(chronology -> chronology.trim())
                         .collect(Collectors.toList());
+
+        System.out.println(chronologyList);
 
         String label = enumerationA != null ? enumerationA.trim() : "";
 
@@ -369,6 +372,8 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
         if (!"".equals(enumerationB)) {
             label = String.format("%s %s", label, String.join(",", enumerationList.toArray(new String[] {})));
         }
+
+        System.out.printf("label: %s%n", label);
 
         return label;
     }
