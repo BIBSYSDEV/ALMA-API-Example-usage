@@ -1,6 +1,6 @@
 package no.unit.alma.commons;
 
-import no.bibsys.alma.rest.error.WebServiceResult;
+import no.unit.alma.generated.error.WebServiceResult;
 
 import java.io.IOException;
 

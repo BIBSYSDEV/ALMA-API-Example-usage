@@ -1,10 +1,10 @@
 package no.unit.alma.bibs;
 
-import no.bibsys.alma.rest.bibs.Bib;
-import no.bibsys.alma.rest.bibs.Bibs;
-import no.bibsys.alma.rest.representations.Representation;
-import no.bibsys.alma.rest.representations.Representations;
-import no.bibsys.alma.rest.user_request.UserRequests;
+import no.unit.alma.generated.bibs.Bib;
+import no.unit.alma.generated.bibs.Bibs;
+import no.unit.alma.generated.representations.Representation;
+import no.unit.alma.generated.representations.Representations;
+import no.unit.alma.generated.userrequests.UserRequests;
 import no.unit.alma.commons.AlmaContext;
 
 public interface AlmaBibsService extends AlmaContext {

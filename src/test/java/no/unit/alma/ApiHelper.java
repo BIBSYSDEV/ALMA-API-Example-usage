@@ -7,15 +7,17 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.JAXBIntrospector;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
 
 import org.junit.jupiter.api.Test;
 
-import no.bibsys.alma.rest.bibs.Bib;
-import no.bibsys.alma.rest.bibs.Bibs;
+import no.unit.alma.generated.bibs.Bib;
+import no.unit.alma.generated.bibs.Bibs;
 
 public class ApiHelper {
 

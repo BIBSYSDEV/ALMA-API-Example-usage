@@ -2,8 +2,8 @@ package no.unit.alma.acquisitions;
 
 import java.io.IOException;
 
-import no.bibsys.alma.rest.vendor.Vendor;
-import no.bibsys.alma.rest.vendor.Vendors;
+import no.unit.alma.generated.vendors.Vendor;
+import no.unit.alma.generated.vendors.Vendors;
 import no.unit.alma.commons.AlmaContext;
 
 public interface AlmaVendorsService extends AlmaContext {

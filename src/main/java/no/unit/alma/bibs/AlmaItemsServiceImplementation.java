@@ -1,25 +1,31 @@
 package no.unit.alma.bibs;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
+import no.unit.alma.generated.items.ObjectFactory;
 import org.apache.commons.lang3.StringUtils;
 
-import no.bibsys.alma.rest.item_loan.ItemLoan;
-import no.bibsys.alma.rest.item_loan.LoanStatus;
-import no.bibsys.alma.rest.items.BibData;
-import no.bibsys.alma.rest.items.HoldingData;
-import no.bibsys.alma.rest.items.Item;
-import no.bibsys.alma.rest.items.ItemData;
-import no.bibsys.alma.rest.representations.Representation;
-import no.bibsys.alma.rest.user_request.PickupLocationTypes;
-import no.bibsys.alma.rest.user_request.RequestTypes;
-import no.bibsys.alma.rest.user_request.UserRequest;
-import no.bibsys.alma.rest.user_request.UserRequests;
+import no.unit.alma.generated.items.BibData;
+import no.unit.alma.generated.items.HoldingData;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.items.ItemData;
+import no.unit.alma.generated.representations.Representation;
+import no.unit.alma.generated.itemloans.ItemLoan;
+import no.unit.alma.generated.itemloans.LoanStatus;
+import no.unit.alma.generated.userrequests.UserRequest;
+import no.unit.alma.generated.userrequests.UserRequests;
+import no.unit.alma.generated.userrequests.RequestTypes;
+import no.unit.alma.generated.userrequests.PickupLocationTypes;
+
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
 
@@ -163,9 +169,12 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
     }
 
     @Override
-    public ItemLoan updateUserLoanAndChangeDueDate(final String userId, final String loanId, final Calendar dueDate) {
+    public ItemLoan updateUserLoanAndChangeDueDate(final String userId, final String loanId, final Calendar dueDate) throws DatatypeConfigurationException {
         final ItemLoan itemLoan = new ItemLoan();
-        itemLoan.setDueDate(dueDate);
+        GregorianCalendar gregory = new GregorianCalendar();
+        gregory.setTime(dueDate.getTime());
+        XMLGregorianCalendar gregorianDueDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregory);
+        itemLoan.setDueDate(gregorianDueDate);
         return usersTarget
                 .path(userId)
                 .path("loans")
@@ -536,7 +545,7 @@ public class AlmaItemsServiceImplementation implements AlmaItemsService {
                 .path(item.getItemData().getPid())
                 .request(MediaType.APPLICATION_XML)
                 .accept(MediaType.APPLICATION_XML)
-                .buildPut(Entity.xml(new no.bibsys.alma.rest.items.ObjectFactory().createItem(item)))
+                .buildPut(Entity.xml(new ObjectFactory().createItem(item)))
                 .invoke(Item.class);
     }
 

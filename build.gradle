@@ -1,3 +1,5 @@
+import org.unbrokendome.gradle.plugins.xjc.XjcGenerate
+
 plugins {
     id 'java'
     id 'checkstyle'
@@ -15,7 +17,8 @@ targetCompatibility = JavaVersion.VERSION_11 // bytecode target version
 
 
 xjc {
-    includeInMainCompilation = false
+    includeInMainCompilation = true
+    includeEpisodeFileInJar = true
 }
 
 sourceSets {
@@ -27,9 +30,76 @@ compileJava {
 }
 
 xjcGenerate {
-    source = fileTree('src/main/xsd') { include '*.url' }
+    urlSources = fileTree('src/main/schema') { include 'webservice_result_xsd.url' }
     outputDirectory = file('src/main/java')
-    targetPackage = 'no.unit.alma.generated'
+    targetPackage = 'no.unit.alma.generated.error'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/webservice_result.episode')
+}
+
+task xjcGenerateBibs(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'bibs_xsd.url' }
+    outputDirectory = file('src/main/java')
+    targetPackage = 'no.unit.alma.generated.bibs'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/bibs.episode')
+}
+
+task xjcGenerateHoldings(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'holdings_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/holdings.episode')
+    targetPackage = 'no.unit.alma.generated.holdings'
+}
+
+task xjcGenerateItems(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'items_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/items.episode')
+    targetPackage = 'no.unit.alma.generated.items'
+}
+
+task xjcGenerateRepresentations(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'representations_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/representations.episode')
+    targetPackage = 'no.unit.alma.generated.representations'
+}
+
+task xjcGenerateUserRequests(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'user_requests_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/user_requests.episode')
+    targetPackage = 'no.unit.alma.generated.userrequests'
+}
+
+task xjcGenerateItemLoans(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'item_loans_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/item_loans.episode')
+    targetPackage = 'no.unit.alma.generated.itemloans'
+}
+
+
+task xjcGenerateVendors(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'vendors_xsd.url' }
+    outputDirectory = file('src/main/java')
+    targetPackage = 'no.unit.alma.generated.vendors'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/vendors.episode')
+}
+
+task xjcGeneratePolines(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'polines_xsd.url' }
+    outputDirectory = file('src/main/java')
+    targetPackage = 'no.unit.alma.generated.polines'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/polines.episode')
 }
 
 
@@ -94,6 +164,7 @@ jacocoTestReport {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude:
                     [
+                    'no/unit/alma/generated/**',
                     'no/bibsys/alma/rest/**',
                     'no/unit/alma/bibs/**',
                     'no/unit/alma/commons/**',
@@ -120,6 +191,7 @@ jacocoTestCoverageVerification {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude:  [
+                    'no/unit/alma/generated/**',
                     'no/bibsys/alma/rest/**',
                     'no/unit/alma/bibs/**',
                     'no/unit/alma/commons/**',

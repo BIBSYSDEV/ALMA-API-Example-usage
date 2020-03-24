@@ -4,9 +4,9 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import no.bibsys.alma.rest.holding.Holding;
-import no.bibsys.alma.rest.holdings.Holdings;
-import no.bibsys.alma.rest.items.Items;
+import no.unit.alma.generated.items.Items;
+import no.unit.alma.generated.holdings.Holding;
+import no.unit.alma.generated.holdings.Holdings;
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
 

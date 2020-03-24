@@ -1,8 +1,9 @@
 package no.unit.alma.bibs;
 
-import no.bibsys.alma.rest.holding.Holding;
-import no.bibsys.alma.rest.holdings.Holdings;
-import no.bibsys.alma.rest.items.Items;
+import no.unit.alma.generated.items.Items;
+import no.unit.alma.generated.holdings.Holding;
+import no.unit.alma.generated.holdings.Holdings;
+
 import no.unit.alma.commons.AlmaContext;
 
 public interface AlmaHoldingsService extends AlmaContext {

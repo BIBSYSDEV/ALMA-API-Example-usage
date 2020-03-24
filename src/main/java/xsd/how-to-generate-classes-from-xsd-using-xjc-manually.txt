@@ -1,6 +1,0 @@
-xjc -d src/main/java -p no.unit.digi.alma.generated.item src/main/resources/alma/xsd/rest_item.xsd
-xjc -d src/main/java -p no.unit.digi.alma.generated.representation src/main/resources/alma/xsd/rest_representation.xsd
-xjc -d src/main/java -p no.unit.digi.alma.generated.bib src/main/resources/alma/xsd/rest_bib.xsd
-xjc -d src/main/java -p no.unit.digi.alma.generated.error src/main/resources/alma/xsd/web_service_result.xsd
-
-Manually add default constructor and @XmlRootElement

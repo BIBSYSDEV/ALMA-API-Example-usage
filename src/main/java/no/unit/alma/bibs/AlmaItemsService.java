@@ -2,13 +2,16 @@ package no.unit.alma.bibs;
 
 import java.util.Calendar;
 
-import no.bibsys.alma.rest.item_loan.ItemLoan;
-import no.bibsys.alma.rest.item_loan.LoanStatus;
-import no.bibsys.alma.rest.items.Item;
-import no.bibsys.alma.rest.representations.Representation;
-import no.bibsys.alma.rest.user_request.UserRequest;
-import no.bibsys.alma.rest.user_request.UserRequests;
+import no.unit.alma.generated.itemloans.ItemLoan;
+import no.unit.alma.generated.itemloans.LoanStatus;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.representations.Representation;
+import no.unit.alma.generated.userrequests.UserRequest;
+import no.unit.alma.generated.userrequests.UserRequests;
+
 import no.unit.alma.commons.AlmaContext;
+
+import javax.xml.datatype.DatatypeConfigurationException;
 
 public interface AlmaItemsService extends AlmaContext {
 
@@ -25,7 +28,7 @@ public interface AlmaItemsService extends AlmaContext {
     ItemLoan createUserLoanOnItem(String barcode, String user_Id, String library, String circulationDesk, float fine,
             LoanStatus loanStatus);
 
-    ItemLoan updateUserLoanAndChangeDueDate(String userId, String loanId, Calendar dueDate);
+    ItemLoan updateUserLoanAndChangeDueDate(String userId, String loanId, Calendar dueDate) throws DatatypeConfigurationException;
 
     UserRequests getRequestsFromItem(Item item, boolean deleted);
 
