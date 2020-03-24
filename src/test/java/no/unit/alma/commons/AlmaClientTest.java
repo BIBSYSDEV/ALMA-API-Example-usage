@@ -49,12 +49,10 @@ class AlmaClientTest {
         when(vaultApiAuthorization.getAlmaHost()).thenReturn(HOST);
 
         when(config.getString(eq("almaServiceContext"))).thenReturn(SERVICE_CONTEXT);
-        when(config.getString(eq(APP))).thenReturn(APP);
         when(config.getString(eq("stage"))).thenReturn(STAGE);
         when(client.property(any(), any())).thenReturn(client);
         when(client.register(any())).thenReturn(client);
         when(client.register(any(AlmaAuthorizationRequestFilter.class), anyInt())).thenReturn(client);
-        when(client.register(any(RequestResponseLogger.class), anyInt())).thenReturn(client);
         when(client.register(any(), anyInt())).thenReturn(client);
         when(client.target(anyString())).thenReturn(webTarget);
 
