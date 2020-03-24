@@ -26,10 +26,7 @@ class AlmaUsersResourceSharingRequestsTest {
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
     private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
-    private static final Integer TOTAL_RECORD_COUNT = 150;
     private static final String TEST_USER_ID = "user id";
-    private static final int LIMIT = 10;
-    private static final int OFFSET = 0;
     private static final String TEST_BARCODE = "barcode";
     private static final String TEST_REQUEST_ID = "request id";
 
