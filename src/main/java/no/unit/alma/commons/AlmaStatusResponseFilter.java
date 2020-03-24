@@ -45,7 +45,7 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
 
     private WebServiceResult unmarshalWebServiceResult(String xmlEntity) {
         if (StringUtils.isEmpty(xmlEntity)) {
-//            log.warn("Xml entity is empty. Skipping");
+            log.warn("Xml entity is empty. Skipping");
             return null;
         }
         try (StringReader reader = new StringReader(xmlEntity)) {
@@ -53,7 +53,7 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             return (WebServiceResult) unmarshaller.unmarshal(reader);
         } catch (JAXBException e) {
-//            log.error("Failed to unmarshal xml entity", e);
+            log.error("Failed to unmarshal xml entity", e);
             return null;
         }
     }

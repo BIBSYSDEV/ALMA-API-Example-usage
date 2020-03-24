@@ -28,7 +28,8 @@ public class ApiAuthorizationService {
         private VaultClient vaultClient;
         private String environment = "dev";
 
-        private ApiAuthorizationServiceBuilder() { }
+        private ApiAuthorizationServiceBuilder() {
+        }
 
         public ApiAuthorizationServiceBuilder vaultClient(VaultClient vaultClient) {
             this.vaultClient = vaultClient;
