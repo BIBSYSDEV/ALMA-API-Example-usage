@@ -370,8 +370,6 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
             label = String.format("%s %s", label, String.join(",", enumerationList.toArray(new String[] {})));
         }
 
-        System.out.printf("label: %S%n", label);
-
         return label;
     }
 
