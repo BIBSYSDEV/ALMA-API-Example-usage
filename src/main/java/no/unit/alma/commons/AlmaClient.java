@@ -17,9 +17,9 @@ public class AlmaClient {
     private final String contextValue;
     private final String almaStage;
 
-    private final static int connectTimeout = 10_000;
-    private final static int readTimeout = 120_000;
-    private final static String context = "bibsysBibKode";
+    private static final int connectTimeout = 10_000;
+    private static final int readTimeout = 120_000;
+    private static final String context = "bibsysBibKode";
 
     /**
      * Alma Client default constructor.
