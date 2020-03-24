@@ -1,5 +1,9 @@
 package no.unit.alma.bibs;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -342,28 +346,31 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
     private String createLabel(String enumerationA, String enumerationB, String enumerationC, String enumerationD,
             String chronologyI, String chronologyJ, String chronologyK, String chronologyL) {
 
-        enumerationA = (enumerationA != null ? enumerationA.trim() : "");
-        enumerationB = (enumerationB != null ? enumerationB.trim() : "");
-        enumerationC = (enumerationC != null ? enumerationC.trim() : "");
-        enumerationD = (enumerationD != null ? enumerationD.trim() : "");
-        chronologyI = (chronologyI != null ? chronologyI.trim() : "");
-        chronologyJ = (chronologyJ != null ? chronologyJ.trim() : "");
-        chronologyK = (chronologyK != null ? chronologyK.trim() : "");
-        chronologyL = (chronologyL != null ? chronologyL.trim() : "");
+        List<String> enumerationList =
+                Arrays.asList(new String[] { enumerationB, enumerationC, enumerationD })
+                        .stream()
+                        .filter(enumeration -> enumeration != null && !enumeration.isBlank())
+                        .map(enumeration -> enumeration.trim())
+                        .collect(Collectors.toList());
+
+        List<String> chronologyList =
+                Arrays.asList(new String[] { chronologyI, chronologyJ, chronologyK, chronologyL })
+                        .stream()
+                        .filter(chronology -> chronology != null && !chronology.isBlank())
+                        .map(chronology -> chronology.trim())
+                        .collect(Collectors.toList());
 
         String label = "" + enumerationA;
 
-        if (!"".equals(chronologyI)) {
-            label +=
-                    "(" + chronologyI + (!"".equals(chronologyJ) ? "," + chronologyJ : "")
-                            + (!"".equals(chronologyK) ? "," + chronologyK : "")
-                            + (!"".equals(chronologyL) ? "," + chronologyL : "") + ")";
+        if (chronologyI != null && !chronologyI.isBlank()) {
+
+            label = String.format("%s(%s)", label, String.join(",", chronologyList.toArray(new String[] {})));
         }
         if (!"".equals(enumerationB)) {
-            label +=
-                    " " + enumerationB + (!"".equals(enumerationC) ? "," + enumerationC : "")
-                            + (!"".equals(enumerationD) ? "," + enumerationD : "");
+            label = String.format("%s %s", label, String.join(",", enumerationList.toArray(new String[] {})));
         }
+
+        System.out.printf("label: #S", label);
 
         return label;
     }
