@@ -351,7 +351,7 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
         chronologyK = (chronologyK != null ? chronologyK.trim() : "");
         chronologyL = (chronologyL != null ? chronologyL.trim() : "");
 
-        String label = enumerationA;
+        String label = "" + enumerationA;
 
         if (!"".equals(chronologyI)) {
             label +=
@@ -363,10 +363,6 @@ public class AlmaBibsServiceImplementation implements AlmaBibsService {
             label +=
                     " " + enumerationB + (!"".equals(enumerationC) ? "," + enumerationC : "")
                             + (!"".equals(enumerationD) ? "," + enumerationD : "");
-        }
-
-        if (label == null) {
-            label = "";
         }
 
         return label;
