@@ -52,7 +52,6 @@ public class AlmaClient {
                 .property(ClientProperties.READ_TIMEOUT, readTimeout)
                 .register(MoxyXmlFeature.class)
                 .register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)
-                .register(new RequestResponseLogger(config.getString("app"), config.getString("stage")), 6000)
                 .register(AlmaStatusResponseFilter.class, Priorities.ENTITY_CODER)
                 .target(buildAlmaUrl(apiAuthorization.getAlmaHost(), config.getString("almaServiceContext")));
         this.almaStage = config.getString("stage");
