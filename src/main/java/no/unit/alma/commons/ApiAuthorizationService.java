@@ -19,7 +19,7 @@ public class ApiAuthorizationService {
         this.environment = environment;
     }
 
-    public VaultApiAuthorization getApiAuthorization(AlmaStage almaStage, String bibsysBibCode) {
+    public VaultApiAuthorization getApiAuthorization(String almaStage, String bibsysBibCode) {
         return new VaultApiAuthorization(vaultClient, environment, almaStage, bibsysBibCode);
     }
 
@@ -28,7 +28,8 @@ public class ApiAuthorizationService {
         private VaultClient vaultClient;
         private String environment = "dev";
 
-        private ApiAuthorizationServiceBuilder() { }
+        private ApiAuthorizationServiceBuilder() {
+        }
 
         public ApiAuthorizationServiceBuilder vaultClient(VaultClient vaultClient) {
             this.vaultClient = vaultClient;
