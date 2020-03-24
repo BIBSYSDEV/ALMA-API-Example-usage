@@ -7,16 +7,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
-public class VaultApiAuthorization implements ApiAuthorization {
+public class VaultApiAuthorization  {
 
-    private static final transient Logger log = LoggerFactory.getLogger(ApiAuthorizationService.class);
+    private static final transient Logger log = LoggerFactory.getLogger(VaultApiAuthorization.class);
 
     private final VaultClient vaultClient;
     private final String environment;
-    private final AlmaStage almaStage;
+    private final String almaStage;
     private final String organization;
 
-    public VaultApiAuthorization(VaultClient vaultClient, String environment, AlmaStage almaStage, String organization) {
+    public VaultApiAuthorization(VaultClient vaultClient, String environment, String almaStage, String organization) {
         Objects.requireNonNull(vaultClient, "Vault client is required");
         if (StringUtils.isEmpty(environment)) {
             throw new NullPointerException("Environment is required");
@@ -40,16 +40,12 @@ public class VaultApiAuthorization implements ApiAuthorization {
         return environment;
     }
 
-    public AlmaStage getAlmaStage() {
+    public String getAlmaStage() {
         return almaStage;
     }
 
-    @Override
-    public final String getOrganization() {
-        return organization;
-    }
+    public String getOrganization() { return organization; }
 
-    @Override
     public String asAPIKey() {
         return "apikey " + getApiKey();
     }
@@ -63,7 +59,7 @@ public class VaultApiAuthorization implements ApiAuthorization {
     }
 
     private String getSecret(String type, String key) {
-        String secretPath = String.format("secret/service/alma/apikey/%s/%s/%s#value", environment, almaStage.getVaultAlmaStageName(), key);
+        String secretPath = String.format("secret/service/alma/apikey/%s/%s/%s#value", environment, almaStage, key);
         log.trace("Vault secret path for Environment '{}', Alma stage '{}', Context '{}', Value '{}': {}", environment, almaStage, type, key, secretPath);
         final String secret = vaultClient.read(secretPath);
         if (secret == null) {
