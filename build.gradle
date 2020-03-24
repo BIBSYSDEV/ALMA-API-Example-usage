@@ -166,8 +166,6 @@ jacocoTestReport {
                     [
                     'no/unit/alma/generated/**',
                     'no/bibsys/alma/rest/**',
-                    'no/unit/alma/bibs/**',
-                    'no/unit/alma/commons/**',
                     'org/w3/_2001/xmlschema/**',
                     ])
             fileTree(dir: it, exclude: 'no/unit/alma/generated/**')
@@ -193,8 +191,6 @@ jacocoTestCoverageVerification {
             fileTree(dir: it, exclude:  [
                     'no/unit/alma/generated/**',
                     'no/bibsys/alma/rest/**',
-                    'no/unit/alma/bibs/**',
-                    'no/unit/alma/commons/**',
                     'org/w3/_2001/xmlschema/**',
             ])
         }))
