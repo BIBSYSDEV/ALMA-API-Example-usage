@@ -117,9 +117,12 @@ class AlmaHoldingsClientTest {
         AlmaHoldingsService almaHoldingsService =
                 new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
 
-        Items resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, 10, 0);
+        long limit = 10;
+        long offset = 0;
+        Items resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, limit, offset);
         assertEquals(TOTAL_RECORD_COUNT, resultItems.getTotalRecordCount());
-        resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, -1, 0);
+        long noLimit = -1;
+        resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, noLimit, offset);
         assertEquals(TOTAL_RECORD_COUNT, resultItems.getTotalRecordCount());
     }
 
