@@ -82,7 +82,7 @@ public class AlmaHoldingsServiceImplementation implements AlmaHoldingsService {
 
         Items items = new Items();
         int offset = 0;
-        final int limit = 10;
+        final int limit = 100;
         Items retrievedItems = getItems(mmsId, holdingsId, limit, offset);
         items.getItem().addAll(retrievedItems.getItem());
 
