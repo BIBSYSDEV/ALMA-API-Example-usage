@@ -5,7 +5,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import no.unit.alma.generated.items.Items;
-import no.unit.alma.generated.holdings.Holding;
+import no.unit.alma.generated.holding.Holding;
 import no.unit.alma.generated.holdings.Holdings;
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
