@@ -253,6 +253,12 @@ class AlmaBibsClientTest {
                         TEST_VOLUME, TEST_ISSUE, TEST_NUMBER);
         assertEquals("test", remotePresentation.getTitle());
 
+        remotePresentation =
+                almaBibsService.createRemoteRepresentation(TEST_BARCODE, TEST_LABEL, TEST_ACCESS,
+                        TEST_REMOTE_REPOSITORY_ID, TEST_LIBRARY_CODE, TEST_URL, "", "", "",
+                        "", "", "");
+        assertEquals("", remotePresentation.getLabel());
+
     }
 
     @Test

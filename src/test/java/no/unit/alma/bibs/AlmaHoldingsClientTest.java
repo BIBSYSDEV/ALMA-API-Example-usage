@@ -119,6 +119,8 @@ class AlmaHoldingsClientTest {
 
         Items resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, 10, 0);
         assertEquals(TOTAL_RECORD_COUNT, resultItems.getTotalRecordCount());
+        resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, -1, 0);
+        assertEquals(TOTAL_RECORD_COUNT, resultItems.getTotalRecordCount());
     }
 
     @Test
