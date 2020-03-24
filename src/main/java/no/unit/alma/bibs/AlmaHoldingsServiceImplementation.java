@@ -56,7 +56,7 @@ public class AlmaHoldingsServiceImplementation implements AlmaHoldingsService {
                 .path(mmsId)
                 .path("holdings")
                 .path(holding.getHoldingId())
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(holding))
                 .invoke(Holding.class);
