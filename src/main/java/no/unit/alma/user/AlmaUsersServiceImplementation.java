@@ -15,14 +15,14 @@ import no.bibsys.alma.rest.user_resource_sharing_request.UserResourceSharingRequ
 import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.commons.AlmaStage;
 
-public class AlmaUsersClient implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequests, AlmaUsersResourceSharingRequests {
+public class AlmaUsersServiceImplementation implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequests, AlmaUsersResourceSharingRequests {
 
     private final WebTarget usersTarget;
     private final String context;
     private final String contextValue;
     private final AlmaStage almaStage;
 
-    public AlmaUsersClient(AlmaClient almaClient) {
+    public AlmaUsersServiceImplementation(AlmaClient almaClient) {
         this.usersTarget = almaClient.getWebTarget().path("users");
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
@@ -58,7 +58,7 @@ public class AlmaUsersClient implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequ
     @Override
     public User postUser(final User user) {
         return usersTarget
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(user))
                 .invoke(User.class);
@@ -68,7 +68,7 @@ public class AlmaUsersClient implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequ
     public User updateUser(String userIdentifier, final User user) {
         return usersTarget
                 .path(userIdentifier)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(user))
                 .invoke(User.class);
@@ -134,7 +134,7 @@ public class AlmaUsersClient implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequ
                 .path(userIdentifer)
                 .path("requests")
                 .queryParam("mms_id", recordIdentifer)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(userRequest))
                 .invoke(UserRequest.class);
@@ -146,7 +146,7 @@ public class AlmaUsersClient implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequ
                 .path(userIdentifer)
                 .path("requests")
                 .queryParam("item_pid", itemId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(userRequest))
                 .invoke(UserRequest.class);
@@ -195,7 +195,7 @@ public class AlmaUsersClient implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequ
         return usersTarget
                 .path(userIdentifier)
                 .path("resource_sharing_requests")
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(userResourceSharingRequest))
                 .invoke(UserResourceSharingRequest.class);
