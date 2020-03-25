@@ -11,13 +11,13 @@ public class ApiAuthorizationService {
     private final transient VaultClient vaultClient;
     private final transient String environment;
 
-    public static ApiAuthorizationServiceBuilder builder() {
-        return new ApiAuthorizationServiceBuilder();
-    }
-
     private ApiAuthorizationService(VaultClient vaultClient, String environment) {
         this.vaultClient = vaultClient;
         this.environment = environment;
+    }
+
+    public static ApiAuthorizationServiceBuilder builder() {
+        return new ApiAuthorizationServiceBuilder();
     }
 
     public VaultApiAuthorization getApiAuthorization(String almaStage, String bibsysBibCode) {

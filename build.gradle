@@ -168,7 +168,7 @@ test {
     finalizedBy jacocoTestReport
 }
 
-pmdMain { exclude 'no/unit/alma/generated/**', 'org/w3/_2001/xmlschema/**' }
+pmdMain { exclude 'no/unit/alma/generated/**' }
 
 pmd {
     ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
