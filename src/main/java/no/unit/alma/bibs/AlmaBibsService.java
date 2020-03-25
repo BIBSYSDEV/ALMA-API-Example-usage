@@ -1,5 +1,15 @@
 package no.unit.alma.bibs;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.lang3.StringUtils;
+
 import no.bibsys.alma.rest.bibs.Bib;
 import no.bibsys.alma.rest.bibs.Bibs;
 import no.bibsys.alma.rest.items.Item;
@@ -8,11 +18,6 @@ import no.bibsys.alma.rest.representations.Representation;
 import no.bibsys.alma.rest.representations.Representations;
 import no.bibsys.alma.rest.user_request.UserRequests;
 import no.unit.alma.commons.AlmaClient;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 
 /**
  * This client implements an integration to the /almaws/v1/bibs
@@ -35,7 +40,6 @@ public class AlmaBibsService {
         this.almaStage = almaClient.getAlmaStage();
     }
 
-    
     public Bib getBib(String identifier, String availParams) {
         WebTarget getBibTarget =
                 bibsTarget
@@ -56,7 +60,7 @@ public class AlmaBibsService {
      * @param mmsId        of the bib record
      * @param collectionId
      */
-    
+
     public void addBibToCollection(String mmsId, String collectionId) {
         final String bibXmlString = String.format("<bib>\n<mms_id>%s</mms_id>\n</bib>\n", mmsId);
         bibsTarget
@@ -78,7 +82,7 @@ public class AlmaBibsService {
      * @return true if record is created that links from IZ to the NZ. Returns false
      *         if linked record already exists.
      */
-    
+
     public Bib createLinkedRecord(String mmsId) {
         return bibsTarget
                 .queryParam("from_nz_mms_id", mmsId)
@@ -88,7 +92,6 @@ public class AlmaBibsService {
                 .invoke(Bib.class);
     }
 
-    
     public Bib updateBib(final Bib bib) {
         return bibsTarget
                 .path(bib.getMmsId())
@@ -98,7 +101,6 @@ public class AlmaBibsService {
                 .invoke(Bib.class);
     }
 
-    
     public UserRequests getRequestsFromBib(String recordIdentifier, boolean deleted) {
         WebTarget userRequestsTarget =
                 bibsTarget
@@ -127,7 +129,6 @@ public class AlmaBibsService {
                 .invoke(Representation.class);
     }
 
-    
     public Representation createRemotePresentation(String barcode, String access, String digitalRepositoryId,
             String url, String libraryCode) {
         final Item item = almaItemsService.getItem(barcode);
@@ -153,7 +154,6 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-    
     public Representation createRemoteRepresentation(String mmsId, String barcode, String access,
             String digitalRepositoryId, String url, String libraryCode) {
         final Representation input = new Representation();
@@ -175,7 +175,6 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-    
     public Representation createRemoteRepresentation(long mmsId, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -207,7 +206,6 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsIdAsString, input);
     }
 
-    
     public Representation createRemoteRepresentation(String barcode, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -240,7 +238,6 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-    
     public Representation createRemoteRepresentation(String barcode, String label, String access,
             String remoteRepositoryId, String libraryCode, String url, String year, String month, String day,
             String volume, String issue, String number) {
@@ -272,7 +269,6 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-    
     public Representations getRemoteRepresentationsFromMmsId(String mmsId, int limit, int offset) {
         return bibsTarget
                 .path(mmsId)
@@ -285,7 +281,6 @@ public class AlmaBibsService {
                 .invoke(Representations.class);
     }
 
-    
     public Representation getSingleRemoteRepresentationFromBarcode(String barcode, String representationId) {
 
         final Item item = almaItemsService.getItem(barcode);
@@ -293,7 +288,6 @@ public class AlmaBibsService {
         return getSingleRemoteRepresentationFromMmsId(mmsId, representationId);
     }
 
-    
     public Representation getSingleRemoteRepresentationFromMmsId(String mmsId, String representationId) {
         return bibsTarget
                 .path(mmsId)
@@ -305,7 +299,6 @@ public class AlmaBibsService {
                 .invoke(Representation.class);
     }
 
-    
     public Bibs retrieveBibs(String mms_id, String ie_id, String holdings_id, String representation_id,
             String nz_mms_id, String view, String expand) {
         return bibsTarget
@@ -322,17 +315,14 @@ public class AlmaBibsService {
                 .invoke(Bibs.class);
     }
 
-    
     public String getContext() {
         return context;
     }
 
-    
     public String getContextValue() {
         return contextValue;
     }
 
-    
     public String getAlmaStage() {
         return almaStage;
     }
@@ -340,31 +330,27 @@ public class AlmaBibsService {
     private String createLabel(String enumerationA, String enumerationB, String enumerationC, String enumerationD,
             String chronologyI, String chronologyJ, String chronologyK, String chronologyL) {
 
-        enumerationA = (enumerationA != null ? enumerationA.trim() : "");
-        enumerationB = (enumerationB != null ? enumerationB.trim() : "");
-        enumerationC = (enumerationC != null ? enumerationC.trim() : "");
-        enumerationD = (enumerationD != null ? enumerationD.trim() : "");
-        chronologyI = (chronologyI != null ? chronologyI.trim() : "");
-        chronologyJ = (chronologyJ != null ? chronologyJ.trim() : "");
-        chronologyK = (chronologyK != null ? chronologyK.trim() : "");
-        chronologyL = (chronologyL != null ? chronologyL.trim() : "");
+        List<String> enumerationList =
+                Arrays.asList(new String[] { enumerationB, enumerationC, enumerationD })
+                        .stream()
+                        .filter(enumeration -> enumeration != null && !enumeration.isBlank())
+                        .map(enumeration -> enumeration.strip())
+                        .collect(Collectors.toList());
 
-        String label = enumerationA;
+        List<String> chronologyList =
+                Arrays.asList(new String[] { chronologyI, chronologyJ, chronologyK, chronologyL })
+                        .stream()
+                        .filter(chronology -> chronology != null && !chronology.isBlank())
+                        .map(chronology -> chronology.strip())
+                        .collect(Collectors.toList());
+
+        String label = enumerationA != null && !enumerationA.isBlank() ? enumerationA : "";
 
         if (!"".equals(chronologyI)) {
-            label +=
-                    "(" + chronologyI + (!"".equals(chronologyJ) ? "," + chronologyJ : "")
-                            + (!"".equals(chronologyK) ? "," + chronologyK : "")
-                            + (!"".equals(chronologyL) ? "," + chronologyL : "") + ")";
+            label = String.format("%s(%s)", label, String.join(label, chronologyList));
         }
         if (!"".equals(enumerationB)) {
-            label +=
-                    " " + enumerationB + (!"".equals(enumerationC) ? "," + enumerationC : "")
-                            + (!"".equals(enumerationD) ? "," + enumerationD : "");
-        }
-
-        if (label == null) {
-            label = "";
+            label = String.format("%s %s", label, String.join(label, enumerationList));
         }
 
         return label;
