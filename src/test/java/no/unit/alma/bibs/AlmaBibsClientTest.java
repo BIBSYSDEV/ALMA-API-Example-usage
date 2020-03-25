@@ -28,7 +28,6 @@ import no.bibsys.alma.rest.representations.Representation;
 import no.bibsys.alma.rest.representations.Representations;
 import no.bibsys.alma.rest.user_request.UserRequests;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaBibsClientTest {
@@ -59,7 +58,7 @@ class AlmaBibsClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
 
     @Mock
     private AlmaClient mockAlmaApiClient;
@@ -105,7 +104,7 @@ class AlmaBibsClientTest {
         tempBib.setTitle("test");
         when(bibsInvocation.invoke((Class<Object>) any())).thenReturn(tempBib);
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
 
         Bib resultBib = almaBibsService.getBib(TEST_MMS_ID, "true");
         assertEquals("test", resultBib.getTitle());
@@ -125,7 +124,7 @@ class AlmaBibsClientTest {
         when(bibsBuilder.buildPut(Entity.xml(bib))).thenReturn(bibsInvocation);
         when(bibsInvocation.invoke((Class<Object>) any())).thenReturn(bib);
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
 
         Bib updatedBib = almaBibsService.updateBib(bib);
         assertEquals("test", updatedBib.getTitle());
@@ -142,7 +141,7 @@ class AlmaBibsClientTest {
         when(bibsBuilder.buildPost(any())).thenReturn(bibsInvocation);
         when(bibsInvocation.invoke()).thenReturn(response);
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
 
         almaBibsService.addBibToCollection(TEST_MMS_ID, TEST_COLLECTION_ID);
     }
@@ -165,7 +164,7 @@ class AlmaBibsClientTest {
         mockGetItem();
 
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
 
         Representation testMmsIdRepresentation =
                 almaBibsService.getSingleRemoteRepresentationFromMmsId(TEST_MMS_ID, REPRESENTATION_ID);
@@ -192,7 +191,7 @@ class AlmaBibsClientTest {
 
         when(bibsInvocation.invoke((Class<Representations>) any())).thenReturn(representations);
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
 
         Representations remoteRepresentations =
                 almaBibsService.getRemoteRepresentationsFromMmsId(TEST_MMS_ID, 10, 0);
@@ -212,13 +211,14 @@ class AlmaBibsClientTest {
 
         Representation representation = new Representation();
         representation.setTitle("test");
+        representation.setLabel(TEST_LABEL);
 
         when(bibsInvocation.invoke((Class<Representation>) any())).thenReturn(representation);
 
         mockGetItem();
 
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
 
         Representation remotePresentation =
                 almaBibsService.createRemotePresentation(TEST_BARCODE, TEST_ACCESS,
@@ -253,6 +253,12 @@ class AlmaBibsClientTest {
                         TEST_VOLUME, TEST_ISSUE, TEST_NUMBER);
         assertEquals("test", remotePresentation.getTitle());
 
+        remotePresentation =
+                almaBibsService.createRemoteRepresentation(TEST_BARCODE, TEST_LABEL, TEST_ACCESS,
+                        TEST_REMOTE_REPOSITORY_ID, TEST_LIBRARY_CODE, TEST_URL, "", "", "",
+                        "", "", "");
+        assertEquals(TEST_LABEL, remotePresentation.getLabel());
+
     }
 
     @Test
@@ -266,7 +272,7 @@ class AlmaBibsClientTest {
         when(bibsBuilder.buildPost(any())).thenReturn(bibsInvocation);
         when(bibsInvocation.invoke((Class<Object>) any())).thenReturn(bib);
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
 
         Bib linkedRecord = almaBibsService.createLinkedRecord(TEST_MMS_ID);
         assertEquals("test", linkedRecord.getTitle());
@@ -288,7 +294,7 @@ class AlmaBibsClientTest {
 
         when(bibsInvocation.invoke((Class<Object>) any())).thenReturn(bibs);
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
         Bibs retrieveBibs =
                 almaBibsService.retrieveBibs(TEST_MMS_ID, TEST_IE_ID, TEST_HOLDING_ID, REPRESENTATION_ID,
                         TEST_NZ_MMS_ID, TEST_VIEW, TEST_EXPAND);
@@ -311,7 +317,7 @@ class AlmaBibsClientTest {
         userRequests.setTotalRecordCount(5);
         when(bibsInvocation.invoke((Class<UserRequests>) any())).thenReturn(userRequests);
 
-        AlmaBibsService almaBibsService = new AlmaBibsServiceImplementation(mockAlmaApiClient);
+        AlmaBibsService almaBibsService = new AlmaBibsService(mockAlmaApiClient);
         UserRequests requestsFromBib = almaBibsService.getRequestsFromBib(TEST_MMS_ID, false);
         assertEquals(5, requestsFromBib.getTotalRecordCount());
 
@@ -324,16 +330,15 @@ class AlmaBibsClientTest {
     void testGetAlmaStage() {
         mockAlmaApi();
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
-        assertEquals(STAGE.getVaultAlmaStageName(), almaBibsService
-                .getAlmaStage().getVaultAlmaStageName());
+                new AlmaBibsService(mockAlmaApiClient);
+        assertEquals(STAGE, almaBibsService.getAlmaStage());
     }
 
     @Test
     void testGetContext() {
         mockAlmaApi();
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
         assertEquals(CONTEXT, almaBibsService.getContext());
     }
 
@@ -341,7 +346,7 @@ class AlmaBibsClientTest {
     void testGetContextValue() {
         mockAlmaApi();
         AlmaBibsService almaBibsService =
-                new AlmaBibsServiceImplementation(mockAlmaApiClient);
+                new AlmaBibsService(mockAlmaApiClient);
         assertEquals(CONTEXT_VALUE, almaBibsService.getContextValue());
     }
 

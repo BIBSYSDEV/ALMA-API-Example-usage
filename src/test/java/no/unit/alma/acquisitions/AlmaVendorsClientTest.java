@@ -19,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.bibsys.alma.rest.vendor.Vendor;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaVendorsServiceTest {
@@ -27,7 +26,7 @@ class AlmaVendorsServiceTest {
     private static final String TEST_ID = "123456";
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
 
     @Mock
     private AlmaClient mockAlmaApiClient;
@@ -52,9 +51,9 @@ class AlmaVendorsServiceTest {
         tempVendor.setCode("test");
         when(invocation.invoke((Class<Object>) any())).thenReturn(tempVendor);
 
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        Vendor resultVendor = almaVendorsServiceImplementation.getVendor(TEST_ID);
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        Vendor resultVendor = almaVendorsService.getVendor(TEST_ID);
         assertEquals(tempVendor.getCode(), resultVendor.getCode());
     }
 
@@ -70,9 +69,9 @@ class AlmaVendorsServiceTest {
         doNothing().when(response).close();
 
 
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        almaVendorsServiceImplementation.deleteVendor(TEST_ID);
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        almaVendorsService.deleteVendor(TEST_ID);
     }
 
 
@@ -89,9 +88,9 @@ class AlmaVendorsServiceTest {
         when(builder.buildPost(Entity.xml(vendor))).thenReturn(invocation);
         when(invocation.invoke((Class<Object>) any())).thenReturn(vendor);
 
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        Vendor resultVendor = almaVendorsServiceImplementation.postVendor(vendor);
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        Vendor resultVendor = almaVendorsService.postVendor(vendor);
         assertEquals(vendor.getCode(), resultVendor.getCode());
 
     }
@@ -109,9 +108,9 @@ class AlmaVendorsServiceTest {
         when(builder.buildPut(Entity.xml(vendor))).thenReturn(invocation);
         when(invocation.invoke((Class<Object>) any())).thenReturn(vendor);
 
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        Vendor resultVendor = almaVendorsServiceImplementation.updateVendor(TEST_ID, vendor);
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        Vendor resultVendor = almaVendorsService.updateVendor(TEST_ID, vendor);
         assertEquals(vendor.getCode(), resultVendor.getCode());
     }
     @Test
@@ -134,9 +133,9 @@ class AlmaVendorsServiceTest {
         when(builder.buildGet()).thenReturn(invocation);
         when(invocation.invoke((Class<Object>) any())).thenReturn(vendors);
 
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        Vendors resultVendors = almaVendorsServiceImplementation.retrieveVendors(EMPTY_QUERY_STRING, STATUS, TYPE, LIMIT, OFFSET);
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        Vendors resultVendors = almaVendorsService.retrieveVendors(EMPTY_QUERY_STRING, STATUS, TYPE, LIMIT, OFFSET);
         assertEquals(vendors.getTotalRecordCount(), resultVendors.getTotalRecordCount());
     }
     @Test
@@ -158,9 +157,9 @@ class AlmaVendorsServiceTest {
         when(builder.buildGet()).thenReturn(invocation);
         when(invocation.invoke((Class<Object>) any())).thenReturn(vendors);
 
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        Vendors resultVendors = almaVendorsServiceImplementation.retrieveVendors(EMPTY_QUERY_STRING, EMPTY_STATUS, TYPE, LIMIT, OFFSET);
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        Vendors resultVendors = almaVendorsService.retrieveVendors(EMPTY_QUERY_STRING, EMPTY_STATUS, TYPE, LIMIT, OFFSET);
         assertEquals(vendors.getTotalRecordCount(), resultVendors.getTotalRecordCount());
     }
 
@@ -181,9 +180,9 @@ class AlmaVendorsServiceTest {
         when(builder.buildGet()).thenReturn(invocation);
         when(invocation.invoke((Class<Object>) any())).thenReturn(vendors);
 
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        Vendors resultVendors = almaVendorsServiceImplementation.searchVendor(QUERY_STRING);
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        Vendors resultVendors = almaVendorsService.searchVendor(QUERY_STRING);
         assertEquals(vendors.getTotalRecordCount(), resultVendors.getTotalRecordCount());
     }
 
@@ -191,27 +190,27 @@ class AlmaVendorsServiceTest {
     @Test
     void testGetAlmaStage() {
         mockAlmaApi();
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        assertEquals(STAGE.getVaultAlmaStageName(), almaVendorsServiceImplementation
-                .getAlmaStage().getVaultAlmaStageName());
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        assertEquals(STAGE, almaVendorsService
+                .getAlmaStage());
     }
 
     @Test
     void testGetContext() {
         mockAlmaApi();
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        assertEquals(CONTEXT, almaVendorsServiceImplementation.getContext());
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        assertEquals(CONTEXT, almaVendorsService.getContext());
     }
 
     @Test
     void testGetContextValue() {
         mockAlmaApi();
-        AlmaVendorsServiceImplementation almaVendorsServiceImplementation =
-                new AlmaVendorsServiceImplementation(mockAlmaApiClient);
-        AlmaStage result = almaVendorsServiceImplementation.getAlmaStage();
-        assertEquals(CONTEXT_VALUE, almaVendorsServiceImplementation.getContextValue());
+        AlmaVendorsService almaVendorsService =
+                new AlmaVendorsService(mockAlmaApiClient);
+        String result = almaVendorsService.getAlmaStage();
+        assertEquals(CONTEXT_VALUE, almaVendorsService.getContextValue());
     }
 
 

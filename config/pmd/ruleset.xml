@@ -9,8 +9,6 @@
   </description>
   <exclude-pattern>.*/test/.*</exclude-pattern>
   <exclude-pattern>.*/no/bibsys/alma/rest/.*</exclude-pattern>
-  <exclude-pattern>.*/no/unit/alma/bibs/.*</exclude-pattern>
-  <exclude-pattern>.*/no/unit/alma/commons/.*</exclude-pattern>
   <exclude-pattern>.*/org/w3/_2001/xmlschema/.*</exclude-pattern>
 
   <rule ref="category/java/errorprone.xml">

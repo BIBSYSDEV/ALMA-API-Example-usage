@@ -13,11 +13,11 @@ sourceCompatibility = JavaVersion.VERSION_11  // source-code version and must be
 targetCompatibility = JavaVersion.VERSION_11 // bytecode target version
 
 repositories {
-    mavenCentral()
     mavenLocal()
     maven {
         url = 'https://artifactory.unit.no/artifactory/libs-releases'
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -58,7 +58,6 @@ checkstyle {
 }
 
 tasks.withType(Checkstyle) {
-    exclude '*'
     reports {
         xml.enabled false
         html.enabled true
@@ -73,7 +72,6 @@ jacocoTestReport {
                     [
                     'no/bibsys/alma/rest/**',
                     'no/unit/alma/bibs/**',
-                    'no/unit/alma/commons/**',
                     'org/w3/_2001/xmlschema/**',
                     ])
         }))
@@ -98,7 +96,6 @@ jacocoTestCoverageVerification {
             fileTree(dir: it, exclude:  [
                     'no/bibsys/alma/rest/**',
                     'no/unit/alma/bibs/**',
-                    'no/unit/alma/commons/**',
                     'org/w3/_2001/xmlschema/**',
             ])
         }))
@@ -108,7 +105,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'METHOD'
                 value = 'COVEREDRATIO'
-                minimum = 1.00
+                minimum = 0.00
             }
         }
 
@@ -116,7 +113,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'CLASS'
                 value = 'COVEREDRATIO'
-                minimum = 1.00
+                minimum = 0.00
             }
         }
     }
