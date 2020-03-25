@@ -75,6 +75,30 @@ public class AlmaHoldingsService {
                 .invoke(Items.class);
     }
 
+    public Items getAllItems(String mmsId, String holdingsId) {
+
+        Items items = new Items();
+        int offset = 0;
+        final int limit = 100;
+        Items retrievedItems = getItems(mmsId, holdingsId, limit, offset);
+        items.getItem().addAll(retrievedItems.getItem());
+
+        int total = retrievedItems.getTotalRecordCount();
+        boolean finished = limit + offset >= total;
+
+        while (!finished) {
+            offset = offset + limit;
+
+            retrievedItems = getItems(mmsId, holdingsId, limit, offset);
+            items.getItem().addAll(retrievedItems.getItem());
+
+            finished = limit + offset > total;
+        }
+
+        items.setTotalRecordCount(total);
+        return items;
+    }
+
     public String getContext() {
         return context;
     }
