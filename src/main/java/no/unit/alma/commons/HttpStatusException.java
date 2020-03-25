@@ -12,10 +12,16 @@ public class HttpStatusException extends IOException {
     private transient String responseBody;
     private transient WebServiceResult webServiceResult;
 
-    public HttpStatusException(int status, String statusText, String method, String url, String responseBody) {
-        this(status, statusText, method, url, responseBody, null);
-    }
-
+    /**
+     * HttpStatusException wraps alma responses in an exception.
+     *
+     * @param status            Status as int
+     * @param statusText        Status as String
+     * @param method            method as String
+     * @param url               url as String
+     * @param responseBody      responseBody as String
+     * @param webServiceResult  Result as WebServiceResult
+     */
     public HttpStatusException(int status, String statusText, String method, String url, String responseBody,
             WebServiceResult webServiceResult) {
         super(status + " " + statusText + " " + method + " " + url);
