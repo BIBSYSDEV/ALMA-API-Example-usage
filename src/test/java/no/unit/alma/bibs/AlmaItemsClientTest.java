@@ -131,7 +131,7 @@ class AlmaItemsClientTest {
     @Test
     void testCreateItem() {
         when(webTarget.path(any())).thenReturn(webTarget);
-        when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
 
         Item tempItem = new Item();
@@ -150,7 +150,7 @@ class AlmaItemsClientTest {
     @Test
     void testUpdateItem() {
         when(webTarget.path(any())).thenReturn(webTarget);
-        when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
 
         Item tempItem = createTestItem();
@@ -171,6 +171,7 @@ class AlmaItemsClientTest {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
 
         Item tempItem = createTestItem();
@@ -225,7 +226,7 @@ class AlmaItemsClientTest {
     @Test
     void testUpdateUserLoanAndChangeDueDate() throws DatatypeConfigurationException {
         when(webTarget.path(any())).thenReturn(webTarget);
-        when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
 
         when(builder.buildPut(any())).thenReturn(invocation);
@@ -279,10 +280,11 @@ class AlmaItemsClientTest {
     }
 
     @Test
-    void testCreatePatronRequst() {
+    void testCreatePatronRequest() {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildPost(any())).thenReturn(invocation);
         when(builder.buildGet()).thenReturn(getInvocation);
@@ -372,6 +374,7 @@ class AlmaItemsClientTest {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildPost(any())).thenReturn(invocation);
         when(builder.buildGet()).thenReturn(getInvocation);
@@ -470,6 +473,7 @@ class AlmaItemsClientTest {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildPut(any())).thenReturn(invocation);
         when(builder.buildGet()).thenReturn(getInvocation);
@@ -513,6 +517,7 @@ class AlmaItemsClientTest {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildPost(any())).thenReturn(invocation);
         when(builder.buildGet()).thenReturn(getInvocation);
@@ -537,6 +542,7 @@ class AlmaItemsClientTest {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildPost(any())).thenReturn(invocation);
         when(builder.buildGet()).thenReturn(getInvocation);
@@ -560,7 +566,7 @@ class AlmaItemsClientTest {
         String TEST_REPRESENTATION_ID = "representation id";
 
         when(webTarget.path(any())).thenReturn(webTarget);
-        when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildPut(any())).thenReturn(invocation);
 
@@ -578,7 +584,7 @@ class AlmaItemsClientTest {
     @Test
     void testUpdateItemDescription() {
         when(webTarget.path(any())).thenReturn(webTarget);
-        when(webTarget.request()).thenReturn(builder);
+        when(webTarget.request(anyString())).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildPut(any())).thenReturn(invocation);
 
