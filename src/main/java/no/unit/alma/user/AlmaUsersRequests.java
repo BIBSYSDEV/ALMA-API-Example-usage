@@ -1,7 +1,7 @@
 package no.unit.alma.user;
 
-import no.bibsys.alma.rest.user_request.UserRequest;
-import no.bibsys.alma.rest.user_request.UserRequests;
+import no.unit.alma.generated.userrequests.UserRequest;
+import no.unit.alma.generated.userrequests.UserRequests;
 
 public interface AlmaUsersRequests {
     UserRequest postUserRequest(String userIdentifer, String recordIdentifer, UserRequest userRequest);

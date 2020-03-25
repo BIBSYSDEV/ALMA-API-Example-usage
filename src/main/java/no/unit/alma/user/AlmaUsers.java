@@ -1,7 +1,7 @@
 package no.unit.alma.user;
 
-import no.bibsys.alma.rest.user.User;
-import no.bibsys.alma.rest.user.Users;
+import no.unit.alma.generated.users.User;
+import no.unit.alma.generated.users.Users;
 
 public interface AlmaUsers {
 

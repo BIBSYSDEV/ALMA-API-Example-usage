@@ -1,6 +1,6 @@
 package no.unit.alma.user;
 
-import no.bibsys.alma.rest.item_loan.ItemLoans;
+import no.unit.alma.generated.itemloans.ItemLoans;
 
 public interface AlmaUsersLoans {
 

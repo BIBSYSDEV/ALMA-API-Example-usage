@@ -85,6 +85,22 @@ task xjcGenerateUserRequests(type: XjcGenerate) {
     targetPackage = 'no.unit.alma.generated.userrequests'
 }
 
+task xjcGenerateUsers(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'users_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/users.episode')
+    targetPackage = 'no.unit.alma.generated.users'
+}
+
+task xjcGenerateUserResourceSharingRequest(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'users_resource_sharing_request_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/userrequests.episode')
+    targetPackage = 'no.unit.alma.generated.userrequests'
+}
+
 task xjcGenerateItemLoans(type: XjcGenerate) {
     urlSources = fileTree('src/main/schema') { include 'item_loans_xsd.url' }
     outputDirectory = file('src/main/java')
@@ -204,7 +220,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'METHOD'
                 value = 'COVEREDRATIO'
-                minimum = 0.66
+                minimum = 0.73
             }
         }
 
@@ -212,7 +228,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'CLASS'
                 value = 'COVEREDRATIO'
-                minimum = 0.66
+                minimum = 0.69
             }
         }
     }

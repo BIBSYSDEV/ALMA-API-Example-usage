@@ -21,10 +21,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.unit.alma.generated.holding.Holding;
 import no.unit.alma.generated.holdings.Holdings;
-import no.bibsys.alma.rest.items.BibData;
-import no.bibsys.alma.rest.items.HoldingData;
-import no.bibsys.alma.rest.items.Item;
-import no.bibsys.alma.rest.items.ItemData;
+import no.unit.alma.generated.items.BibData;
+import no.unit.alma.generated.items.HoldingData;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.items.ItemData;
 import no.unit.alma.generated.items.Items;
 import no.unit.alma.commons.AlmaClient;
 
@@ -86,7 +86,7 @@ class AlmaHoldingsClientTest {
         AlmaHoldingsService almaHoldingsService =
                 new AlmaHoldingsService(mockAlmaApiClient);
 
-        no.unit.alma.generated.holding.Holding resultHolding = almaHoldingsService.getHolding(TEST_MMS_ID, TEST_HOLDING_ID);
+        Holding resultHolding = almaHoldingsService.getHolding(TEST_MMS_ID, TEST_HOLDING_ID);
         assertEquals(TEST_ORIGINATING_SYSTEM, resultHolding.getOriginatingSystem());
     }
 
