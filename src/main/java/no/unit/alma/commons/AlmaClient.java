@@ -48,8 +48,7 @@ public class AlmaClient {
      * @param bibCode       An instituition bibCode
      */
     public AlmaClient(Client client, Config config, VaultClient vaultClient, String bibCode) {
-        this(client,
-                config,
+        this(client, config,
                 ApiAuthorizationService.builder()
                         .vaultClient(vaultClient)
                         .environment(config.getString("environment"))
