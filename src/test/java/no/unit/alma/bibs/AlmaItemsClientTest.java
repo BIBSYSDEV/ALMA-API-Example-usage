@@ -31,14 +31,13 @@ import no.bibsys.alma.rest.user_request.UserRequest;
 import no.bibsys.alma.rest.user_request.UserRequest.TargetDestination;
 import no.bibsys.alma.rest.user_request.UserRequests;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaItemsClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
     private static final Integer TOTAL_RECORD_COUNT = 1;
     private static final String TEST_MMS_ID = "mms id";
     private static final String TEST_HOLDINGS_ID = "holdings id";
@@ -101,7 +100,7 @@ class AlmaItemsClientTest {
 
         when(invocation.invoke(Item.class)).thenReturn(tempItem);
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         Item resultItem = almaItemsService.getItem(TEST_MMS_ID, TEST_HOLDINGS_ID, TEST_ITEMS_ID);
         assertEquals(TEST_LINK, resultItem.getLink());
@@ -121,7 +120,7 @@ class AlmaItemsClientTest {
 
         when(invocation.invoke(Item.class)).thenReturn(tempItem);
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         Item resultItem = almaItemsService.getItem(TEST_BARCODE);
         assertEquals(TEST_LINK, resultItem.getLink());
@@ -140,7 +139,7 @@ class AlmaItemsClientTest {
 
         when(invocation.invoke(Item.class)).thenReturn(tempItem);
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         Item resultItem = almaItemsService.createItem(TEST_MMS_ID, TEST_HOLDINGS_ID);
         assertEquals(TEST_LINK, resultItem.getLink());
@@ -159,7 +158,7 @@ class AlmaItemsClientTest {
 
         when(invocation.invoke(Item.class)).thenReturn(tempItem);
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         Item resultItem = almaItemsService.updateItem(tempItem);
         assertEquals(TEST_LINK, resultItem.getLink());
@@ -193,7 +192,7 @@ class AlmaItemsClientTest {
         when(getInvocation.invoke(Item.class)).thenReturn(tempItem, tempItem, testItemNoBibData, testItemNoHoldingData,
                 testItemNoItemData);
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         ItemLoan resultItemLoan =
                 almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK);
@@ -235,7 +234,7 @@ class AlmaItemsClientTest {
 
         when(invocation.invoke((Class<Object>) any())).thenReturn(tempItemLoan);
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         ItemLoan resultItemLoan =
                 almaItemsService.updateUserLoanAndChangeDueDate(TEST_USER_ID, TEST_LOAN_ID, TEST_DUE_DATE);
@@ -258,7 +257,7 @@ class AlmaItemsClientTest {
         Item testGetItem = createTestItem();
         when(invocation.invoke(Item.class)).thenReturn(testGetItem);
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         UserRequests resultUserRequests =
                 almaItemsService.getRequestsFromItem(TEST_MMS_ID, TEST_HOLDINGS_ID, TEST_ITEMS_ID, true);
@@ -299,7 +298,7 @@ class AlmaItemsClientTest {
 
         when(getInvocation.invoke(Item.class)).thenReturn(testGetItem, testItemNoItemData);
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         Item tempItem = createTestItem();
         UserRequest resultPatronRequest =
@@ -381,7 +380,7 @@ class AlmaItemsClientTest {
         when(invocation.invoke(UserRequest.class)).thenReturn(tempUserRequest);
 
         AlmaItemsService almaItemsService =
-                new AlmaItemsServiceImplementation(mockAlmaApiClient);
+                new AlmaItemsService(mockAlmaApiClient);
 
         Item testItem = createTestItem();
         UserRequest resultUserRequest =
@@ -438,7 +437,7 @@ class AlmaItemsClientTest {
         Item testItem = createTestItem();
         when(getInvocation.invoke(Item.class)).thenReturn(testItem);
 
-        AlmaItemsService almaItemsService = new AlmaItemsServiceImplementation(mockAlmaApiClient);
+        AlmaItemsService almaItemsService = new AlmaItemsService(mockAlmaApiClient);
         almaItemsService.deleteItem(TEST_BARCODE, false, HoldingsRecord.DELETE);
         almaItemsService.deleteItem(TEST_BARCODE, true, HoldingsRecord.DELETE);
         almaItemsService.deleteItem(TEST_MMS_ID, TEST_HOLDINGS_ID, TEST_ITEMS_ID, false, HoldingsRecord.DELETE);
@@ -457,7 +456,7 @@ class AlmaItemsClientTest {
 
         Item testItem = createTestItem();
         when(getInvocation.invoke(Item.class)).thenReturn(testItem);
-        AlmaItemsService almaItemsService = new AlmaItemsServiceImplementation(mockAlmaApiClient);
+        AlmaItemsService almaItemsService = new AlmaItemsService(mockAlmaApiClient);
         almaItemsService.deleteRequest(TEST_BARCODE, TEST_REQUEST_ID);
         almaItemsService.deleteRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_NOTE);
     }
@@ -490,7 +489,7 @@ class AlmaItemsClientTest {
         Item testItem = createTestItem();
         when(getInvocation.invoke(Item.class)).thenReturn(testItem);
 
-        AlmaItemsService almaItemsService = new AlmaItemsServiceImplementation(mockAlmaApiClient);
+        AlmaItemsService almaItemsService = new AlmaItemsService(mockAlmaApiClient);
 
         UserRequest resultUserRequest =
                 almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, false);
@@ -524,7 +523,7 @@ class AlmaItemsClientTest {
         tempUserRequest.setBarcode(TEST_BARCODE);
         when(invocation.invoke(UserRequest.class)).thenReturn(tempUserRequest);
 
-        AlmaItemsService almaItemsService = new AlmaItemsServiceImplementation(mockAlmaApiClient);
+        AlmaItemsService almaItemsService = new AlmaItemsService(mockAlmaApiClient);
         UserRequest resultUserRequest =
                 almaItemsService.actionOnRequest(TEST_BARCODE, TEST_ACTION, TEST_REQUEST_ID, false);
         assertEquals(TEST_BARCODE, resultUserRequest.getBarcode());
@@ -545,7 +544,7 @@ class AlmaItemsClientTest {
         when(getInvocation.invoke(Item.class)).thenReturn(testItem);
         when(invocation.invoke(Item.class)).thenReturn(testItem);
 
-        AlmaItemsService almaItemsService = new AlmaItemsServiceImplementation(mockAlmaApiClient);
+        AlmaItemsService almaItemsService = new AlmaItemsService(mockAlmaApiClient);
         Item resultItem = almaItemsService.scanInItem(TEST_BARCODE, TEST_CIRCULATION_DESK, TEST_LIBRARY);
         assertEquals(TEST_ITEMS_ID, resultItem.getItemData().getPid());
         resultItem =
@@ -568,7 +567,7 @@ class AlmaItemsClientTest {
         tempRepresentation.setLabel(TEST_LABEL);
         when(invocation.invoke(Representation.class)).thenReturn(tempRepresentation);
 
-        AlmaItemsService almaItemsService = new AlmaItemsServiceImplementation(mockAlmaApiClient);
+        AlmaItemsService almaItemsService = new AlmaItemsService(mockAlmaApiClient);
         Representation resultRepresentation =
                 almaItemsService.updateRemoteDigitalItem(TEST_MMS_ID, TEST_REPRESENTATION_ID, tempRepresentation);
         assertEquals(TEST_LABEL, resultRepresentation.getLabel());
@@ -586,7 +585,7 @@ class AlmaItemsClientTest {
         tempItem.getItemData().setBarcode(TEST_BARCODE);
         when(invocation.invoke(Item.class)).thenReturn(tempItem);
 
-        AlmaItemsService almaItemsService = new AlmaItemsServiceImplementation(mockAlmaApiClient);
+        AlmaItemsService almaItemsService = new AlmaItemsService(mockAlmaApiClient);
         Item resultItem = almaItemsService.updateItemDescription(tempItem);
         assertEquals(TEST_BARCODE, resultItem.getItemData().getBarcode());
     }
@@ -594,22 +593,22 @@ class AlmaItemsClientTest {
     @Test
     void testGetAlmaStage() {
         AlmaHoldingsService almaBibsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
-        assertEquals(STAGE.getVaultAlmaStageName(), almaBibsService
-                .getAlmaStage().getVaultAlmaStageName());
+                new AlmaHoldingsService(mockAlmaApiClient);
+        assertEquals(STAGE, almaBibsService
+                .getAlmaStage());
     }
 
     @Test
     void testGetContext() {
         AlmaHoldingsService almaBibsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+                new AlmaHoldingsService(mockAlmaApiClient);
         assertEquals(CONTEXT, almaBibsService.getContext());
     }
 
     @Test
     void testGetContextValue() {
         AlmaHoldingsService almaBibsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+                new AlmaHoldingsService(mockAlmaApiClient);
         assertEquals(CONTEXT_VALUE, almaBibsService.getContextValue());
     }
 
