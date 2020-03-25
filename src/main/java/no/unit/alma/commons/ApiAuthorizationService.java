@@ -1,14 +1,15 @@
 package no.unit.alma.commons;
 
-import no.bibsys.vault.VaultClient;
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Objects;
+import no.bibsys.vault.VaultClient;
 
 public class ApiAuthorizationService {
 
-    private final VaultClient vaultClient;
-    private final String environment;
+    private final transient VaultClient vaultClient;
+    private final transient String environment;
 
     public static ApiAuthorizationServiceBuilder builder() {
         return new ApiAuthorizationServiceBuilder();
@@ -19,33 +20,34 @@ public class ApiAuthorizationService {
         this.environment = environment;
     }
 
-    public VaultApiAuthorization getApiAuthorization(AlmaStage almaStage, String bibsysBibCode) {
+    public VaultApiAuthorization getApiAuthorization(String almaStage, String bibsysBibCode) {
         return new VaultApiAuthorization(vaultClient, environment, almaStage, bibsysBibCode);
     }
 
     public static class ApiAuthorizationServiceBuilder {
 
-        private VaultClient vaultClient;
-        private String environment = "dev";
+        private transient VaultClient builderVaultClient;
+        private transient String builderEnvironment = "dev";
 
-        private ApiAuthorizationServiceBuilder() { }
+        private ApiAuthorizationServiceBuilder() {
+        }
 
         public ApiAuthorizationServiceBuilder vaultClient(VaultClient vaultClient) {
-            this.vaultClient = vaultClient;
+            this.builderVaultClient = vaultClient;
             return this;
         }
 
         public ApiAuthorizationServiceBuilder environment(String environment) {
-            this.environment = environment;
+            this.builderEnvironment = environment;
             return this;
         }
 
         public ApiAuthorizationService build() {
-            Objects.requireNonNull(vaultClient, "VaultClient cannot be null");
-            if (StringUtils.isEmpty(environment)) {
+            Objects.requireNonNull(builderVaultClient, "VaultClient cannot be null");
+            if (StringUtils.isEmpty(builderEnvironment)) {
                 throw new IllegalArgumentException("Environment is required. eg. dev");
             }
-            return new ApiAuthorizationService(vaultClient, environment);
+            return new ApiAuthorizationService(builderVaultClient, builderEnvironment);
         }
     }
 }

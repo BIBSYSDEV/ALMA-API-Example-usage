@@ -1,55 +1,53 @@
 package no.unit.alma.commons;
 
-import no.bibsys.vault.VaultClient;
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
+import no.bibsys.vault.VaultClient;
 
-public class VaultApiAuthorization implements ApiAuthorization {
+public class VaultApiAuthorization {
 
-    private static final transient Logger log = LoggerFactory.getLogger(ApiAuthorizationService.class);
+    private static final transient Logger log = LoggerFactory.getLogger(VaultApiAuthorization.class);
 
-    private final VaultClient vaultClient;
+    private final transient VaultClient vaultClient;
     private final String environment;
-    private final AlmaStage almaStage;
+    private final String almaStage;
     private final String organization;
 
-    public VaultApiAuthorization(VaultClient vaultClient, String environment, AlmaStage almaStage, String organization) {
+    public VaultApiAuthorization(VaultClient vaultClient, String environment, String almaStage, String organization) {
         Objects.requireNonNull(vaultClient, "Vault client is required");
         if (StringUtils.isEmpty(environment)) {
-            throw new NullPointerException("Environment is required");
+            throw new RuntimeException("Environment is required");
         }
         if (StringUtils.isEmpty(organization)) {
-            throw new NullPointerException("Organization is required");
+            throw new RuntimeException("Organization is required");
         }
         Objects.requireNonNull(almaStage, "Alma stage is required");
         this.vaultClient = vaultClient;
         this.environment = environment;
         this.almaStage = almaStage;
         this.organization = organization;
-        //make sure that we can retrieve the almaHost or fail fast
-        getAlmaHost();
-        //make sure that we can retrieve the apikey or fail fast
-        getApiKey();
+        // make sure that we can retrieve the almaHost or fail fast
+        getSecret("almaHost", "host");
+        // make sure that we can retrieve the apikey or fail fast
+        getSecret("apiKey", organization);
     }
-
 
     public String getEnvironment() {
         return environment;
     }
 
-    public AlmaStage getAlmaStage() {
+    public String getAlmaStage() {
         return almaStage;
     }
 
-    @Override
-    public final String getOrganization() {
+    public String getOrganization() {
         return organization;
     }
 
-    @Override
     public String asAPIKey() {
         return "apikey " + getApiKey();
     }
@@ -63,27 +61,34 @@ public class VaultApiAuthorization implements ApiAuthorization {
     }
 
     private String getSecret(String type, String key) {
-        String secretPath = String.format("secret/service/alma/apikey/%s/%s/%s#value", environment, almaStage.getVaultAlmaStageName(), key);
-        log.trace("Vault secret path for Environment '{}', Alma stage '{}', Context '{}', Value '{}': {}", environment, almaStage, type, key, secretPath);
+        String secretPath = String.format("secret/service/alma/apikey/%s/%s/%s#value", environment, almaStage, key);
+        log.trace("Vault secret path for Environment '{}', Alma stage '{}', Context '{}', Value '{}': {}", environment,
+                almaStage, type, key, secretPath);
         final String secret = vaultClient.read(secretPath);
         if (secret == null) {
-            throw new NullPointerException(String.format("Unable to retrieve AlmaContext secret. Environment: '%s', Alma stage: '%s', AlmaContext: '%s', Value: '%s'",
-                environment, almaStage, type, key));
+            throw new RuntimeException(String.format(
+                    "Unable to retrieve AlmaContext secret. Environment: '%s', Alma stage: '%s', AlmaContext: '%s', Value: '%s'",
+                    environment, almaStage, type, key));
         }
-        log.debug("AlmaContext secret found for Environment '{}', Alma stage '{}', Context '{}', Value '{}'", environment, almaStage, type, key);
+        log.debug("AlmaContext secret found for Environment '{}', Alma stage '{}', Context '{}', Value '{}'",
+                environment, almaStage, type, key);
         return secret;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         VaultApiAuthorization that = (VaultApiAuthorization) o;
         return Objects.equals(organization, that.organization) &&
-            Objects.equals(environment, that.environment) &&
-            almaStage == that.almaStage &&
-            Objects.equals(getAlmaHost(), that.getAlmaHost()) &&
-            Objects.equals(getApiKey(), that.getApiKey());
+                Objects.equals(environment, that.environment) &&
+                almaStage == that.almaStage &&
+                Objects.equals(getAlmaHost(), that.getAlmaHost()) &&
+                Objects.equals(getApiKey(), that.getApiKey());
     }
 
     @Override
@@ -94,9 +99,9 @@ public class VaultApiAuthorization implements ApiAuthorization {
     @Override
     public String toString() {
         return "ApiAuthorization{" +
-            "environment='" + environment + '\'' +
-            ", almaStage=" + almaStage +
-            ", organization='" + organization + '\'' +
-            '}';
+                "environment='" + environment + '\'' +
+                ", almaStage=" + almaStage +
+                ", organization='" + organization + '\'' +
+                '}';
     }
 }

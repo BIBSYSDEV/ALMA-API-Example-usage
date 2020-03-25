@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vendor>
+    <code>BAKER</code>
+    <name>Baker &amp; Taylor</name>
+    <status desc="Inactive">INACTIVE</status>
+    <liable_for_vat>false</liable_for_vat>
+    <language desc="English">en</language>
+    <material_supplier>true</material_supplier>
+    <access_provider>false</access_provider>
+    <licensor>false</licensor>
+    <governmental>false</governmental>
+    <vendor_libraries>
+        <library include_sub_units="true">
+            <code desc="API Guest Institution">API_GUEST_INST</code>
+        </library>
+    </vendor_libraries>
+    <vendor_currencies>
+        <currency desc="US Dollar">USD</currency>
+        <currency desc="Euro">EUR</currency>
+        <currency desc="Pound Sterling">GBP</currency>
+        <currency desc="Australian Dollar">AUD</currency>
+        <currency desc="New Zealand Dollar">NZD</currency>
+        <currency desc="Canadian Dollar">CAD</currency>
+        <currency desc="Norwegian Krone">NOK</currency>
+    </vendor_currencies>
+    <accounts>
+        <account>
+            <code>10000</code>
+            <description>Approval</description>
+            <status desc="Active">ACTIVE</status>
+            <account_libraries>
+                <library include_sub_units="true">
+                    <code desc="Law Library">LAW</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="API Guest Institution">API_GUEST_INST</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Science Library">BIO</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Main Library">MAIN</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Resource Sharing Library">RES_SHARE</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Music Library">MUS</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Graduate Library">GRAD</code>
+                </library>
+            </account_libraries>
+            <discount_percent>10.0</discount_percent>
+            <payment_methods>
+                <payment_method desc="Accounting Department">ACCOUNTINGDEPARTMENT</payment_method>
+            </payment_methods>
+            <subscription_interval>90</subscription_interval>
+            <contact_info>
+                <addresses/>
+                <emails/>
+                <phones/>
+            </contact_info>
+        </account>
+        <account>
+            <code>20000</code>
+            <description>Firm Order</description>
+            <status desc="Active">ACTIVE</status>
+            <account_libraries>
+                <library include_sub_units="true">
+                    <code desc="Law Library">LAW</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="API Guest Institution">API_GUEST_INST</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Science Library">BIO</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Main Library">MAIN</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Resource Sharing Library">RES_SHARE</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Music Library">MUS</code>
+                </library>
+                <library include_sub_units="true">
+                    <code desc="Graduate Library">GRAD</code>
+                </library>
+            </account_libraries>
+            <discount_percent>25.0</discount_percent>
+            <payment_methods>
+                <payment_method desc="Accounting Department">ACCOUNTINGDEPARTMENT</payment_method>
+            </payment_methods>
+            <subscription_interval>90</subscription_interval>
+            <contact_info>
+                <addresses/>
+                <emails/>
+                <phones/>
+            </contact_info>
+        </account>
+    </accounts>
+    <contact_persons>
+        <contact_person>
+            <first_name>Doug</first_name>
+            <last_name>Rummel</last_name>
+        </contact_person>
+    </contact_persons>
+    <interfaces/>
+    <contact_info>
+        <addresses>
+            <address preferred="false">
+                <line1>9700 W. Higgins Road</line1>
+                <line2>Suite 100</line2>
+                <city>Rosemont</city>
+                <state_province>IL</state_province>
+                <postal_code>60018</postal_code>
+                <country desc=""></country>
+                <start_date>2011-12-17Z</start_date>
+                <address_types>
+                    <address_type desc="Returns">returns</address_type>
+                    <address_type desc="Shipping">shipping</address_type>
+                </address_types>
+            </address>
+            <address preferred="false">
+                <line1>9700 W. Higgins Road</line1>
+                <line2>Suite 100</line2>
+                <city>Rosemont</city>
+                <state_province>IL</state_province>
+                <postal_code>60018</postal_code>
+                <country desc=""></country>
+                <start_date>2011-12-17Z</start_date>
+                <address_types>
+                    <address_type desc="Billing">billing</address_type>
+                    <address_type desc="Payment">payment</address_type>
+                </address_types>
+            </address>
+            <address preferred="true">
+                <line1>9700 W. Higgins Road</line1>
+                <line2>Suite 100</line2>
+                <city>Rosemont</city>
+                <state_province>IL</state_province>
+                <postal_code>60018</postal_code>
+                <country desc=""></country>
+                <start_date>2011-12-17Z</start_date>
+                <address_types>
+                    <address_type desc="Order">order</address_type>
+                    <address_type desc="Claim">claim</address_type>
+                </address_types>
+            </address>
+        </addresses>
+        <emails>
+            <email preferred="false">
+                <email_address>gail.muirhead@exlibrisgroup.com</email_address>
+                <email_types>
+                    <email_type desc="Claim">claimMail</email_type>
+                    <email_type desc="Order">orderMail</email_type>
+                    <email_type desc="Payment">paymentMail</email_type>
+                    <email_type desc="Queries">queries</email_type>
+                    <email_type desc="Returns">returnsMail</email_type>
+                </email_types>
+            </email>
+            <email preferred="true">
+                <email_address>gail.muirhead@exlibrisgroup.com</email_address>
+                <email_types>
+                    <email_type desc="Queries">queries</email_type>
+                    <email_type desc="Returns">returnsMail</email_type>
+                    <email_type desc="Claim">claimMail</email_type>
+                    <email_type desc="Order">orderMail</email_type>
+                    <email_type desc="Payment">paymentMail</email_type>
+                </email_types>
+            </email>
+        </emails>
+        <phones>
+            <phone preferred="false" preferred_sms="false">
+                <phone_number>847-292-2296</phone_number>
+                <phone_types>
+                    <phone_type desc="Returns phone">returnsPhone</phone_type>
+                </phone_types>
+            </phone>
+            <phone preferred="false" preferred_sms="false">
+                <phone_number>847-292-2298</phone_number>
+                <phone_types>
+                    <phone_type desc="Payment phone">paymentPhone</phone_type>
+                </phone_types>
+            </phone>
+            <phone preferred="true" preferred_sms="true">
+                <phone_number>847-292-2292</phone_number>
+                <phone_types>
+                    <phone_type desc="Order phone">orderPhone</phone_type>
+                    <phone_type desc="Claim phone">claimPhone</phone_type>
+                </phone_types>
+            </phone>
+        </phones>
+        <web_addresses/>
+    </contact_info>
+    <edi_info/>
+    <notes>
+        <note>
+            <content>This is a great vendor for popular titles! what an incredible selection!</content>
+            <creation_date>2011-12-17Z</creation_date>
+        </note>
+    </notes>
+</vendor>

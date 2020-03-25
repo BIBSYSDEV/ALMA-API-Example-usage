@@ -1,6 +1,6 @@
 package no.unit.alma.commons;
 
-import no.bibsys.alma.rest.error.WebServiceResult;
+import no.unit.alma.generated.error.WebServiceResult;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,11 @@ import javax.ws.rs.core.Response.Status.Family;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.stream.Collectors;
 
 
@@ -22,7 +26,8 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
     private static final transient Logger log = LoggerFactory.getLogger(AlmaStatusResponseFilter.class);
 
     @Override
-    public void filter(ClientRequestContext clientRequestContext, ClientResponseContext clientResponseContext) throws IOException {
+    public void filter(ClientRequestContext clientRequestContext,
+                       ClientResponseContext clientResponseContext) throws IOException {
         if (clientResponseContext.getStatusInfo().getFamily() != Family.SUCCESSFUL) {
             log.trace("Response from alma is marked as unsuccessful.\nUri: {}\nMethod: {}\nResponse code: {}",
                 clientRequestContext.getUri(), clientRequestContext.getMethod(), clientResponseContext.getStatus());
@@ -45,7 +50,7 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
 
     private WebServiceResult unmarshalWebServiceResult(String xmlEntity) {
         if (StringUtils.isEmpty(xmlEntity)) {
-//            log.warn("Xml entity is empty. Skipping");
+            log.warn("Xml entity is empty. Skipping");
             return null;
         }
         try (StringReader reader = new StringReader(xmlEntity)) {
@@ -53,7 +58,7 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             return (WebServiceResult) unmarshaller.unmarshal(reader);
         } catch (JAXBException e) {
-//            log.error("Failed to unmarshal xml entity", e);
+            log.error("Failed to unmarshal xml entity", e);
             return null;
         }
     }
