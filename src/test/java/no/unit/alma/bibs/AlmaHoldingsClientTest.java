@@ -26,7 +26,7 @@ class AlmaHoldingsClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "sandbox02";
+    private static final String STAGE = "alma-sandbox2";
 
     private static final Integer TOTAL_RECORD_COUNT = 1;
     private static final String TEST_MMS_ID = "123456";
@@ -122,6 +122,14 @@ class AlmaHoldingsClientTest {
         long noLimit = -1;
         resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, noLimit, offset);
         assertEquals(TOTAL_RECORD_COUNT, resultItems.getTotalRecordCount());
+    }
+
+    @Test
+    void testGetAlmaStage() {
+        AlmaHoldingsService almaBibsService =
+                new AlmaHoldingsService(mockAlmaApiClient);
+        assertEquals(STAGE, almaBibsService
+                .getAlmaStage());
     }
 
     @Test

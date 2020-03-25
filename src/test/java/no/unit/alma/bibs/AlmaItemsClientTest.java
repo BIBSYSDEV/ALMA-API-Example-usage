@@ -38,7 +38,7 @@ class AlmaItemsClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "sandbox02";
+    private static final String STAGE = "alma-sandbox2";
     private static final Integer TOTAL_RECORD_COUNT = 1;
     private static final String TEST_MMS_ID = "mms id";
     private static final String TEST_HOLDINGS_ID = "holdings id";
@@ -595,6 +595,14 @@ class AlmaItemsClientTest {
         AlmaItemsService almaItemsService = new AlmaItemsService(mockAlmaApiClient);
         Item resultItem = almaItemsService.updateItemDescription(tempItem);
         assertEquals(TEST_BARCODE, resultItem.getItemData().getBarcode());
+    }
+
+    @Test
+    void testGetAlmaStage() {
+        AlmaHoldingsService almaBibsService =
+                new AlmaHoldingsService(mockAlmaApiClient);
+        assertEquals(STAGE, almaBibsService
+                .getAlmaStage());
     }
 
     @Test

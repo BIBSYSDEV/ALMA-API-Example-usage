@@ -1,5 +1,15 @@
 package no.unit.alma.bibs;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.lang3.StringUtils;
+
 import no.unit.alma.generated.bibs.Bib;
 import no.unit.alma.generated.bibs.Bibs;
 import no.unit.alma.generated.items.Item;
@@ -8,22 +18,19 @@ import no.unit.alma.generated.representations.Representation;
 import no.unit.alma.generated.representations.Representations;
 import no.unit.alma.generated.userrequests.UserRequests;
 import no.unit.alma.commons.AlmaClient;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 
 /**
  * This client implements an integration to the /almaws/v1/bibs
  */
 public class AlmaBibsService {
 
-    private final WebTarget bibsTarget;
+    private static final String EMPTY_STRING = "";
+    private static final String DERIVATIVE_COPY = "DERIVATIVE_COPY";
+    private final transient WebTarget bibsTarget;
     private final String context;
     private final String contextValue;
     private final String almaStage;
-    private final AlmaItemsService almaItemsService;
+    private final transient AlmaItemsService almaItemsService;
 
     public AlmaBibsService(AlmaClient almaClient) {
 
@@ -34,7 +41,6 @@ public class AlmaBibsService {
         this.contextValue = almaClient.getContextValue();
         this.almaStage = almaClient.getAlmaStage();
     }
-
 
     public Bib getBib(String identifier, String availParams) {
         WebTarget getBibTarget =
@@ -88,7 +94,6 @@ public class AlmaBibsService {
                 .invoke(Bib.class);
     }
 
-
     public Bib updateBib(final Bib bib) {
         return bibsTarget
                 .path(bib.getMmsId())
@@ -97,7 +102,6 @@ public class AlmaBibsService {
                 .buildPut(Entity.xml(bib))
                 .invoke(Bib.class);
     }
-
 
     public UserRequests getRequestsFromBib(String recordIdentifier, boolean deleted) {
         WebTarget userRequestsTarget =
@@ -127,7 +131,6 @@ public class AlmaBibsService {
                 .invoke(Representation.class);
     }
 
-
     public Representation createRemotePresentation(String barcode, String access, String digitalRepositoryId,
             String url, String libraryCode) {
         final Item item = almaItemsService.getItem(barcode);
@@ -138,7 +141,7 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(digitalRepositoryId);
@@ -153,7 +156,6 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-
     public Representation createRemoteRepresentation(String mmsId, String barcode, String access,
             String digitalRepositoryId, String url, String libraryCode) {
         final Representation input = new Representation();
@@ -162,7 +164,7 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(digitalRepositoryId);
@@ -175,7 +177,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-
+@SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(long mmsId, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -186,15 +188,15 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(remoteRepositoryId);
         input.setRepository(repository);
         input.setLinkingParameter1(url);
-        input.setLinkingParameter4("" + mmsId);
+        input.setLinkingParameter4(EMPTY_STRING + mmsId);
         input.setOriginatingRecordId(url);
-        String label = createLabel(volume, issue, number, "", year, month, day, "");
+        String label = createLabel(volume, issue, number, EMPTY_STRING, year, month, day, EMPTY_STRING);
         input.setLabel(label);
         input.setYear(year);
         input.setSeasonMonth(month);
@@ -207,7 +209,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsIdAsString, input);
     }
 
-
+@SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(String barcode, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -219,7 +221,7 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(remoteRepositoryId);
@@ -227,7 +229,7 @@ public class AlmaBibsService {
         input.setLinkingParameter1(url);
         input.setLinkingParameter4(barcode);
         input.setOriginatingRecordId(url);
-        final String label = createLabel(volume, issue, number, "", year, month, day, "");
+        final String label = createLabel(volume, issue, number, EMPTY_STRING, year, month, day, EMPTY_STRING);
         input.setLabel(label);
         input.setYear(year);
         input.setSeasonMonth(month);
@@ -240,7 +242,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-
+@SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(String barcode, String label, String access,
             String remoteRepositoryId, String libraryCode, String url, String year, String month, String day,
             String volume, String issue, String number) {
@@ -252,7 +254,7 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(remoteRepositoryId);
@@ -271,7 +273,6 @@ public class AlmaBibsService {
 
         return createRemotePresentation(mmsId, input);
     }
-
 
     public Representations getRemoteRepresentationsFromMmsId(String mmsId, int limit, int offset) {
         return bibsTarget
@@ -285,14 +286,12 @@ public class AlmaBibsService {
                 .invoke(Representations.class);
     }
 
-
     public Representation getSingleRemoteRepresentationFromBarcode(String barcode, String representationId) {
 
         final Item item = almaItemsService.getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
         return getSingleRemoteRepresentationFromMmsId(mmsId, representationId);
     }
-
 
     public Representation getSingleRemoteRepresentationFromMmsId(String mmsId, String representationId) {
         return bibsTarget
@@ -306,14 +305,14 @@ public class AlmaBibsService {
     }
 
 
-    public Bibs retrieveBibs(String mms_id, String ie_id, String holdings_id, String representation_id,
-            String nz_mms_id, String view, String expand) {
+    public Bibs retrieveBibs(String mmsId, String ieId, String holdingsId, String representationId,
+            String nzMmsId, String view, String expand) {
         return bibsTarget
-                .queryParam("mms_id", mms_id)
-                .queryParam("ie_id", ie_id)
-                .queryParam("holdings_id", holdings_id)
-                .queryParam("representation_id", representation_id)
-                .queryParam("nz_mms_id", nz_mms_id)
+                .queryParam("mms_id", mmsId)
+                .queryParam("ie_id", ieId)
+                .queryParam("holdings_id", holdingsId)
+                .queryParam("representation_id", representationId)
+                .queryParam("nz_mms_id", nzMmsId)
                 .queryParam("view", view)
                 .queryParam("expand", expand)
                 .request()
@@ -322,16 +321,13 @@ public class AlmaBibsService {
                 .invoke(Bibs.class);
     }
 
-
     public String getContext() {
         return context;
     }
 
-
     public String getContextValue() {
         return contextValue;
     }
-
 
     public String getAlmaStage() {
         return almaStage;
@@ -340,31 +336,27 @@ public class AlmaBibsService {
     private String createLabel(String enumerationA, String enumerationB, String enumerationC, String enumerationD,
             String chronologyI, String chronologyJ, String chronologyK, String chronologyL) {
 
-        enumerationA = (enumerationA != null ? enumerationA.trim() : "");
-        enumerationB = (enumerationB != null ? enumerationB.trim() : "");
-        enumerationC = (enumerationC != null ? enumerationC.trim() : "");
-        enumerationD = (enumerationD != null ? enumerationD.trim() : "");
-        chronologyI = (chronologyI != null ? chronologyI.trim() : "");
-        chronologyJ = (chronologyJ != null ? chronologyJ.trim() : "");
-        chronologyK = (chronologyK != null ? chronologyK.trim() : "");
-        chronologyL = (chronologyL != null ? chronologyL.trim() : "");
+        List<String> enumerationList =
+                Arrays.asList(new String[] { enumerationB, enumerationC, enumerationD })
+                        .stream()
+                        .filter(enumeration -> enumeration != null && !enumeration.isBlank())
+                        .map(enumeration -> enumeration.strip())
+                        .collect(Collectors.toList());
 
-        String label = enumerationA;
+        List<String> chronologyList =
+                Arrays.asList(new String[] { chronologyI, chronologyJ, chronologyK, chronologyL })
+                        .stream()
+                        .filter(chronology -> chronology != null && !chronology.isBlank())
+                        .map(chronology -> chronology.strip())
+                        .collect(Collectors.toList());
 
-        if (!"".equals(chronologyI)) {
-            label +=
-                    "(" + chronologyI + (!"".equals(chronologyJ) ? "," + chronologyJ : "")
-                            + (!"".equals(chronologyK) ? "," + chronologyK : "")
-                            + (!"".equals(chronologyL) ? "," + chronologyL : "") + ")";
+        String label = enumerationA != null && !enumerationA.isBlank() ? enumerationA : EMPTY_STRING;
+
+        if (!EMPTY_STRING.equals(chronologyI)) {
+            label = String.format("%s(%s)", label, String.join(label, chronologyList));
         }
-        if (!"".equals(enumerationB)) {
-            label +=
-                    " " + enumerationB + (!"".equals(enumerationC) ? "," + enumerationC : "")
-                            + (!"".equals(enumerationD) ? "," + enumerationD : "");
-        }
-
-        if (label == null) {
-            label = "";
+        if (!EMPTY_STRING.equals(enumerationB)) {
+            label = String.format("%s %s", label, String.join(label, enumerationList));
         }
 
         return label;
