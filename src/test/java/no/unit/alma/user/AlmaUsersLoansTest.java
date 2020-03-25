@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bibsys.alma.rest.item_loan.ItemLoans;
+import no.unit.alma.generated.itemloans.ItemLoans;
 import no.unit.alma.commons.AlmaClient;
 
 @ExtendWith(MockitoExtension.class)

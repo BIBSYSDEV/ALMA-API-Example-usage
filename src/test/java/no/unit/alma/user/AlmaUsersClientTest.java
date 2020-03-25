@@ -16,8 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bibsys.alma.rest.user.User;
-import no.bibsys.alma.rest.user.Users;
+import no.unit.alma.generated.users.User;
+import no.unit.alma.generated.users.Users;
 import no.unit.alma.commons.AlmaClient;
 
 @ExtendWith(MockitoExtension.class)

@@ -6,12 +6,12 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
 
-import no.bibsys.alma.rest.item_loan.ItemLoans;
-import no.bibsys.alma.rest.user.User;
-import no.bibsys.alma.rest.user.Users;
-import no.bibsys.alma.rest.user_request.UserRequest;
-import no.bibsys.alma.rest.user_request.UserRequests;
-import no.bibsys.alma.rest.user_resource_sharing_request.UserResourceSharingRequest;
+import no.unit.alma.generated.itemloans.ItemLoans;
+import no.unit.alma.generated.users.User;
+import no.unit.alma.generated.users.Users;
+import no.unit.alma.generated.userrequests.UserRequest;
+import no.unit.alma.generated.userrequests.UserRequests;
+import no.unit.alma.generated.userrequests.UserResourceSharingRequest;
 import no.unit.alma.commons.AlmaClient;
 
 public class AlmaUsersService

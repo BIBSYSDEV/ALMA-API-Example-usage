@@ -12,6 +12,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,17 +20,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bibsys.alma.rest.item_loan.ItemLoan;
-import no.bibsys.alma.rest.item_loan.LoanStatus;
-import no.bibsys.alma.rest.items.BibData;
-import no.bibsys.alma.rest.items.HoldingData;
-import no.bibsys.alma.rest.items.Item;
-import no.bibsys.alma.rest.items.ItemData;
-import no.bibsys.alma.rest.items.ItemData.PhysicalMaterialType;
-import no.bibsys.alma.rest.representations.Representation;
-import no.bibsys.alma.rest.user_request.UserRequest;
-import no.bibsys.alma.rest.user_request.UserRequest.TargetDestination;
-import no.bibsys.alma.rest.user_request.UserRequests;
+import no.unit.alma.generated.itemloans.ItemLoan;
+import no.unit.alma.generated.itemloans.LoanStatus;
+import no.unit.alma.generated.items.BibData;
+import no.unit.alma.generated.items.HoldingData;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.items.ItemData;
+import no.unit.alma.generated.items.ItemData.PhysicalMaterialType;
+import no.unit.alma.generated.representations.Representation;
+import no.unit.alma.generated.userrequests.UserRequest;
+import no.unit.alma.generated.userrequests.UserRequest.TargetDestination;
+import no.unit.alma.generated.userrequests.UserRequests;
 import no.unit.alma.commons.AlmaClient;
 
 @ExtendWith(MockitoExtension.class)
@@ -222,7 +223,7 @@ class AlmaItemsClientTest {
     }
 
     @Test
-    void testUpdateUserLoanAndChangeDueDate() {
+    void testUpdateUserLoanAndChangeDueDate() throws DatatypeConfigurationException {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
@@ -278,7 +279,7 @@ class AlmaItemsClientTest {
     }
 
     @Test
-    void testCreatePatronRequst() {
+    void testCreatePatronRequest() {
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);

@@ -1,6 +1,6 @@
 package no.unit.alma.user;
 
-import no.bibsys.alma.rest.user_resource_sharing_request.UserResourceSharingRequest;
+import no.unit.alma.generated.userrequests.UserResourceSharingRequest;
 
 public interface AlmaUsersResourceSharingRequests {
     UserResourceSharingRequest postUserResourceSharingRequest(UserResourceSharingRequest userResourceSharingRequest,
