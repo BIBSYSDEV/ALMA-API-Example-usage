@@ -5,6 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Invocation.Builder;
@@ -18,6 +21,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.bibsys.alma.rest.holding.Holding;
 import no.bibsys.alma.rest.holdings.Holdings;
+import no.bibsys.alma.rest.items.BibData;
+import no.bibsys.alma.rest.items.HoldingData;
+import no.bibsys.alma.rest.items.Item;
+import no.bibsys.alma.rest.items.ItemData;
 import no.bibsys.alma.rest.items.Items;
 import no.unit.alma.commons.AlmaClient;
 
@@ -126,6 +133,57 @@ class AlmaHoldingsClientTest {
     }
 
     @Test
+    void testGetAllItems() {
+        int totalRecordCount = 240;
+        List<Items> responses = new CopyOnWriteArrayList<Items>();
+        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 100, totalRecordCount));
+        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 100, totalRecordCount));
+        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 40, totalRecordCount));
+        for (Items items : responses) {
+            items.setTotalRecordCount(totalRecordCount);
+        }
+
+        when(holdingsWebTarget.path(any())).thenReturn(holdingsWebTarget);
+        when(holdingsWebTarget.queryParam(anyString(), any())).thenReturn(holdingsWebTarget);
+        when(holdingsWebTarget.request()).thenReturn(holdingsBuilder);
+        when(holdingsBuilder.accept(anyString())).thenReturn(holdingsBuilder);
+        when(holdingsBuilder.buildGet()).thenReturn(holdingsInvocation);
+        when(holdingsInvocation.invoke(Items.class)).thenReturn(responses.get(0), responses.get(1), responses.get(2));
+
+        AlmaHoldingsService almaHoldingsService = new AlmaHoldingsService(mockAlmaApiClient);
+        Items allItems = almaHoldingsService.getAllItems(TEST_MMS_ID, TEST_HOLDING_ID);
+        assertEquals(totalRecordCount, allItems.getTotalRecordCount());
+        assertEquals(totalRecordCount, allItems.getItem().size());
+    }
+
+    private Items createTestItems(String mmsId, String holdingsId, int number, int total) {
+        List<Item> itemList = new CopyOnWriteArrayList<Item>();
+
+        for (int i = 0; i < number; i++) {
+            Item newItem = new Item();
+            BibData bibData = new BibData();
+            bibData.setMmsId(mmsId);
+            newItem.setBibData(bibData);
+
+            HoldingData holdingData = new HoldingData();
+            holdingData.setHoldingId(holdingsId);
+            newItem.setHoldingData(holdingData);
+
+            ItemData itemData = new ItemData();
+            itemData.setPid(Long.toString(System.currentTimeMillis()));
+            newItem.setItemData(itemData);
+
+            itemList.add(newItem);
+        }
+
+        Items items = new Items();
+        items.getItem().addAll(itemList);
+        items.setTotalRecordCount(total);
+
+        return items;
+    }
+
+    @Test
     void testGetAlmaStage() {
         AlmaHoldingsService almaBibsService =
                 new AlmaHoldingsService(mockAlmaApiClient);
@@ -155,5 +213,4 @@ class AlmaHoldingsClientTest {
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }
-
 }
