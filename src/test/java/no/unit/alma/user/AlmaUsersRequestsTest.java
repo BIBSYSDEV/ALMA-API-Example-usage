@@ -122,13 +122,6 @@ class AlmaUsersRequestsTest {
         assertEquals(TEST_AUTHOR, resultUserRequest.getAuthor());
     }
 
-    // UserRequest postUserRequest(String userIdentifer, String recordIdentifer,
-    // UserRequest userRequest);
-    //
-    // UserRequest postUserRequestItem(String userIdentifer, String itemId,
-    // UserRequest userRequest);
-    //
-
     private void mockAlmaApi() {
 
         when(mockAlmaApiClient.getWebTarget())
