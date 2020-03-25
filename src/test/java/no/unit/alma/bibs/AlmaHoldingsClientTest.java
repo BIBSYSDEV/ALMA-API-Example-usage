@@ -86,7 +86,7 @@ class AlmaHoldingsClientTest {
     @Test
     void testUpdateHolding() {
         when(holdingsWebTarget.path(any())).thenReturn(holdingsWebTarget);
-        when(holdingsWebTarget.request(anyString())).thenReturn(holdingsBuilder);
+        when(holdingsWebTarget.request()).thenReturn(holdingsBuilder);
         when(holdingsBuilder.accept(anyString())).thenReturn(holdingsBuilder);
 
         Holding tempHolding = new Holding();

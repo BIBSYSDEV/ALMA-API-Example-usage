@@ -24,17 +24,11 @@ import no.unit.alma.generated.userrequests.RequestTypes;
 import no.unit.alma.generated.userrequests.UserRequest;
 import no.unit.alma.generated.userrequests.UserRequests;
 import no.unit.alma.commons.AlmaClient;
-import org.apache.commons.lang3.StringUtils;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 public class AlmaItemsService {
 
