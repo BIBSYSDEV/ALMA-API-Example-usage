@@ -8,6 +8,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import no.bibsys.alma.rest.item_loan.ItemLoan;
 import no.bibsys.alma.rest.item_loan.LoanStatus;
@@ -24,17 +26,32 @@ import no.unit.alma.commons.AlmaClient;
 
 public class AlmaItemsService {
 
-    private final WebTarget bibsTarget;
-    private final WebTarget itemsTarget;
-    private final WebTarget usersTarget;
+    private static final String EMPTY_STRING = "";
+    private static final String PATRON_PHYSICAL = "PATRON_PHYSICAL";
+    private static final String HISTORY = "history";
+    private static final String STATUS = "status";
+    private static final String REQUEST_TYPE = "request_type";
+    private static final String REQUESTS = "requests";
+    private static final String USER_ID = "user_id";
+    private static final String LOANS = "loans";
+    private static final String HOLDINGS = "holdings";
+    private static final String USERS = "users";
+    private static final String ITEMS = "items";
+    private static final String BIBS = "bibs";
+
+    private final transient WebTarget bibsTarget;
+    private final transient WebTarget itemsTarget;
+    private final transient WebTarget usersTarget;
     private final String context;
     private final String contextValue;
     private final String almaStage;
 
+    private static final transient Logger log = LoggerFactory.getLogger(AlmaItemsService.class);
+
     public AlmaItemsService(AlmaClient almaClient) {
-        this.bibsTarget = almaClient.getWebTarget().path("bibs");
-        this.itemsTarget = almaClient.getWebTarget().path("items");
-        this.usersTarget = almaClient.getWebTarget().path("users");
+        this.bibsTarget = almaClient.getWebTarget().path(BIBS);
+        this.itemsTarget = almaClient.getWebTarget().path(ITEMS);
+        this.usersTarget = almaClient.getWebTarget().path(USERS);
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
         this.almaStage = almaClient.getAlmaStage();
@@ -43,9 +60,9 @@ public class AlmaItemsService {
     public Item getItem(final String mmsId, final String holdingsId, final String itemId) {
         return bibsTarget
                 .path(mmsId)
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingsId)
-                .path("items")
+                .path(ITEMS)
                 .path(itemId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
@@ -65,21 +82,21 @@ public class AlmaItemsService {
     public Item createItem(final String mms, final String holdingsId) {
         return bibsTarget
                 .path(mms)
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingsId)
-                .path("items")
+                .path(ITEMS)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
-                .buildPost(Entity.xml(""))
+                .buildPost(Entity.xml(EMPTY_STRING))
                 .invoke(Item.class);
     }
 
     public Item updateItem(final Item item) {
         return bibsTarget
                 .path(item.getBibData().getMmsId())
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(item.getHoldingData().getHoldingId())
-                .path("items")
+                .path(ITEMS)
                 .path(item.getItemData().getPid())
                 .request()
                 .accept(MediaType.APPLICATION_XML)
@@ -87,7 +104,7 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
-    public ItemLoan createUserLoanOnItem(final String barcode, final String user_Id, final String library,
+    public ItemLoan createUserLoanOnItem(final String barcode, final String userId, final String library,
             final String circulationDesk) {
         final Item item = getItem(barcode);
         final BibData bibData = item.getBibData();
@@ -98,7 +115,7 @@ public class AlmaItemsService {
         }
         final ItemLoan itemLoan = new ItemLoan();
         itemLoan.setItemBarcode(barcode);
-        itemLoan.setUserId(user_Id);
+        itemLoan.setUserId(userId);
         final ItemLoan.Library loanLibrary = new ItemLoan.Library();
         loanLibrary.setValue(library);
         itemLoan.setLibrary(loanLibrary);
@@ -108,19 +125,19 @@ public class AlmaItemsService {
 
         return bibsTarget
                 .path(bibData.getMmsId())
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingData.getHoldingId())
-                .path("items")
+                .path(ITEMS)
                 .path(itemData.getPid())
-                .path("loans")
-                .queryParam("user_id", user_Id)
+                .path(LOANS)
+                .queryParam(USER_ID, userId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
     }
 
-    public ItemLoan createUserLoanOnItem(final String barcode, final String user_Id, final String library,
+    public ItemLoan createUserLoanOnItem(final String barcode, final String userId, final String library,
             final String circulationDesk, final float fine, final LoanStatus loanStatus) {
         final Item item = getItem(barcode);
         final BibData bibData = item.getBibData();
@@ -133,7 +150,7 @@ public class AlmaItemsService {
         itemLoan.setLoanFine(fine);
         itemLoan.setLoanStatus(loanStatus);
         itemLoan.setItemBarcode(barcode);
-        itemLoan.setUserId(user_Id);
+        itemLoan.setUserId(userId);
         final ItemLoan.Library loanLibrary = new ItemLoan.Library();
         loanLibrary.setValue(library);
         itemLoan.setLibrary(loanLibrary);
@@ -143,12 +160,12 @@ public class AlmaItemsService {
 
         return bibsTarget
                 .path(bibData.getMmsId())
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingData.getHoldingId())
-                .path("items")
+                .path(ITEMS)
                 .path(itemData.getPid())
-                .path("loans")
-                .queryParam("user_id", user_Id)
+                .path(LOANS)
+                .queryParam(USER_ID, userId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(itemLoan))
@@ -160,7 +177,7 @@ public class AlmaItemsService {
         itemLoan.setDueDate(dueDate);
         return usersTarget
                 .path(userId)
-                .path("loans")
+                .path(LOANS)
                 .path(loanId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
@@ -175,21 +192,21 @@ public class AlmaItemsService {
         return getRequestsFromItem(recordId, holdingsId, itemId, deleted);
     }
 
-    public UserRequests getRequestsFromItem(String mms_id, String holding_id, String item_pid, boolean deleted) {
+    public UserRequests getRequestsFromItem(String mmsId, String holdingId, String itemPid, boolean deleted) {
         WebTarget requestsFromItemTarget =
                 bibsTarget
-                        .path(mms_id)
-                        .path("holdings")
-                        .path(holding_id)
-                        .path("items")
-                        .path(item_pid)
-                        .path("requests");
+                        .path(mmsId)
+                        .path(HOLDINGS)
+                        .path(holdingId)
+                        .path(ITEMS)
+                        .path(itemPid)
+                        .path(REQUESTS);
 
         if (deleted) {
             requestsFromItemTarget =
                     requestsFromItemTarget
-                            .queryParam("request_type", "DIGITIZATION")
-                            .queryParam("status", "history");
+                            .queryParam(REQUEST_TYPE, "DIGITIZATION")
+                            .queryParam(STATUS, HISTORY);
         }
 
         return requestsFromItemTarget
@@ -229,16 +246,16 @@ public class AlmaItemsService {
         newRequest.setComment(message);
         newRequest.setPickupLocationLibrary(pickupLocationLibrary);
         final UserRequest.RequestSubType requestSubType = new UserRequest.RequestSubType();
-        requestSubType.setValue("PATRON_PHYSICAL");
+        requestSubType.setValue(PATRON_PHYSICAL);
         newRequest.setRequestSubType(requestSubType);
         return bibsTarget
                 .path(bibData.getMmsId())
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingData.getHoldingId())
-                .path("items")
+                .path(ITEMS)
                 .path(itemData.getPid())
-                .path("requests")
-                .queryParam("user_id", userId)
+                .path(REQUESTS)
+                .queryParam(USER_ID, userId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(newRequest))
@@ -251,8 +268,8 @@ public class AlmaItemsService {
         }
         return bibsTarget
                 .path(mmsId)
-                .path("requests")
-                .queryParam("user_id", userId)
+                .path(REQUESTS)
+                .queryParam(USER_ID, userId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(newRequest))
@@ -288,22 +305,22 @@ public class AlmaItemsService {
         try {
             materialType.setValue(item.getItemData().getPhysicalMaterialType().getValue());
         } catch (Exception e) { // wtf
-//            log.error("", e);
+            log.error(e.getMessage());
         }
         newRequest.setMaterialType(materialType);
         newRequest.setTargetDestination(targetDestination);
         WebTarget digitizationTarget =
                 bibsTarget
                         .path(bibData.getMmsId())
-                        .path("holdings")
+                        .path(HOLDINGS)
                         .path(holdingData.getHoldingId())
-                        .path("items")
+                        .path(ITEMS)
                         .path(itemData.getPid())
-                        .path("requests");
+                        .path(REQUESTS);
         if (StringUtils.isNotEmpty(userId)) {
             digitizationTarget =
                     digitizationTarget
-                            .queryParam("user_id", userId);
+                            .queryParam(USER_ID, userId);
         }
         return digitizationTarget
                 .request()
@@ -316,12 +333,12 @@ public class AlmaItemsService {
             HoldingsRecord holdingsRecord) {
         bibsTarget
                 .path(mmsId)
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingsId)
-                .path("items")
+                .path(ITEMS)
                 .path(itemId)
                 .queryParam("override", override)
-                .queryParam("holdings", holdingsRecord.toString())
+                .queryParam(HOLDINGS, holdingsRecord.toString())
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildDelete()
@@ -337,11 +354,11 @@ public class AlmaItemsService {
         WebTarget deleteTarget =
                 bibsTarget
                         .path(recordId)
-                        .path("holdings")
+                        .path(HOLDINGS)
                         .path(holdingsId)
-                        .path("items")
+                        .path(ITEMS)
                         .path(itemId)
-                        .queryParam("holdings", holdingsRecord.toString());
+                        .queryParam(HOLDINGS, holdingsRecord.toString());
         if (override) {
             deleteTarget = deleteTarget.queryParam("override", true);
         }
@@ -354,7 +371,7 @@ public class AlmaItemsService {
     }
 
     public void deleteRequest(String barcode, String requestId) {
-        deleteRequest(barcode, requestId, "");
+        deleteRequest(barcode, requestId, EMPTY_STRING);
     }
 
     public void deleteRequest(final String barcode, final String requestId, String note) {
@@ -366,11 +383,11 @@ public class AlmaItemsService {
         WebTarget deleteTarget =
                 bibsTarget
                         .path(recordId)
-                        .path("holdings")
+                        .path(HOLDINGS)
                         .path(holdingsId)
-                        .path("items")
+                        .path(ITEMS)
                         .path(itemId)
-                        .path("requests")
+                        .path(REQUESTS)
                         .path(requestId);
         if (StringUtils.isNotEmpty(note)) {
             deleteTarget = deleteTarget.queryParam("note", note);
@@ -411,11 +428,11 @@ public class AlmaItemsService {
 
         return bibsTarget
                 .path(recordId)
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingsId)
-                .path("items")
+                .path(ITEMS)
                 .path(itemId)
-                .path("requests")
+                .path(REQUESTS)
                 .path(recordId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
@@ -429,34 +446,34 @@ public class AlmaItemsService {
                                                                                                                // ikke i
                                                                                                                // bruk
         final Item item = getItem(barcode);
-        final String recordId = "" + item.getBibData().getMmsId();
+        final String recordId = EMPTY_STRING + item.getBibData().getMmsId();
         final String holdingsId = item.getHoldingData().getHoldingId();
         final String itemId = item.getItemData().getPid();
         return bibsTarget
                 .path(recordId)
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingsId)
-                .path("items")
+                .path(ITEMS)
                 .path(itemId)
-                .path("requests")
+                .path(REQUESTS)
                 .path(requestId)
                 .queryParam("op", action)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
-                .buildPost(Entity.xml(""))
+                .buildPost(Entity.xml(EMPTY_STRING))
                 .invoke(UserRequest.class);
     }
 
     public Item scanInItem(String barcode, String requestId, String department, String circDesk, String library) {
         final Item item = getItem(barcode);
-        final String recordId = "" + item.getBibData().getMmsId();
+        final String recordId = EMPTY_STRING + item.getBibData().getMmsId();
         final String holdingsId = item.getHoldingData().getHoldingId();
         final String itemId = item.getItemData().getPid();
         return bibsTarget
                 .path(recordId)
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingsId)
-                .path("items")
+                .path(ITEMS)
                 .path(itemId)
                 .queryParam("request_id", requestId)
                 .queryParam("op", "scan")
@@ -465,27 +482,27 @@ public class AlmaItemsService {
                 .queryParam("library", library)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
-                .buildPost(Entity.xml(""))
+                .buildPost(Entity.xml(EMPTY_STRING))
                 .invoke(Item.class);
     }
 
     public Item scanInItem(String barcode, String circDesk, String library) {
         final Item item = getItem(barcode);
-        final String recordId = "" + item.getBibData().getMmsId();
+        final String recordId = EMPTY_STRING + item.getBibData().getMmsId();
         final String holdingsId = item.getHoldingData().getHoldingId();
         final String itemId = item.getItemData().getPid();
         return bibsTarget
                 .path(recordId)
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(holdingsId)
-                .path("items")
+                .path(ITEMS)
                 .path(itemId)
                 .queryParam("op", "scan")
                 .queryParam("circ_desk", circDesk)
                 .queryParam("library", library)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
-                .buildPost(Entity.xml(""))
+                .buildPost(Entity.xml(EMPTY_STRING))
                 .invoke(Item.class);
     }
 
@@ -503,9 +520,9 @@ public class AlmaItemsService {
     public Item updateItemDescription(final Item item) {
         return bibsTarget
                 .path(item.getBibData().getMmsId())
-                .path("holdings")
+                .path(HOLDINGS)
                 .path(item.getHoldingData().getHoldingId())
-                .path("items")
+                .path(ITEMS)
                 .path(item.getItemData().getPid())
                 .request()
                 .accept(MediaType.APPLICATION_XML)

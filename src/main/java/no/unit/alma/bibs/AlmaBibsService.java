@@ -24,11 +24,13 @@ import no.unit.alma.commons.AlmaClient;
  */
 public class AlmaBibsService {
 
-    private final WebTarget bibsTarget;
+    private static final String EMPTY_STRING = "";
+    private static final String DERIVATIVE_COPY = "DERIVATIVE_COPY";
+    private final transient WebTarget bibsTarget;
     private final String context;
     private final String contextValue;
     private final String almaStage;
-    private final AlmaItemsService almaItemsService;
+    private final transient AlmaItemsService almaItemsService;
 
     public AlmaBibsService(AlmaClient almaClient) {
 
@@ -139,7 +141,7 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(digitalRepositoryId);
@@ -162,7 +164,7 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(digitalRepositoryId);
@@ -185,15 +187,15 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(remoteRepositoryId);
         input.setRepository(repository);
         input.setLinkingParameter1(url);
-        input.setLinkingParameter4("" + mmsId);
+        input.setLinkingParameter4(EMPTY_STRING + mmsId);
         input.setOriginatingRecordId(url);
-        String label = createLabel(volume, issue, number, "", year, month, day, "");
+        String label = createLabel(volume, issue, number, EMPTY_STRING, year, month, day, EMPTY_STRING);
         input.setLabel(label);
         input.setYear(year);
         input.setSeasonMonth(month);
@@ -217,7 +219,7 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(remoteRepositoryId);
@@ -225,7 +227,7 @@ public class AlmaBibsService {
         input.setLinkingParameter1(url);
         input.setLinkingParameter4(barcode);
         input.setOriginatingRecordId(url);
-        final String label = createLabel(volume, issue, number, "", year, month, day, "");
+        final String label = createLabel(volume, issue, number, EMPTY_STRING, year, month, day, EMPTY_STRING);
         input.setLabel(label);
         input.setYear(year);
         input.setSeasonMonth(month);
@@ -249,7 +251,7 @@ public class AlmaBibsService {
         library.setValue(libraryCode);
         input.setLibrary(library);
         final Representation.UsageType usageType = new Representation.UsageType();
-        usageType.setValue("DERIVATIVE_COPY");
+        usageType.setValue(DERIVATIVE_COPY);
         input.setUsageType(usageType);
         final Representation.Repository repository = new Representation.Repository();
         repository.setValue(remoteRepositoryId);
@@ -299,14 +301,14 @@ public class AlmaBibsService {
                 .invoke(Representation.class);
     }
 
-    public Bibs retrieveBibs(String mms_id, String ie_id, String holdings_id, String representation_id,
-            String nz_mms_id, String view, String expand) {
+    public Bibs retrieveBibs(String mmsId, String ieId, String holdingsId, String representationId,
+            String nzMmsId, String view, String expand) {
         return bibsTarget
-                .queryParam("mms_id", mms_id)
-                .queryParam("ie_id", ie_id)
-                .queryParam("holdings_id", holdings_id)
-                .queryParam("representation_id", representation_id)
-                .queryParam("nz_mms_id", nz_mms_id)
+                .queryParam("mms_id", mmsId)
+                .queryParam("ie_id", ieId)
+                .queryParam("holdings_id", holdingsId)
+                .queryParam("representation_id", representationId)
+                .queryParam("nz_mms_id", nzMmsId)
                 .queryParam("view", view)
                 .queryParam("expand", expand)
                 .request()
@@ -344,12 +346,12 @@ public class AlmaBibsService {
                         .map(chronology -> chronology.strip())
                         .collect(Collectors.toList());
 
-        String label = enumerationA != null && !enumerationA.isBlank() ? enumerationA : "";
+        String label = enumerationA != null && !enumerationA.isBlank() ? enumerationA : EMPTY_STRING;
 
-        if (!"".equals(chronologyI)) {
+        if (!EMPTY_STRING.equals(chronologyI)) {
             label = String.format("%s(%s)", label, String.join(label, chronologyList));
         }
-        if (!"".equals(enumerationB)) {
+        if (!EMPTY_STRING.equals(enumerationB)) {
             label = String.format("%s %s", label, String.join(label, enumerationList));
         }
 
