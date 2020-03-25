@@ -18,14 +18,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.bibsys.alma.rest.user_resource_sharing_request.UserResourceSharingRequest;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaUsersResourceSharingRequestsTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
     private static final String TEST_USER_ID = "user id";
     private static final String TEST_BARCODE = "barcode";
     private static final String TEST_REQUEST_ID = "request id";
@@ -62,7 +61,7 @@ class AlmaUsersResourceSharingRequestsTest {
         when(invocation.invoke(UserResourceSharingRequest.class)).thenReturn(testUserResourceSharingRequest);
 
         AlmaUsersResourceSharingRequests almaUsersResourceSharingRequestsService =
-                new AlmaUsersServiceImplementation(mockAlmaApiClient);
+                new AlmaUsersService(mockAlmaApiClient);
         UserResourceSharingRequest resultUserResourceSharingRequest =
                 almaUsersResourceSharingRequestsService.getUserResourceSharingRequest(TEST_USER_ID, TEST_REQUEST_ID);
         assertEquals(TEST_BARCODE, resultUserResourceSharingRequest.getBarcode());
@@ -80,7 +79,7 @@ class AlmaUsersResourceSharingRequestsTest {
         when(invocation.invoke(UserResourceSharingRequest.class)).thenReturn(testUserResourceSharingRequest);
 
         AlmaUsersResourceSharingRequests almaUsersResourceSharingRequestsService =
-                new AlmaUsersServiceImplementation(mockAlmaApiClient);
+                new AlmaUsersService(mockAlmaApiClient);
         UserResourceSharingRequest resultUserResourceSharingRequest =
                 almaUsersResourceSharingRequestsService.postUserResourceSharingRequest(testUserResourceSharingRequest,
                         TEST_USER_ID);

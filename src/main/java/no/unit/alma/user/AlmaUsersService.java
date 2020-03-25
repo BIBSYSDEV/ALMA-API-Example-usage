@@ -13,16 +13,16 @@ import no.bibsys.alma.rest.user_request.UserRequest;
 import no.bibsys.alma.rest.user_request.UserRequests;
 import no.bibsys.alma.rest.user_resource_sharing_request.UserResourceSharingRequest;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
-public class AlmaUsersServiceImplementation implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequests, AlmaUsersResourceSharingRequests {
+public class AlmaUsersService
+        implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequests, AlmaUsersResourceSharingRequests {
 
     private final WebTarget usersTarget;
     private final String context;
     private final String contextValue;
-    private final AlmaStage almaStage;
+    private final String almaStage;
 
-    public AlmaUsersServiceImplementation(AlmaClient almaClient) {
+    public AlmaUsersService(AlmaClient almaClient) {
         this.usersTarget = almaClient.getWebTarget().path("users");
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
@@ -213,18 +213,15 @@ public class AlmaUsersServiceImplementation implements AlmaUsers, AlmaUsersLoans
                 .invoke(UserResourceSharingRequest.class);
     }
 
-    @Override
     public String getContext() {
         return context;
     }
 
-    @Override
     public String getContextValue() {
         return contextValue;
     }
 
-    @Override
-    public AlmaStage getAlmaStage() {
+    public String getAlmaStage() {
         return almaStage;
     }
 }

@@ -19,14 +19,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import no.bibsys.alma.rest.user.User;
 import no.bibsys.alma.rest.user.Users;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaUsersClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
     private static final String TEST_NAME = "Test Name";
     private static final String TEST_USER_ID = "user id";
     private static final String TEST_VIEW = "view";
@@ -65,7 +64,7 @@ class AlmaUsersClientTest {
         testUser.setFullName(TEST_NAME);
         when(invocation.invoke(User.class)).thenReturn(testUser);
 
-        AlmaUsersServiceImplementation almaUsersClient = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersService almaUsersClient = new AlmaUsersService(mockAlmaApiClient);
         User resultUser = almaUsersClient.getUser(TEST_USER_ID);
         assertEquals(TEST_NAME, resultUser.getFullName());
 
@@ -84,7 +83,7 @@ class AlmaUsersClientTest {
         testUser.setFullName(TEST_NAME);
         when(invocation.invoke(User.class)).thenReturn(testUser);
 
-        AlmaUsersServiceImplementation almaUsersClient = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersService almaUsersClient = new AlmaUsersService(mockAlmaApiClient);
         User resultUser = almaUsersClient.postUser(testUser);
         assertEquals(TEST_NAME, resultUser.getFullName());
     }
@@ -100,7 +99,7 @@ class AlmaUsersClientTest {
         testUser.setFullName(TEST_NAME);
         when(invocation.invoke(User.class)).thenReturn(testUser);
 
-        AlmaUsersServiceImplementation almaUsersClient = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersService almaUsersClient = new AlmaUsersService(mockAlmaApiClient);
         User resultUser = almaUsersClient.updateUser(TEST_USER_ID, testUser);
         assertEquals(TEST_NAME, resultUser.getFullName());
     }
@@ -113,7 +112,7 @@ class AlmaUsersClientTest {
         when(builder.buildDelete()).thenReturn(invocation);
         when(invocation.invoke()).thenReturn(response);
 
-        AlmaUsersServiceImplementation almaUsersClient = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersService almaUsersClient = new AlmaUsersService(mockAlmaApiClient);
         almaUsersClient.deleteUser(TEST_USER_ID);
     }
 
@@ -132,17 +131,13 @@ class AlmaUsersClientTest {
         int limit = 10;
         int offset = 0;
         String TEST_ORDERBY = "order by";
-        AlmaUsersServiceImplementation almaUsersClient = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersService almaUsersClient = new AlmaUsersService(mockAlmaApiClient);
         Users resultUsers = almaUsersClient.retrieveUsers(limit, offset);
         assertEquals(TOTAL_RECORD_COUNT, resultUsers.getTotalRecordCount());
 
         resultUsers = almaUsersClient.retrieveUsers(limit, offset, TEST_ORDERBY);
         assertEquals(TOTAL_RECORD_COUNT, resultUsers.getTotalRecordCount());
     }
-
-    // Users retrieveUsers(int limit, int offset);
-    //
-    // Users retrieveUsers(int limit, int offset, String orderBy);
 
     private void mockAlmaApi() {
 

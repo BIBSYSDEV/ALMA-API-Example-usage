@@ -19,14 +19,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import no.bibsys.alma.rest.user_request.UserRequest;
 import no.bibsys.alma.rest.user_request.UserRequests;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaUsersRequestsTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
     private static final Integer TOTAL_RECORD_COUNT = 150;
     private static final String TEST_USER_ID = "user id";
     private static final int LIMIT = 10;
@@ -66,7 +65,7 @@ class AlmaUsersRequestsTest {
         testUserRequest.setAuthor(TEST_AUTHOR);
         when(invocation.invoke(UserRequest.class)).thenReturn(testUserRequest);
 
-        AlmaUsersRequests almaUsersRequestService = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersRequests almaUsersRequestService = new AlmaUsersService(mockAlmaApiClient);
         UserRequest resultUserRequest = almaUsersRequestService.getUserRequest(TEST_USER_ID, TEST_REQUEST_ID);
         assertEquals(TEST_AUTHOR, resultUserRequest.getAuthor());
 
@@ -84,9 +83,9 @@ class AlmaUsersRequestsTest {
         testUserRequests.setTotalRecordCount(TOTAL_RECORD_COUNT);
         when(invocation.invoke(UserRequests.class)).thenReturn(testUserRequests);
 
-        AlmaUsersRequests almaUsersRequestService = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersRequests almaUsersRequestService = new AlmaUsersService(mockAlmaApiClient);
         UserRequests resultUserRequests = almaUsersRequestService.getUserRequests(TEST_USER_ID);
-        assertEquals(TEST_AUTHOR, resultUserRequests.getTotalRecordCount());
+        assertEquals(TOTAL_RECORD_COUNT, resultUserRequests.getTotalRecordCount());
     }
 
     @Test
@@ -97,7 +96,7 @@ class AlmaUsersRequestsTest {
         when(builder.buildDelete()).thenReturn(invocation);
         when(invocation.invoke()).thenReturn(response);
 
-        AlmaUsersRequests almaUsersRequestService = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersRequests almaUsersRequestService = new AlmaUsersService(mockAlmaApiClient);
         almaUsersRequestService.deleteUserRequest(TEST_USER_ID, TEST_REQUEST_ID);
     }
 
@@ -113,7 +112,7 @@ class AlmaUsersRequestsTest {
         testUserRequest.setAuthor(TEST_AUTHOR);
         when(invocation.invoke(UserRequest.class)).thenReturn(testUserRequest);
 
-        AlmaUsersRequests almaUsersRequestService = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersRequests almaUsersRequestService = new AlmaUsersService(mockAlmaApiClient);
         UserRequest resultUserRequest =
                 almaUsersRequestService.postUserRequest(TEST_USER_ID, TEST_REQUEST_ID, testUserRequest);
         assertEquals(TEST_AUTHOR, resultUserRequest.getAuthor());

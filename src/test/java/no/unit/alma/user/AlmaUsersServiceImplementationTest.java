@@ -11,14 +11,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaUsersServiceImplementationTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
 
     @Mock
     AlmaClient mockAlmaApiClient;
@@ -29,25 +28,24 @@ class AlmaUsersServiceImplementationTest {
     @Test
     void testGetAlmaStage() {
         mockAlmaApi();
-        AlmaUsersServiceImplementation almaBibsService =
-                new AlmaUsersServiceImplementation(mockAlmaApiClient);
-        assertEquals(STAGE.getVaultAlmaStageName(), almaBibsService
-                .getAlmaStage().getVaultAlmaStageName());
+        AlmaUsersService almaBibsService =
+                new AlmaUsersService(mockAlmaApiClient);
+        assertEquals(STAGE, almaBibsService.getAlmaStage());
     }
 
     @Test
     void testGetContext() {
         mockAlmaApi();
-        AlmaUsersServiceImplementation almaBibsService =
-                new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersService almaBibsService =
+                new AlmaUsersService(mockAlmaApiClient);
         assertEquals(CONTEXT, almaBibsService.getContext());
     }
 
     @Test
     void testGetContextValue() {
         mockAlmaApi();
-        AlmaUsersServiceImplementation almaBibsService =
-                new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersService almaBibsService =
+                new AlmaUsersService(mockAlmaApiClient);
         assertEquals(CONTEXT_VALUE, almaBibsService.getContextValue());
     }
 

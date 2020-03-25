@@ -2,9 +2,8 @@ package no.unit.alma.user;
 
 import no.bibsys.alma.rest.user.User;
 import no.bibsys.alma.rest.user.Users;
-import no.unit.alma.commons.AlmaContext;
 
-public interface AlmaUsers extends AlmaContext {
+public interface AlmaUsers {
 
     User getUser(String userIdentifier);
 

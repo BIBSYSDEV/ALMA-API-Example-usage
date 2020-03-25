@@ -18,14 +18,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.bibsys.alma.rest.item_loan.ItemLoans;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaUsersLoansTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
     private static final Integer TOTAL_RECORD_COUNT = 150;
     private static final String TEST_USER_ID = "user id";
     private static final int LIMIT = 10;
@@ -63,7 +62,7 @@ class AlmaUsersLoansTest {
         testItemLoans.setTotalRecordCount(TOTAL_RECORD_COUNT);
         when(invocation.invoke(ItemLoans.class)).thenReturn(testItemLoans);
 
-        AlmaUsersLoans almaUsersLoans = new AlmaUsersServiceImplementation(mockAlmaApiClient);
+        AlmaUsersLoans almaUsersLoans = new AlmaUsersService(mockAlmaApiClient);
         ItemLoans resultItemLoans = almaUsersLoans.retrieveUserItemLoans(TEST_USER_ID, LIMIT, OFFSET);
         assertEquals(TOTAL_RECORD_COUNT, resultItemLoans.getTotalRecordCount());
 
