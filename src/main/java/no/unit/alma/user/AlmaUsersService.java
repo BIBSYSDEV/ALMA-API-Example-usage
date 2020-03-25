@@ -17,7 +17,16 @@ import no.unit.alma.commons.AlmaClient;
 public class AlmaUsersService
         implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequests, AlmaUsersResourceSharingRequests {
 
-    private final WebTarget usersTarget;
+    private static final String RESOURCE_SHARING_REQUESTS = "resource_sharing_requests";
+    private static final String ORDER_BY = "order_by";
+    private static final String OFFSET = "offset";
+    private static final String LIMIT = "limit";
+    private static final String LOANS = "loans";
+    private static final String ITEM_PID = "item_pid";
+    private static final String MMS_ID = "mms_id";
+    private static final String REQUESTS = "requests";
+
+    private final transient WebTarget usersTarget;
     private final String context;
     private final String contextValue;
     private final String almaStage;
@@ -93,9 +102,9 @@ public class AlmaUsersService
     @Override
     public Users retrieveUsers(int limit, int offset, String orderBy) {
         return usersTarget
-                .queryParam("limit", limit)
-                .queryParam("offset", offset)
-                .queryParam("order_by", orderBy)
+                .queryParam(LIMIT, limit)
+                .queryParam(OFFSET, offset)
+                .queryParam(ORDER_BY, orderBy)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildGet()
@@ -106,9 +115,9 @@ public class AlmaUsersService
     public ItemLoans retrieveUserItemLoans(String userIdentifier, int limit, int offset) {
         return usersTarget
                 .path(userIdentifier)
-                .path("loans")
-                .queryParam("limit", limit)
-                .queryParam("offset", offset)
+                .path(LOANS)
+                .queryParam(LIMIT, limit)
+                .queryParam(OFFSET, offset)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildGet()
@@ -121,9 +130,11 @@ public class AlmaUsersService
         int limit = 100;
         ItemLoans retrievedLoans = retrieveUserItemLoans(userIdentifier, limit, offset);
         final Integer recordCount = retrievedLoans.getTotalRecordCount();
-        while (recordCount > (offset += limit)) {
+        boolean finished = recordCount <= (offset += limit);
+        while (!finished) {
             ItemLoans retrievedMoreLoans = retrieveUserItemLoans(userIdentifier, limit, offset);
             retrievedLoans.getItemLoan().addAll(retrievedMoreLoans.getItemLoan());
+            finished = recordCount <= (offset += limit);
         }
         return retrievedLoans;
     }
@@ -132,8 +143,8 @@ public class AlmaUsersService
     public UserRequest postUserRequest(String userIdentifer, String recordIdentifer, UserRequest userRequest) {
         return usersTarget
                 .path(userIdentifer)
-                .path("requests")
-                .queryParam("mms_id", recordIdentifer)
+                .path(REQUESTS)
+                .queryParam(MMS_ID, recordIdentifer)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(userRequest))
@@ -144,8 +155,8 @@ public class AlmaUsersService
     public UserRequest postUserRequestItem(String userIdentifer, String itemId, UserRequest userRequest) {
         return usersTarget
                 .path(userIdentifer)
-                .path("requests")
-                .queryParam("item_pid", itemId)
+                .path(REQUESTS)
+                .queryParam(ITEM_PID, itemId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(userRequest))
@@ -156,7 +167,7 @@ public class AlmaUsersService
     public void deleteUserRequest(String userIdentifer, String requestId) {
         usersTarget
                 .path(userIdentifer)
-                .path("requests")
+                .path(REQUESTS)
                 .path(requestId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
@@ -169,8 +180,8 @@ public class AlmaUsersService
     public UserRequests getUserRequests(String userIdentifer) {
         return usersTarget
                 .path(userIdentifer)
-                .path("requests")
-                .queryParam("limit", 100)
+                .path(REQUESTS)
+                .queryParam(LIMIT, 100)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildGet()
@@ -181,7 +192,7 @@ public class AlmaUsersService
     public UserRequest getUserRequest(String userIdentifer, String requestId) {
         return usersTarget
                 .path(userIdentifer)
-                .path("requests")
+                .path(REQUESTS)
                 .path(requestId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
@@ -194,7 +205,7 @@ public class AlmaUsersService
             UserResourceSharingRequest userResourceSharingRequest, String userIdentifier) {
         return usersTarget
                 .path(userIdentifier)
-                .path("resource_sharing_requests")
+                .path(RESOURCE_SHARING_REQUESTS)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(userResourceSharingRequest))
@@ -205,7 +216,7 @@ public class AlmaUsersService
     public UserResourceSharingRequest getUserResourceSharingRequest(String userIdentifier, String requestId) {
         return usersTarget
                 .path(userIdentifier)
-                .path("resource_sharing_requests")
+                .path(RESOURCE_SHARING_REQUESTS)
                 .path(requestId)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
