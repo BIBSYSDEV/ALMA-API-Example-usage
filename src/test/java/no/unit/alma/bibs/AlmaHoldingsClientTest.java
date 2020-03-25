@@ -150,7 +150,7 @@ class AlmaHoldingsClientTest {
         when(holdingsBuilder.buildGet()).thenReturn(holdingsInvocation);
         when(holdingsInvocation.invoke(Items.class)).thenReturn(responses.get(0), responses.get(1), responses.get(2));
 
-        AlmaHoldingsService almaHoldingsService = new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+        AlmaHoldingsService almaHoldingsService = new AlmaHoldingsService(mockAlmaApiClient);
         Items allItems = almaHoldingsService.getAllItems(TEST_MMS_ID, TEST_HOLDING_ID);
         assertEquals(totalRecordCount, allItems.getTotalRecordCount());
         assertEquals(totalRecordCount, allItems.getItem().size());
