@@ -177,6 +177,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
+    @SuppressWarnings({ "PMD.GodClass", "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(long mmsId, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -208,6 +209,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsIdAsString, input);
     }
 
+    @SuppressWarnings({ "PMD.GodClass", "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(String barcode, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -240,6 +242,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
+    @SuppressWarnings({ "PMD.GodClass", "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(String barcode, String label, String access,
             String remoteRepositoryId, String libraryCode, String url, String year, String month, String day,
             String volume, String issue, String number) {
