@@ -22,7 +22,6 @@ class AlmaClientTest {
     @Mock
     VaultApiAuthorization vaultApiAuthorization;
 
-
     @Mock
     ApiAuthorizationService apiAuthorizationService;
 
