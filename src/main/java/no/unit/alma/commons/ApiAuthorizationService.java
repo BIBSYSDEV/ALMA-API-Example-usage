@@ -42,6 +42,10 @@ public class ApiAuthorizationService {
             return this;
         }
 
+        /**
+         * Build-method for ApiAuthorizationService using VaultClientBuilder and environment variables.
+         * @return an ApiAuthorizationService
+         */
         public ApiAuthorizationService build() {
             Objects.requireNonNull(builderVaultClient, "VaultClient cannot be null");
             if (StringUtils.isEmpty(builderEnvironment)) {

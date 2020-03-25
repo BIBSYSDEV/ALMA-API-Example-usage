@@ -22,6 +22,6 @@ public class AlmaAuthorizationRequestFilter implements ClientRequestFilter {
             throw new IOException(errMsg);
         }
 
-        clientRequestContext.getHeaders().add("Authorization", apiAuthorization.asAPIKey());
+        clientRequestContext.getHeaders().add("Authorization", apiAuthorization.asApiKey());
     }
 }
