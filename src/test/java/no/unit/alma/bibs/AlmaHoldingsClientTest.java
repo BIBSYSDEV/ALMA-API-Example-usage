@@ -20,14 +20,13 @@ import no.bibsys.alma.rest.holding.Holding;
 import no.bibsys.alma.rest.holdings.Holdings;
 import no.bibsys.alma.rest.items.Items;
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.commons.AlmaStage;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaHoldingsClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final AlmaStage STAGE = AlmaStage.SANDBOX2;
+    private static final String STAGE = "alma-sandbox2";
 
     private static final Integer TOTAL_RECORD_COUNT = 1;
     private static final String TEST_MMS_ID = "123456";
@@ -61,7 +60,7 @@ class AlmaHoldingsClientTest {
         tempHoldings.setTotalRecordCount(TOTAL_RECORD_COUNT);
         when(holdingsInvocation.invoke((Class<Object>) any())).thenReturn(tempHoldings);
         AlmaHoldingsService almaHoldingsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+                new AlmaHoldingsService(mockAlmaApiClient);
 
         Holdings resultHoldings = almaHoldingsService.getHoldings(TEST_MMS_ID);
         assertEquals(TOTAL_RECORD_COUNT, resultHoldings.getTotalRecordCount());
@@ -78,7 +77,7 @@ class AlmaHoldingsClientTest {
         tempHolding.setOriginatingSystem(TEST_ORIGINATING_SYSTEM);
         when(holdingsInvocation.invoke((Class<Object>) any())).thenReturn(tempHolding);
         AlmaHoldingsService almaHoldingsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+                new AlmaHoldingsService(mockAlmaApiClient);
 
         Holding resultHolding = almaHoldingsService.getHolding(TEST_MMS_ID, TEST_HOLDING_ID);
         assertEquals(TEST_ORIGINATING_SYSTEM, resultHolding.getOriginatingSystem());
@@ -95,7 +94,7 @@ class AlmaHoldingsClientTest {
         when(holdingsBuilder.buildPut(Entity.xml(tempHolding))).thenReturn(holdingsInvocation);
         when(holdingsInvocation.invoke((Class<Object>) any())).thenReturn(tempHolding);
         AlmaHoldingsService almaHoldingsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+                new AlmaHoldingsService(mockAlmaApiClient);
 
         Holding resultHolding = almaHoldingsService.updateHolding(TEST_MMS_ID, tempHolding);
         assertEquals(TEST_ORIGINATING_SYSTEM, resultHolding.getOriginatingSystem());
@@ -115,31 +114,36 @@ class AlmaHoldingsClientTest {
         when(holdingsInvocation.invoke((Class<Object>) any())).thenReturn(tempItems);
 
         AlmaHoldingsService almaHoldingsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+                new AlmaHoldingsService(mockAlmaApiClient);
 
-        Items resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, 10, 0);
+        long limit = 10;
+        long offset = 0;
+        Items resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, limit, offset);
+        assertEquals(TOTAL_RECORD_COUNT, resultItems.getTotalRecordCount());
+        long noLimit = -1;
+        resultItems = almaHoldingsService.getItems(TEST_MMS_ID, TEST_HOLDING_ID, noLimit, offset);
         assertEquals(TOTAL_RECORD_COUNT, resultItems.getTotalRecordCount());
     }
 
     @Test
     void testGetAlmaStage() {
         AlmaHoldingsService almaBibsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
-        assertEquals(STAGE.getVaultAlmaStageName(), almaBibsService
-                .getAlmaStage().getVaultAlmaStageName());
+                new AlmaHoldingsService(mockAlmaApiClient);
+        assertEquals(STAGE, almaBibsService
+                .getAlmaStage());
     }
 
     @Test
     void testGetContext() {
         AlmaHoldingsService almaBibsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+                new AlmaHoldingsService(mockAlmaApiClient);
         assertEquals(CONTEXT, almaBibsService.getContext());
     }
 
     @Test
     void testGetContextValue() {
         AlmaHoldingsService almaBibsService =
-                new AlmaHoldingsServiceImplementation(mockAlmaApiClient);
+                new AlmaHoldingsService(mockAlmaApiClient);
         assertEquals(CONTEXT_VALUE, almaBibsService.getContextValue());
     }
 
