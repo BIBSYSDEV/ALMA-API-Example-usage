@@ -1,5 +1,6 @@
 package no.unit.alma.commons;
 
+import no.unit.alma.generated.error.WebServiceResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -32,27 +33,23 @@ class AlmaStatusResponseFilterTest {
 
     @Test
     void testFilterWhenUnmarshallingFailes() throws IOException, URISyntaxException {
-        String initialString = "not xml";
-        URI url = new URI("https://www.example.com");
+        String responseBody = "not xml";
+        String urlString = "https://www.example.com";
+        URI url = new URI(urlString);
         int status = 121;
         String method = "method";
         String statusText = "status text";
-
-        InputStream inputStream = new ByteArrayInputStream(initialString.getBytes());
+        WebServiceResult webServiceResult = null;
+        InputStream inputStream = new ByteArrayInputStream(responseBody.getBytes());
         Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
 
         when(statusInfo.getFamily()).thenReturn(value);
         when(statusInfo.getReasonPhrase()).thenReturn(statusText);
-
-
         when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
-
         when(clientResponseContext.getMediaType()).thenReturn(MediaType.APPLICATION_XML_TYPE);
         when(clientResponseContext.hasEntity()).thenReturn(true);
         when(clientResponseContext.getEntityStream()).thenReturn(inputStream);
-        when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
         when(clientResponseContext.getStatus()).thenReturn(status);
-
         when(clientRequestContext.getMethod()).thenReturn(method);
         when(clientRequestContext.getUri()).thenReturn(url);
 
@@ -63,25 +60,163 @@ class AlmaStatusResponseFilterTest {
             assertEquals(method, e.getMethod());
             assertEquals(statusText, e.getStatusText());
             assertEquals(status, e.getStatus());
+            assertEquals(responseBody, e.getResponseBody());
+            assertEquals(webServiceResult, e.getWebServiceResult());
+            assertEquals(urlString, e.getUrl());
         }
 
     }
 
+    @Test
+    void testFilterWhenResponseIsNotXML() throws IOException, URISyntaxException {
+        String responseBody = "not xml";
+        String urlString = "https://www.example.com";
+        URI url = new URI(urlString);
+        int status = 121;
+        String method = "method";
+        String statusText = "status text";
+        WebServiceResult webServiceResult = null;
+        InputStream inputStream = new ByteArrayInputStream(responseBody.getBytes());
+        Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
+
+        when(statusInfo.getFamily()).thenReturn(value);
+        when(statusInfo.getReasonPhrase()).thenReturn(statusText);
+        when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
+        when(clientResponseContext.getMediaType()).thenReturn(MediaType.APPLICATION_JSON_TYPE);
+        when(clientResponseContext.hasEntity()).thenReturn(true);
+        when(clientResponseContext.getEntityStream()).thenReturn(inputStream);
+        when(clientResponseContext.getStatus()).thenReturn(status);
+        when(clientRequestContext.getMethod()).thenReturn(method);
+        when(clientRequestContext.getUri()).thenReturn(url);
+
+        AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
+        try {
+            almaStatusResponseFilter.filter(clientRequestContext, clientResponseContext);
+        } catch (HttpStatusException e) {
+            assertEquals(method, e.getMethod());
+            assertEquals(statusText, e.getStatusText());
+            assertEquals(status, e.getStatus());
+            assertEquals(responseBody, e.getResponseBody());
+            assertEquals(webServiceResult, e.getWebServiceResult());
+            assertEquals(urlString, e.getUrl());
+        }
+
+    }
+
+    @Test
+    void testFilterWhenResponseIsSuccessFul() throws IOException {
+        Response.Status.Family value = Response.Status.Family.SUCCESSFUL;
+        when(statusInfo.getFamily()).thenReturn(value);
+        when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
+        AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
+        almaStatusResponseFilter.filter(clientRequestContext, clientResponseContext);
+    }
+
+
+    @Test
+    void testFilterWhenResponseHasNoEntity() throws IOException, URISyntaxException {
+        String urlString = "https://www.example.com";
+        URI url = new URI(urlString);
+        int status = 121;
+        String method = "method";
+        String statusText = "status text";
+        WebServiceResult webServiceResult = null;
+        Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
+
+        when(statusInfo.getFamily()).thenReturn(value);
+        when(statusInfo.getReasonPhrase()).thenReturn(statusText);
+        when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
+        when(clientResponseContext.getMediaType()).thenReturn(MediaType.APPLICATION_JSON_TYPE);
+        when(clientResponseContext.hasEntity()).thenReturn(false);
+        when(clientResponseContext.getStatus()).thenReturn(status);
+        when(clientRequestContext.getMethod()).thenReturn(method);
+        when(clientRequestContext.getUri()).thenReturn(url);
+
+        AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
+        try {
+            almaStatusResponseFilter.filter(clientRequestContext, clientResponseContext);
+        } catch (HttpStatusException e) {
+            assertEquals(method, e.getMethod());
+            assertEquals(statusText, e.getStatusText());
+            assertEquals(status, e.getStatus());
+            assertEquals(null, e.getResponseBody());
+            assertEquals(webServiceResult, e.getWebServiceResult());
+            assertEquals(urlString, e.getUrl());
+        }
+
+    }
+
+    @Test
+    void testFilterEmptyWebServiceResult() throws IOException, URISyntaxException {
+        String responseBody = "";
+        String urlString = "https://www.example.com";
+        URI url = new URI(urlString);
+        int status = 121;
+        String method = "method";
+        String statusText = "status text";
+        WebServiceResult webServiceResult = null;
+        InputStream inputStream = new ByteArrayInputStream(responseBody.getBytes());
+        Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
+
+        when(statusInfo.getFamily()).thenReturn(value);
+        when(statusInfo.getReasonPhrase()).thenReturn(statusText);
+        when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
+        when(clientResponseContext.getMediaType()).thenReturn(MediaType.APPLICATION_XML_TYPE);
+        when(clientResponseContext.hasEntity()).thenReturn(true);
+        when(clientResponseContext.getEntityStream()).thenReturn(inputStream);
+        when(clientResponseContext.getStatus()).thenReturn(status);
+        when(clientRequestContext.getMethod()).thenReturn(method);
+        when(clientRequestContext.getUri()).thenReturn(url);
+
+        AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
+        try {
+            almaStatusResponseFilter.filter(clientRequestContext, clientResponseContext);
+        } catch (HttpStatusException e) {
+            assertEquals(method, e.getMethod());
+            assertEquals(statusText, e.getStatusText());
+            assertEquals(status, e.getStatus());
+            assertEquals(responseBody, e.getResponseBody());
+            assertEquals(webServiceResult, e.getWebServiceResult());
+            assertEquals(urlString, e.getUrl());
+        }
+
+    }
+
+
 //    @Test
-//    void testFilterWhenResponseIsNotXML() throws IOException, URISyntaxException {
+//    void testFilterWhenIOExceptionOnMarshallingResponse() throws IOException, URISyntaxException {
+//        String responseBody = "not xml";
+//        String urlString = "https://www.example.com";
+//        URI url = new URI(urlString);
+//        int status = 121;
+//        String method = "method";
+//        String statusText = "status text";
+//        WebServiceResult webServiceResult = null;
+//        InputStream inputStream = new ByteArrayInputStream(responseBody.getBytes());
 //        Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
-//        int status = 1;
-//        URI url = new URI("https://www.example.com");
 //
-//        when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
-//        when(clientResponseContext.getStatus()).thenReturn(status);
 //        when(statusInfo.getFamily()).thenReturn(value);
-//        when(clientResponseContext.getMediaType()).thenReturn(MediaType.APPLICATION_JSON_TYPE);
+//        when(statusInfo.getReasonPhrase()).thenReturn(statusText);
+//        when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
+//        when(clientResponseContext.getMediaType()).thenReturn(MediaType.APPLICATION_XML_TYPE);
+//        when(clientResponseContext.hasEntity()).thenReturn(true);
+//        when(clientResponseContext.getEntityStream()).thenThrow(new IOException());
+//        when(clientResponseContext.getStatus()).thenReturn(status);
+//        when(clientRequestContext.getMethod()).thenReturn(method);
 //        when(clientRequestContext.getUri()).thenReturn(url);
-//        when(clientRequestContext.getMethod()).thenReturn("method");
 //
 //        AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
-//        almaStatusResponseFilter.filter(clientRequestContext, clientResponseContext);
+//        try {
+//            almaStatusResponseFilter.filter(clientRequestContext, clientResponseContext);
+//        } catch (HttpStatusException e) {
+//            assertEquals(method, e.getMethod());
+//            assertEquals(statusText, e.getStatusText());
+//            assertEquals(status, e.getStatus());
+//            assertEquals(responseBody, e.getResponseBody());
+//            assertEquals(webServiceResult, e.getWebServiceResult());
+//            assertEquals(urlString, e.getUrl());
+//        }
+//
 //    }
 
 
