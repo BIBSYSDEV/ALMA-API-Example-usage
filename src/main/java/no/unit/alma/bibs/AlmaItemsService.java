@@ -1,5 +1,14 @@
 package no.unit.alma.bibs;
 
+import java.util.Calendar;
+import java.util.List;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.lang3.StringUtils;
+
 import no.bibsys.alma.rest.item_loan.ItemLoan;
 import no.bibsys.alma.rest.item_loan.LoanStatus;
 import no.bibsys.alma.rest.items.BibData;
@@ -12,15 +21,8 @@ import no.bibsys.alma.rest.user_request.RequestTypes;
 import no.bibsys.alma.rest.user_request.UserRequest;
 import no.bibsys.alma.rest.user_request.UserRequests;
 import no.unit.alma.commons.AlmaClient;
-import org.apache.commons.lang3.StringUtils;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import java.util.Calendar;
-import java.util.List;
-
-public class AlmaItemsService  {
+public class AlmaItemsService {
 
     private final WebTarget bibsTarget;
     private final WebTarget itemsTarget;
@@ -38,7 +40,6 @@ public class AlmaItemsService  {
         this.almaStage = almaClient.getAlmaStage();
     }
 
-    
     public Item getItem(final String mmsId, final String holdingsId, final String itemId) {
         return bibsTarget
                 .path(mmsId)
@@ -52,7 +53,6 @@ public class AlmaItemsService  {
                 .invoke(Item.class);
     }
 
-    
     public Item getItem(final String barcode) {
         return itemsTarget
                 .queryParam("item_barcode", barcode)
@@ -62,20 +62,18 @@ public class AlmaItemsService  {
                 .invoke(Item.class);
     }
 
-    
     public Item createItem(final String mms, final String holdingsId) {
         return bibsTarget
                 .path(mms)
                 .path("holdings")
                 .path(holdingsId)
                 .path("items")
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(Item.class);
     }
 
-    
     public Item updateItem(final Item item) {
         return bibsTarget
                 .path(item.getBibData().getMmsId())
@@ -83,13 +81,12 @@ public class AlmaItemsService  {
                 .path(item.getHoldingData().getHoldingId())
                 .path("items")
                 .path(item.getItemData().getPid())
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(item))
                 .invoke(Item.class);
     }
 
-    
     public ItemLoan createUserLoanOnItem(final String barcode, final String user_Id, final String library,
             final String circulationDesk) {
         final Item item = getItem(barcode);
@@ -117,13 +114,12 @@ public class AlmaItemsService  {
                 .path(itemData.getPid())
                 .path("loans")
                 .queryParam("user_id", user_Id)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
     }
 
-    
     public ItemLoan createUserLoanOnItem(final String barcode, final String user_Id, final String library,
             final String circulationDesk, final float fine, final LoanStatus loanStatus) {
         final Item item = getItem(barcode);
@@ -153,13 +149,12 @@ public class AlmaItemsService  {
                 .path(itemData.getPid())
                 .path("loans")
                 .queryParam("user_id", user_Id)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
     }
 
-    
     public ItemLoan updateUserLoanAndChangeDueDate(final String userId, final String loanId, final Calendar dueDate) {
         final ItemLoan itemLoan = new ItemLoan();
         itemLoan.setDueDate(dueDate);
@@ -167,13 +162,12 @@ public class AlmaItemsService  {
                 .path(userId)
                 .path("loans")
                 .path(loanId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
     }
 
-    
     public UserRequests getRequestsFromItem(Item item, boolean deleted) {
         final String recordId = item.getBibData().getMmsId();
         final String holdingsId = item.getHoldingData().getHoldingId();
@@ -181,7 +175,6 @@ public class AlmaItemsService  {
         return getRequestsFromItem(recordId, holdingsId, itemId, deleted);
     }
 
-    
     public UserRequests getRequestsFromItem(String mms_id, String holding_id, String item_pid, boolean deleted) {
         WebTarget requestsFromItemTarget =
                 bibsTarget
@@ -206,13 +199,11 @@ public class AlmaItemsService  {
                 .invoke(UserRequests.class);
     }
 
-    
     public UserRequests getRequestsFromItem(String barcode, boolean deleted) {
         final Item item = getItem(barcode);
         return getRequestsFromItem(item, deleted);
     }
 
-    
     public UserRequest createPatronRequest(String barcode, String pickupLocationLibrary, String message, String ltId) {
         final Item item = getItem(barcode);
         if (item.getItemData() == null) {
@@ -221,7 +212,6 @@ public class AlmaItemsService  {
         return createPatronRequest(item, pickupLocationLibrary, message, ltId);
     }
 
-    
     public UserRequest createPatronRequest(Item item, String pickupLocationLibrary, String message, String userId) {
         final BibData bibData = item.getBibData();
         final HoldingData holdingData = item.getHoldingData();
@@ -249,13 +239,12 @@ public class AlmaItemsService  {
                 .path(itemData.getPid())
                 .path("requests")
                 .queryParam("user_id", userId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(newRequest))
                 .invoke(UserRequest.class);
     }
 
-    
     public UserRequest createPatronRequest(String mmsId, String userId, final UserRequest newRequest) {
         if (userId == null || userId.isEmpty()) {
             throw new IllegalArgumentException("No ltId provided for mmsid=" + mmsId + ", could not create request");
@@ -264,26 +253,23 @@ public class AlmaItemsService  {
                 .path(mmsId)
                 .path("requests")
                 .queryParam("user_id", userId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(newRequest))
                 .invoke(UserRequest.class);
     }
 
-    
     public UserRequest createDigitizationRequest(String barcode, UserRequest.TargetDestination targetDestination,
             String message) {
         final Item item = getItem(barcode);
         return createDigitizationRequest(item, targetDestination, message);
     }
 
-    
     public UserRequest createDigitizationRequest(Item item, UserRequest.TargetDestination targetDestination,
             String message) {
         return createDigitizationRequest(item, targetDestination, message, null);
     }
 
-    
     public UserRequest createDigitizationRequest(Item item, UserRequest.TargetDestination targetDestination,
             String message, String userId) {
         final BibData bibData = item.getBibData();
@@ -320,13 +306,12 @@ public class AlmaItemsService  {
                             .queryParam("user_id", userId);
         }
         return digitizationTarget
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(newRequest))
                 .invoke(UserRequest.class);
     }
 
-    
     public void deleteItem(final String mmsId, String holdingsId, final String itemId, boolean override,
             HoldingsRecord holdingsRecord) {
         bibsTarget
@@ -344,7 +329,6 @@ public class AlmaItemsService  {
                 .close();
     }
 
-    
     public void deleteItem(final String barcode, boolean override, HoldingsRecord holdingsRecord) {
         final Item item = getItem(barcode);
         final String recordId = item.getBibData().getMmsId();
@@ -369,12 +353,10 @@ public class AlmaItemsService  {
                 .close();
     }
 
-    
     public void deleteRequest(String barcode, String requestId) {
         deleteRequest(barcode, requestId, "");
     }
 
-    
     public void deleteRequest(final String barcode, final String requestId, String note) {
         final Item item = getItem(barcode);
         final String recordId = item.getBibData().getMmsId();
@@ -402,7 +384,6 @@ public class AlmaItemsService  {
 
     }
 
-    
     public UserRequest updateCommentOnRequest(String barcode, String requestId, String comment,
             boolean appendToExistingComment) {
         final List<UserRequest> requestsFromItem = getRequestsFromItem(barcode, false).getUserRequest();
@@ -436,13 +417,12 @@ public class AlmaItemsService  {
                 .path(itemId)
                 .path("requests")
                 .path(recordId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(requestToUpdate))
                 .invoke(UserRequest.class);
     }
 
-    
     public UserRequest actionOnRequest(String barcode, String action, String requestId, boolean releaseItem) { // todo:
                                                                                                                // releaseItem
                                                                                                                // er
@@ -461,13 +441,12 @@ public class AlmaItemsService  {
                 .path("requests")
                 .path(requestId)
                 .queryParam("op", action)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(UserRequest.class);
     }
 
-    
     public Item scanInItem(String barcode, String requestId, String department, String circDesk, String library) {
         final Item item = getItem(barcode);
         final String recordId = "" + item.getBibData().getMmsId();
@@ -484,13 +463,12 @@ public class AlmaItemsService  {
                 .queryParam("department", department)
                 .queryParam("circ_desk", circDesk)
                 .queryParam("library", library)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(Item.class);
     }
 
-    
     public Item scanInItem(String barcode, String circDesk, String library) {
         final Item item = getItem(barcode);
         final String recordId = "" + item.getBibData().getMmsId();
@@ -505,25 +483,23 @@ public class AlmaItemsService  {
                 .queryParam("op", "scan")
                 .queryParam("circ_desk", circDesk)
                 .queryParam("library", library)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(""))
                 .invoke(Item.class);
     }
 
-    
     public Representation updateRemoteDigitalItem(String mmsId, String representationId, Representation digitalItem) {
         return bibsTarget
                 .path(mmsId)
                 .path("representations")
                 .path(representationId)
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(digitalItem))
                 .invoke(Representation.class);
     }
 
-    
     public Item updateItemDescription(final Item item) {
         return bibsTarget
                 .path(item.getBibData().getMmsId())
@@ -531,23 +507,20 @@ public class AlmaItemsService  {
                 .path(item.getHoldingData().getHoldingId())
                 .path("items")
                 .path(item.getItemData().getPid())
-                .request(MediaType.APPLICATION_XML)
+                .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildPut(Entity.xml(new no.bibsys.alma.rest.items.ObjectFactory().createItem(item)))
                 .invoke(Item.class);
     }
 
-    
     public String getContext() {
         return context;
     }
 
-    
     public String getContextValue() {
         return contextValue;
     }
 
-    
     public String getAlmaStage() {
         return almaStage;
     }
