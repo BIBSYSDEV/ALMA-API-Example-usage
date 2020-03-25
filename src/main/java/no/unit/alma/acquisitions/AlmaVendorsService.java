@@ -4,8 +4,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import no.bibsys.alma.rest.vendor.Vendor;
-import no.bibsys.alma.rest.vendor.Vendors;
+import no.unit.alma.generated.vendors.Vendor;
+import no.unit.alma.generated.vendors.Vendors;
 import no.unit.alma.commons.AlmaClient;
 import org.apache.commons.lang3.StringUtils;
 
@@ -153,17 +153,17 @@ public class AlmaVendorsService  {
                 .close();
     }
 
-    
+
     public String getContext() {
         return context;
     }
 
-    
+
     public String getContextValue() {
         return contextValue;
     }
 
-    
+
     public String getAlmaStage() {
         return almaStage;
     }

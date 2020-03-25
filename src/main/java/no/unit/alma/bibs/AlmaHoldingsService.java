@@ -4,9 +4,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import no.bibsys.alma.rest.holding.Holding;
-import no.bibsys.alma.rest.holdings.Holdings;
-import no.bibsys.alma.rest.items.Items;
+import no.unit.alma.generated.items.Items;
+import no.unit.alma.generated.holding.Holding;
+import no.unit.alma.generated.holdings.Holdings;
+
 import no.unit.alma.commons.AlmaClient;
 
 /**
@@ -72,6 +73,30 @@ public class AlmaHoldingsService {
                 .accept(MediaType.APPLICATION_XML)
                 .buildGet()
                 .invoke(Items.class);
+    }
+
+    public Items getAllItems(String mmsId, String holdingsId) {
+
+        Items items = new Items();
+        int offset = 0;
+        final int limit = 100;
+        Items retrievedItems = getItems(mmsId, holdingsId, limit, offset);
+        items.getItem().addAll(retrievedItems.getItem());
+
+        int total = retrievedItems.getTotalRecordCount();
+        boolean finished = limit + offset >= total;
+
+        while (!finished) {
+            offset = offset + limit;
+
+            retrievedItems = getItems(mmsId, holdingsId, limit, offset);
+            items.getItem().addAll(retrievedItems.getItem());
+
+            finished = limit + offset > total;
+        }
+
+        items.setTotalRecordCount(total);
+        return items;
     }
 
     public String getContext() {

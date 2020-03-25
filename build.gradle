@@ -1,19 +1,22 @@
+import org.unbrokendome.gradle.plugins.xjc.XjcGenerate
+
 plugins {
     id 'java'
     id 'checkstyle'
     id 'pmd'
     id 'jacoco'
     id "net.linguica.maven-settings" version "0.5"
+    id 'org.unbroken-dome.xjc' version '1.4.3'
 }
 
-group 'no.unit.nva'
+group 'no.unit.alma'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = JavaVersion.VERSION_11  // source-code version and must be <= targetCompatibility
 targetCompatibility = JavaVersion.VERSION_11 // bytecode target version
 
 repositories {
-   mavenLocal()
+   mavenCentral()
    maven {
         url = 'https://artifactory.unit.no/artifactory/libs-releases'
     	// put mavenUsername and mavenPassword in gradle.properties NB! Do NOT commit gradle.properties to git!

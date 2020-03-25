@@ -11,18 +11,24 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import no.bibsys.alma.rest.item_loan.ItemLoan;
-import no.bibsys.alma.rest.item_loan.LoanStatus;
-import no.bibsys.alma.rest.items.BibData;
-import no.bibsys.alma.rest.items.HoldingData;
-import no.bibsys.alma.rest.items.Item;
-import no.bibsys.alma.rest.items.ItemData;
-import no.bibsys.alma.rest.representations.Representation;
-import no.bibsys.alma.rest.user_request.PickupLocationTypes;
-import no.bibsys.alma.rest.user_request.RequestTypes;
-import no.bibsys.alma.rest.user_request.UserRequest;
-import no.bibsys.alma.rest.user_request.UserRequests;
+import no.unit.alma.generated.itemloans.ItemLoan;
+import no.unit.alma.generated.itemloans.LoanStatus;
+import no.unit.alma.generated.items.BibData;
+import no.unit.alma.generated.items.HoldingData;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.items.ItemData;
+import no.unit.alma.generated.items.ObjectFactory;
+import no.unit.alma.generated.representations.Representation;
+import no.unit.alma.generated.userrequests.PickupLocationTypes;
+import no.unit.alma.generated.userrequests.RequestTypes;
+import no.unit.alma.generated.userrequests.UserRequest;
+import no.unit.alma.generated.userrequests.UserRequests;
 import no.unit.alma.commons.AlmaClient;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.GregorianCalendar;
 
 public class AlmaItemsService {
 
@@ -104,6 +110,7 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
+
     public ItemLoan createUserLoanOnItem(final String barcode, final String userId, final String library,
             final String circulationDesk) {
         final Item item = getItem(barcode);
@@ -136,6 +143,7 @@ public class AlmaItemsService {
                 .buildPost(Entity.xml(itemLoan))
                 .invoke(ItemLoan.class);
     }
+
 
     public ItemLoan createUserLoanOnItem(final String barcode, final String userId, final String library,
             final String circulationDesk, final float fine, final LoanStatus loanStatus) {
@@ -172,9 +180,14 @@ public class AlmaItemsService {
                 .invoke(ItemLoan.class);
     }
 
-    public ItemLoan updateUserLoanAndChangeDueDate(final String userId, final String loanId, final Calendar dueDate) {
+
+    public ItemLoan updateUserLoanAndChangeDueDate(final String userId, final String loanId, final Calendar dueDate)
+            throws DatatypeConfigurationException {
         final ItemLoan itemLoan = new ItemLoan();
-        itemLoan.setDueDate(dueDate);
+        GregorianCalendar gregory = new GregorianCalendar();
+        gregory.setTime(dueDate.getTime());
+        XMLGregorianCalendar gregorianDueDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregory);
+        itemLoan.setDueDate(gregorianDueDate);
         return usersTarget
                 .path(userId)
                 .path(LOANS)
@@ -191,6 +204,7 @@ public class AlmaItemsService {
         final String itemId = item.getItemData().getPid();
         return getRequestsFromItem(recordId, holdingsId, itemId, deleted);
     }
+
 
     public UserRequests getRequestsFromItem(String mmsId, String holdingId, String itemPid, boolean deleted) {
         WebTarget requestsFromItemTarget =
@@ -526,7 +540,7 @@ public class AlmaItemsService {
                 .path(item.getItemData().getPid())
                 .request()
                 .accept(MediaType.APPLICATION_XML)
-                .buildPut(Entity.xml(new no.bibsys.alma.rest.items.ObjectFactory().createItem(item)))
+                .buildPut(Entity.xml(new ObjectFactory().createItem(item)))
                 .invoke(Item.class);
     }
 

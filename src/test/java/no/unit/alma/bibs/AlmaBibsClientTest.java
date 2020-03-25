@@ -18,15 +18,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bibsys.alma.rest.bibs.Bib;
-import no.bibsys.alma.rest.bibs.Bibs;
-import no.bibsys.alma.rest.items.BibData;
-import no.bibsys.alma.rest.items.HoldingData;
-import no.bibsys.alma.rest.items.Item;
-import no.bibsys.alma.rest.items.ItemData;
-import no.bibsys.alma.rest.representations.Representation;
-import no.bibsys.alma.rest.representations.Representations;
-import no.bibsys.alma.rest.user_request.UserRequests;
+import no.unit.alma.generated.bibs.Bib;
+import no.unit.alma.generated.bibs.Bibs;
+import no.unit.alma.generated.items.BibData;
+import no.unit.alma.generated.items.HoldingData;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.items.ItemData;
+import no.unit.alma.generated.representations.Representation;
+import no.unit.alma.generated.representations.Representations;
+import no.unit.alma.generated.userrequests.UserRequests;
 import no.unit.alma.commons.AlmaClient;
 
 @ExtendWith(MockitoExtension.class)

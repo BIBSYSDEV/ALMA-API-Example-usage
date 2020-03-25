@@ -10,13 +10,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
 
-import no.bibsys.alma.rest.bibs.Bib;
-import no.bibsys.alma.rest.bibs.Bibs;
-import no.bibsys.alma.rest.items.Item;
-import no.bibsys.alma.rest.items.ItemData;
-import no.bibsys.alma.rest.representations.Representation;
-import no.bibsys.alma.rest.representations.Representations;
-import no.bibsys.alma.rest.user_request.UserRequests;
+import no.unit.alma.generated.bibs.Bib;
+import no.unit.alma.generated.bibs.Bibs;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.items.ItemData;
+import no.unit.alma.generated.representations.Representation;
+import no.unit.alma.generated.representations.Representations;
+import no.unit.alma.generated.userrequests.UserRequests;
 import no.unit.alma.commons.AlmaClient;
 
 /**
@@ -177,7 +177,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-    @SuppressWarnings({ "PMD.ExcessiveParameterList" })
+@SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(long mmsId, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -209,7 +209,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsIdAsString, input);
     }
 
-    @SuppressWarnings({ "PMD.ExcessiveParameterList" })
+@SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(String barcode, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -242,7 +242,7 @@ public class AlmaBibsService {
         return createRemotePresentation(mmsId, input);
     }
 
-    @SuppressWarnings({ "PMD.ExcessiveParameterList" })
+@SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(String barcode, String label, String access,
             String remoteRepositoryId, String libraryCode, String url, String year, String month, String day,
             String volume, String issue, String number) {
@@ -303,6 +303,7 @@ public class AlmaBibsService {
                 .buildGet()
                 .invoke(Representation.class);
     }
+
 
     public Bibs retrieveBibs(String mmsId, String ieId, String holdingsId, String representationId,
             String nzMmsId, String view, String expand) {

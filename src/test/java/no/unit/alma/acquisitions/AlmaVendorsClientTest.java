@@ -11,13 +11,13 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import no.bibsys.alma.rest.vendor.Vendors;
+import no.unit.alma.generated.vendors.Vendors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.bibsys.alma.rest.vendor.Vendor;
+import no.unit.alma.generated.vendors.Vendor;
 import no.unit.alma.commons.AlmaClient;
 
 @ExtendWith(MockitoExtension.class)
