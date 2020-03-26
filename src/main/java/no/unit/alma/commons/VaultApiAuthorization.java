@@ -17,6 +17,14 @@ public class VaultApiAuthorization {
     private final String almaStage;
     private final String organization;
 
+    /**
+     * The ApiKeys for Alma are stored in Vault. This class retrieves teh secrets from Vault to use them as apiKeys
+     * for Alma-Api-endpoints dependent on the environment/stage.
+     * @param vaultClient VaultClient
+     * @param environment environment (test, utv, prod)
+     * @param almaStage alma-phase (sandbox, prod)
+     * @param organization alma-instance (bibcode)
+     */
     public VaultApiAuthorization(VaultClient vaultClient, String environment, String almaStage, String organization) {
         Objects.requireNonNull(vaultClient, "Vault client is required");
         if (StringUtils.isEmpty(environment)) {
@@ -48,7 +56,7 @@ public class VaultApiAuthorization {
         return organization;
     }
 
-    public String asAPIKey() {
+    public String asApiKey() {
         return "apikey " + getApiKey();
     }
 
@@ -66,9 +74,8 @@ public class VaultApiAuthorization {
                 almaStage, type, key, secretPath);
         final String secret = vaultClient.read(secretPath);
         if (secret == null) {
-            throw new RuntimeException(String.format(
-                    "Unable to retrieve AlmaContext secret. Environment: '%s', Alma stage: '%s', AlmaContext: '%s', Value: '%s'",
-                    environment, almaStage, type, key));
+            throw new RuntimeException(String.format("Unable to retrieve AlmaContext secret. Environment: '%s'"
+                            + ", Alma stage: '%s', AlmaContext: '%s', Value: '%s'", environment, almaStage, type, key));
         }
         log.debug("AlmaContext secret found for Environment '{}', Alma stage '{}', Context '{}', Value '{}'",
                 environment, almaStage, type, key);
@@ -84,11 +91,11 @@ public class VaultApiAuthorization {
             return false;
         }
         VaultApiAuthorization that = (VaultApiAuthorization) o;
-        return Objects.equals(organization, that.organization) &&
-                Objects.equals(environment, that.environment) &&
-                almaStage == that.almaStage &&
-                Objects.equals(getAlmaHost(), that.getAlmaHost()) &&
-                Objects.equals(getApiKey(), that.getApiKey());
+        return Objects.equals(organization, that.organization)
+                && Objects.equals(environment, that.environment)
+                && almaStage == that.almaStage
+                && Objects.equals(getAlmaHost(), that.getAlmaHost())
+                && Objects.equals(getApiKey(), that.getApiKey());
     }
 
     @Override
@@ -98,10 +105,10 @@ public class VaultApiAuthorization {
 
     @Override
     public String toString() {
-        return "ApiAuthorization{" +
-                "environment='" + environment + '\'' +
-                ", almaStage=" + almaStage +
-                ", organization='" + organization + '\'' +
-                '}';
+        return "ApiAuthorization{"
+                + "environment='" + environment + '\''
+                + ", almaStage=" + almaStage
+                + ", organization='" + organization + '\''
+                + '}';
     }
 }
