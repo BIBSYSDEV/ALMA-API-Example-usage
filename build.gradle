@@ -15,6 +15,118 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_11  // source-code version and must be <= targetCompatibility
 targetCompatibility = JavaVersion.VERSION_11 // bytecode target version
 
+
+xjc {
+    includeInMainCompilation = true
+    includeEpisodeFileInJar = true
+}
+
+sourceSets {
+    main { java { srcDir xjcGenerate.outputDirectory } }
+}
+
+compileJava {
+    dependsOn xjcGenerate
+}
+
+xjcGenerate {
+    urlSources = fileTree('src/main/schema') { include 'webservice_result_xsd.url' }
+    outputDirectory = file('src/main/java')
+    targetPackage = 'no.unit.alma.generated.error'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/webservice_result.episode')
+}
+
+task xjcGenerateBibs(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'bibs_xsd.url' }
+    outputDirectory = file('src/main/java')
+    targetPackage = 'no.unit.alma.generated.bibs'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/bibs.episode')
+}
+
+task xjcGenerateHolding(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'holding_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/holding.episode')
+    targetPackage = 'no.unit.alma.generated.holding'
+}
+
+task xjcGenerateHoldings(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'holdings_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/holdings.episode')
+    targetPackage = 'no.unit.alma.generated.holdings'
+}
+
+task xjcGenerateItems(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'items_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/items.episode')
+    targetPackage = 'no.unit.alma.generated.items'
+}
+
+task xjcGenerateRepresentations(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'representations_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/representations.episode')
+    targetPackage = 'no.unit.alma.generated.representations'
+}
+
+task xjcGenerateUserRequests(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'user_requests_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/user_requests.episode')
+    targetPackage = 'no.unit.alma.generated.userrequests'
+}
+
+task xjcGenerateUsers(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'users_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/users.episode')
+    targetPackage = 'no.unit.alma.generated.users'
+}
+
+task xjcGenerateUserResourceSharingRequest(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'users_resource_sharing_request_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/userrequests.episode')
+    targetPackage = 'no.unit.alma.generated.userrequests'
+}
+
+task xjcGenerateItemLoans(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'item_loans_xsd.url' }
+    outputDirectory = file('src/main/java')
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/item_loans.episode')
+    targetPackage = 'no.unit.alma.generated.itemloans'
+}
+
+
+task xjcGenerateVendors(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'vendors_xsd.url' }
+    outputDirectory = file('src/main/java')
+    targetPackage = 'no.unit.alma.generated.vendors'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/vendors.episode')
+}
+
+task xjcGeneratePolines(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'polines_xsd.url' }
+    outputDirectory = file('src/main/java')
+    targetPackage = 'no.unit.alma.generated.polines'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/polines.episode')
+}
+
+
 repositories {
    mavenCentral()
    maven {
@@ -82,10 +194,6 @@ tasks.withType(Checkstyle) {
 jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude:
-                    [
-                    'no/unit/alma/generated/**'
-                    ])
             fileTree(dir: it, exclude: 'no/unit/alma/generated/**')
         }))
     }
