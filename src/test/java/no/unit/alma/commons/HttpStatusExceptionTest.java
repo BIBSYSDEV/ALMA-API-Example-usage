@@ -3,7 +3,9 @@ package no.unit.alma.commons;
 import no.unit.alma.generated.error.WebServiceResult;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class HttpStatusExceptionTest {
 
@@ -27,7 +29,7 @@ class HttpStatusExceptionTest {
         assertEquals(url, httpStatusException.getUrl());
         assertEquals(responseBody, httpStatusException.getResponseBody());
         assertEquals(webServiceResult.getResult(), httpStatusException.getWebServiceResult().getResult());
-        assertEquals(true, httpStatusException.isWebserviceResult());
+        assertTrue(httpStatusException.isWebserviceResult());
     }
 
 }

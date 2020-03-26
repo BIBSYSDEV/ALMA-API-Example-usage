@@ -17,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -75,7 +76,6 @@ class AlmaStatusResponseFilterTest {
         int status = 121;
         String method = "method";
         String statusText = "status text";
-        WebServiceResult webServiceResult = null;
         InputStream inputStream = new ByteArrayInputStream(responseBody.getBytes());
         Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
 
@@ -97,7 +97,7 @@ class AlmaStatusResponseFilterTest {
             assertEquals(statusText, e.getStatusText());
             assertEquals(status, e.getStatus());
             assertEquals(responseBody, e.getResponseBody());
-            assertEquals(webServiceResult, e.getWebServiceResult());
+            assertNull(e.getWebServiceResult());
             assertEquals(urlString, e.getUrl());
         }
 
@@ -120,7 +120,6 @@ class AlmaStatusResponseFilterTest {
         int status = 121;
         String method = "method";
         String statusText = "status text";
-        WebServiceResult webServiceResult = null;
         Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
 
         when(statusInfo.getFamily()).thenReturn(value);
@@ -139,8 +138,8 @@ class AlmaStatusResponseFilterTest {
             assertEquals(method, e.getMethod());
             assertEquals(statusText, e.getStatusText());
             assertEquals(status, e.getStatus());
-            assertEquals(null, e.getResponseBody());
-            assertEquals(webServiceResult, e.getWebServiceResult());
+            assertNull(e.getResponseBody());
+            assertNull(e.getWebServiceResult());
             assertEquals(urlString, e.getUrl());
         }
 
@@ -154,7 +153,6 @@ class AlmaStatusResponseFilterTest {
         int status = 121;
         String method = "method";
         String statusText = "status text";
-        WebServiceResult webServiceResult = null;
         InputStream inputStream = new ByteArrayInputStream(responseBody.getBytes());
         Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
 
@@ -176,7 +174,7 @@ class AlmaStatusResponseFilterTest {
             assertEquals(statusText, e.getStatusText());
             assertEquals(status, e.getStatus());
             assertEquals(responseBody, e.getResponseBody());
-            assertEquals(webServiceResult, e.getWebServiceResult());
+            assertNull(e.getWebServiceResult());
             assertEquals(urlString, e.getUrl());
         }
 
