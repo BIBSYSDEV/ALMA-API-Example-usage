@@ -23,7 +23,7 @@ public class HttpStatusException extends IOException {
      * @param webServiceResult  Result as WebServiceResult
      */
     public HttpStatusException(int status, String statusText, String method, String url, String responseBody,
-            WebServiceResult webServiceResult) {
+                               WebServiceResult webServiceResult) {
         super(status + " " + statusText + " " + method + " " + url);
         this.status = status;
         this.statusText = statusText;
