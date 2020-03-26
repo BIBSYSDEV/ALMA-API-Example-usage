@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
 class HttpStatusExceptionTest {
@@ -31,5 +32,20 @@ class HttpStatusExceptionTest {
         assertEquals(webServiceResult.getResult(), httpStatusException.getWebServiceResult().getResult());
         assertTrue(httpStatusException.isWebserviceResult());
     }
+
+    @Test
+    void testHttpStatusExceptionWhenWebServiceResultIsNull() {
+        int status = 23;
+        String statusText = "sample status text";
+        String method = "sample method";
+        String url = "https://www.example.com";
+        String responseBody = "sample body";
+        WebServiceResult webServiceResult  = null;
+        HttpStatusException httpStatusException = new HttpStatusException(status, statusText, method, url, responseBody, webServiceResult);
+        assertFalse(httpStatusException.isWebserviceResult());
+    }
+
+
+
 
 }
