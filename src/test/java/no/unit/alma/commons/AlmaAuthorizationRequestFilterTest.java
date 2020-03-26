@@ -42,12 +42,12 @@ public class AlmaAuthorizationRequestFilterTest {
 
     @Test
     void testFilterApiAuthorizationIsNull() throws URISyntaxException {
-        AlmaAuthorizationRequestFilter mockFilter = new AlmaAuthorizationRequestFilter(null);
         MultivaluedHashMap<String, Object> headers = new MultivaluedHashMap<>();
         ClientRequestContext clientRequestContext = mock(ClientRequestContext.class);
         when(clientRequestContext.getHeaders()).thenReturn(headers);
         when(clientRequestContext.getMethod()).thenReturn(METHOD);
         when(clientRequestContext.getUri()).thenReturn(new URI(URI));
+        AlmaAuthorizationRequestFilter mockFilter = new AlmaAuthorizationRequestFilter(null);
         assertThrows(IOException.class, () -> mockFilter.filter(clientRequestContext));
     }
 
