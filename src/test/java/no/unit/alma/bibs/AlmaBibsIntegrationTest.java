@@ -14,7 +14,6 @@ public class AlmaBibsIntegrationTest {
 
     @Test
     void testGetBib() {
-        System.setProperty("java.net.preferIPv4Stack", "true");
         Config config = ConfigFactory.defaultReference();
         AlmaBibsService almaBibsService =
                 new AlmaBibsService(new AlmaClient(JerseyClientBuilder.newClient(), config, "zz"));
