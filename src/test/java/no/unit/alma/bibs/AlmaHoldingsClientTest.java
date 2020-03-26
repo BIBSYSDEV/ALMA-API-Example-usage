@@ -19,6 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.generated.holding.Holding;
 import no.unit.alma.generated.holdings.Holdings;
 import no.unit.alma.generated.items.BibData;
@@ -26,7 +27,6 @@ import no.unit.alma.generated.items.HoldingData;
 import no.unit.alma.generated.items.Item;
 import no.unit.alma.generated.items.ItemData;
 import no.unit.alma.generated.items.Items;
-import no.unit.alma.commons.AlmaClient;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaHoldingsClientTest {
@@ -138,21 +138,22 @@ class AlmaHoldingsClientTest {
         responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 100, totalRecordCount));
         responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 100, totalRecordCount));
         responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 40, totalRecordCount));
-        for (Items items : responses) {
-            items.setTotalRecordCount(totalRecordCount);
-        }
+        responses.add(createTestItems(TEST_MMS_ID, TEST_HOLDING_ID, 40, 40));
 
         when(holdingsWebTarget.path(any())).thenReturn(holdingsWebTarget);
         when(holdingsWebTarget.queryParam(anyString(), any())).thenReturn(holdingsWebTarget);
         when(holdingsWebTarget.request()).thenReturn(holdingsBuilder);
         when(holdingsBuilder.accept(anyString())).thenReturn(holdingsBuilder);
         when(holdingsBuilder.buildGet()).thenReturn(holdingsInvocation);
-        when(holdingsInvocation.invoke(Items.class)).thenReturn(responses.get(0), responses.get(1), responses.get(2));
+        when(holdingsInvocation.invoke(Items.class)).thenReturn(responses.get(0), responses.get(1), responses.get(2),
+                responses.get(3));
 
         AlmaHoldingsService almaHoldingsService = new AlmaHoldingsService(mockAlmaApiClient);
         Items allItems = almaHoldingsService.getAllItems(TEST_MMS_ID, TEST_HOLDING_ID);
         assertEquals(totalRecordCount, allItems.getTotalRecordCount());
         assertEquals(totalRecordCount, allItems.getItem().size());
+        allItems = almaHoldingsService.getAllItems(TEST_MMS_ID, TEST_HOLDING_ID);
+        assertEquals(40, allItems.getTotalRecordCount());
     }
 
     private Items createTestItems(String mmsId, String holdingsId, int number, int total) {

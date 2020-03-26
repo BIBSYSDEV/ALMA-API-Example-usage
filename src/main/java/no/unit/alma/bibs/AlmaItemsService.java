@@ -1,16 +1,19 @@
 package no.unit.alma.bibs;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.generated.itemloans.ItemLoan;
 import no.unit.alma.generated.itemloans.LoanStatus;
 import no.unit.alma.generated.items.BibData;
@@ -23,12 +26,6 @@ import no.unit.alma.generated.userrequests.PickupLocationTypes;
 import no.unit.alma.generated.userrequests.RequestTypes;
 import no.unit.alma.generated.userrequests.UserRequest;
 import no.unit.alma.generated.userrequests.UserRequests;
-import no.unit.alma.commons.AlmaClient;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.GregorianCalendar;
 
 public class AlmaItemsService {
 
@@ -51,8 +48,6 @@ public class AlmaItemsService {
     private final String context;
     private final String contextValue;
     private final String almaStage;
-
-    private static final transient Logger log = LoggerFactory.getLogger(AlmaItemsService.class);
 
     public AlmaItemsService(AlmaClient almaClient) {
         this.bibsTarget = almaClient.getWebTarget().path(BIBS);
@@ -110,7 +105,6 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
-
     public ItemLoan createUserLoanOnItem(final String barcode, final String userId, final String library,
             final String circulationDesk) {
         final Item item = getItem(barcode);
@@ -144,13 +138,13 @@ public class AlmaItemsService {
                 .invoke(ItemLoan.class);
     }
 
-
     public ItemLoan createUserLoanOnItem(final String barcode, final String userId, final String library,
             final String circulationDesk, final float fine, final LoanStatus loanStatus) {
         final Item item = getItem(barcode);
         final BibData bibData = item.getBibData();
         final HoldingData holdingData = item.getHoldingData();
         final ItemData itemData = item.getItemData();
+
         if (bibData == null || holdingData == null || itemData == null) {
             throw new IllegalStateException("Cannot create user loan on empty Item");
         }
@@ -180,7 +174,6 @@ public class AlmaItemsService {
                 .invoke(ItemLoan.class);
     }
 
-
     public ItemLoan updateUserLoanAndChangeDueDate(final String userId, final String loanId, final Calendar dueDate)
             throws DatatypeConfigurationException {
         final ItemLoan itemLoan = new ItemLoan();
@@ -204,7 +197,6 @@ public class AlmaItemsService {
         final String itemId = item.getItemData().getPid();
         return getRequestsFromItem(recordId, holdingsId, itemId, deleted);
     }
-
 
     public UserRequests getRequestsFromItem(String mmsId, String holdingId, String itemPid, boolean deleted) {
         WebTarget requestsFromItemTarget =
@@ -316,11 +308,7 @@ public class AlmaItemsService {
         newRequest.setPartialDigitization(Boolean.FALSE);
         final UserRequest.MaterialType materialType = new UserRequest.MaterialType();
         materialType.setValue("BOOK");
-        try {
-            materialType.setValue(item.getItemData().getPhysicalMaterialType().getValue());
-        } catch (Exception e) { // wtf
-            log.error(e.getMessage());
-        }
+        materialType.setValue(item.getItemData().getPhysicalMaterialType().getValue());
         newRequest.setMaterialType(materialType);
         newRequest.setTargetDestination(targetDestination);
         WebTarget digitizationTarget =
@@ -429,11 +417,22 @@ public class AlmaItemsService {
             throw new IllegalStateException("Could not find request for " + barcode + " with id = " + requestId);
         }
         String existingComment = updatingRequest.getComment();
-        if (appendToExistingComment && existingComment != null && existingComment.length() > 0) {
-            updatingRequest.setComment(existingComment + "\nOrdernum: " + comment);
-        } else {
-            updatingRequest.setComment("Ordernum: " + comment);
+
+        if (existingComment == null) {
+            existingComment = "";
         }
+
+        StringBuilder newComment = new StringBuilder(existingComment);
+
+        if (appendToExistingComment) {
+            if (!existingComment.isBlank()) {
+                newComment.append('\n');
+            }
+            newComment.append("Ordernum: ").append(comment);
+        } else {
+            newComment = new StringBuilder("Ordernum: ").append(comment);
+        }
+        updatingRequest.setComment(newComment.toString());
         final Item item = getItem(barcode);
         final String recordId = item.getBibData().getMmsId();
         final String holdingsId = item.getHoldingData().getHoldingId();

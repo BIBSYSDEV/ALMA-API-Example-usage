@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
 
+import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.generated.bibs.Bib;
 import no.unit.alma.generated.bibs.Bibs;
 import no.unit.alma.generated.items.Item;
@@ -17,21 +18,26 @@ import no.unit.alma.generated.items.ItemData;
 import no.unit.alma.generated.representations.Representation;
 import no.unit.alma.generated.representations.Representations;
 import no.unit.alma.generated.userrequests.UserRequests;
-import no.unit.alma.commons.AlmaClient;
 
 /**
- * This client implements an integration to the /almaws/v1/bibs
+ * Service for BIBS.
+ * 
  */
 public class AlmaBibsService {
 
     private static final String EMPTY_STRING = "";
     private static final String DERIVATIVE_COPY = "DERIVATIVE_COPY";
     private final transient WebTarget bibsTarget;
-    private final String context;
-    private final String contextValue;
-    private final String almaStage;
+    private final transient String context;
+    private final transient String contextValue;
+    private final transient String almaStage;
     private final transient AlmaItemsService almaItemsService;
 
+    /**
+     * Create new AlmaBibsService.
+     * 
+     * @param almaClient
+     */
     public AlmaBibsService(AlmaClient almaClient) {
 
         almaItemsService = new AlmaItemsService(almaClient);
@@ -42,6 +48,13 @@ public class AlmaBibsService {
         this.almaStage = almaClient.getAlmaStage();
     }
 
+    /**
+     * Get BIB from Alma.
+     * 
+     * @param identifier
+     * @param availParams
+     * @return BIB record
+     */
     public Bib getBib(String identifier, String availParams) {
         WebTarget getBibTarget =
                 bibsTarget
@@ -57,7 +70,7 @@ public class AlmaBibsService {
     }
 
     /**
-     * Add bib record to collection
+     * Add BIB record to collection.
      *
      * @param mmsId        of the bib record
      * @param collectionId
@@ -94,6 +107,12 @@ public class AlmaBibsService {
                 .invoke(Bib.class);
     }
 
+    /**
+     * Update existing BIB record.
+     * 
+     * @param bib
+     * @return updated BIB
+     */
     public Bib updateBib(final Bib bib) {
         return bibsTarget
                 .path(bib.getMmsId())
@@ -103,6 +122,13 @@ public class AlmaBibsService {
                 .invoke(Bib.class);
     }
 
+    /**
+     * Get all UserRequests from BIB record.
+     * 
+     * @param recordIdentifier
+     * @param deleted
+     * @return UserRequests object
+     */
     public UserRequests getRequestsFromBib(String recordIdentifier, boolean deleted) {
         WebTarget userRequestsTarget =
                 bibsTarget
@@ -121,7 +147,7 @@ public class AlmaBibsService {
                 .invoke(UserRequests.class);
     }
 
-    private Representation createRemotePresentation(String mmsId, Representation representation) {
+    private Representation createRemoteRepresentation(String mmsId, Representation representation) {
         return bibsTarget
                 .path(mmsId)
                 .path("representations")
@@ -131,7 +157,17 @@ public class AlmaBibsService {
                 .invoke(Representation.class);
     }
 
-    public Representation createRemotePresentation(String barcode, String access, String digitalRepositoryId,
+    /**
+     * Create remote digial Representation for BIB record.
+     * 
+     * @param barcode
+     * @param access
+     * @param digitalRepositoryId
+     * @param url
+     * @param libraryCode
+     * @return created Representation
+     */
+    public Representation createRemoteRepresentation(String barcode, String access, String digitalRepositoryId,
             String url, String libraryCode) {
         final Item item = almaItemsService.getItem(barcode);
         final String mmsId = item.getBibData().getMmsId();
@@ -153,9 +189,20 @@ public class AlmaBibsService {
         input.setLabel(label);
         input.setPublicNote(access);
 
-        return createRemotePresentation(mmsId, input);
+        return createRemoteRepresentation(mmsId, input);
     }
 
+    /**
+     * Create remote digial Representation for BIB record.
+     * 
+     * @param mmsId
+     * @param barcode
+     * @param access
+     * @param digitalRepositoryId
+     * @param url
+     * @param libraryCode
+     * @return created Representation
+     */
     public Representation createRemoteRepresentation(String mmsId, String barcode, String access,
             String digitalRepositoryId, String url, String libraryCode) {
         final Representation input = new Representation();
@@ -174,10 +221,26 @@ public class AlmaBibsService {
         input.setLinkingParameter4(barcode);
         input.setPublicNote(access);
 
-        return createRemotePresentation(mmsId, input);
+        return createRemoteRepresentation(mmsId, input);
     }
 
-@SuppressWarnings({ "PMD.ExcessiveParameterList" })
+    /**
+     * Create remote digial Representation for BIB record.
+     * 
+     * @param mmsId
+     * @param access
+     * @param remoteRepositoryId
+     * @param libraryCode
+     * @param url
+     * @param year
+     * @param month
+     * @param day
+     * @param volume
+     * @param issue
+     * @param number
+     * @return created Representation
+     */
+    @SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(long mmsId, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -206,10 +269,26 @@ public class AlmaBibsService {
         input.setNumber(number);
         input.setPublicNote(access);
 
-        return createRemotePresentation(mmsIdAsString, input);
+        return createRemoteRepresentation(mmsIdAsString, input);
     }
 
-@SuppressWarnings({ "PMD.ExcessiveParameterList" })
+    /**
+     * Create remote digial Representation for BIB record.
+     * 
+     * @param barcode
+     * @param access
+     * @param remoteRepositoryId
+     * @param libraryCode
+     * @param url
+     * @param year
+     * @param month
+     * @param day
+     * @param volume
+     * @param issue
+     * @param number
+     * @return created Representation
+     */
+    @SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(String barcode, String access, String remoteRepositoryId,
             String libraryCode, String url, String year, String month, String day, String volume, String issue,
             String number) {
@@ -239,10 +318,27 @@ public class AlmaBibsService {
         input.setNumber(number);
         input.setPublicNote(access);
 
-        return createRemotePresentation(mmsId, input);
+        return createRemoteRepresentation(mmsId, input);
     }
 
-@SuppressWarnings({ "PMD.ExcessiveParameterList" })
+    /**
+     * Create remote digial Representation for BIB record.
+     * 
+     * @param barcode
+     * @param label
+     * @param access
+     * @param remoteRepositoryId
+     * @param libraryCode
+     * @param url
+     * @param year
+     * @param month
+     * @param day
+     * @param volume
+     * @param issue
+     * @param number
+     * @return created Representation
+     */
+    @SuppressWarnings({ "PMD.ExcessiveParameterList" })
     public Representation createRemoteRepresentation(String barcode, String label, String access,
             String remoteRepositoryId, String libraryCode, String url, String year, String month, String day,
             String volume, String issue, String number) {
@@ -271,9 +367,17 @@ public class AlmaBibsService {
         input.setNumber(number);
         input.setPublicNote(access);
 
-        return createRemotePresentation(mmsId, input);
+        return createRemoteRepresentation(mmsId, input);
     }
 
+    /**
+     * Get all remote digital Represenation from BIB record.
+     * 
+     * @param mmsId
+     * @param limit
+     * @param offset
+     * @return Representations from BIB
+     */
     public Representations getRemoteRepresentationsFromMmsId(String mmsId, int limit, int offset) {
         return bibsTarget
                 .path(mmsId)
@@ -286,6 +390,13 @@ public class AlmaBibsService {
                 .invoke(Representations.class);
     }
 
+    /**
+     * Get a single remote digital Representation from Item barcode.
+     * 
+     * @param barcode
+     * @param representationId
+     * @return Representation
+     */
     public Representation getSingleRemoteRepresentationFromBarcode(String barcode, String representationId) {
 
         final Item item = almaItemsService.getItem(barcode);
@@ -293,6 +404,13 @@ public class AlmaBibsService {
         return getSingleRemoteRepresentationFromMmsId(mmsId, representationId);
     }
 
+    /**
+     * Get a single remote digital Representation from BIB record by mmsId.
+     * 
+     * @param mmsId
+     * @param representationId
+     * @return Representation
+     */
     public Representation getSingleRemoteRepresentationFromMmsId(String mmsId, String representationId) {
         return bibsTarget
                 .path(mmsId)
@@ -304,7 +422,18 @@ public class AlmaBibsService {
                 .invoke(Representation.class);
     }
 
-
+    /**
+     * Get BIB records.
+     * 
+     * @param mmsId
+     * @param ieId
+     * @param holdingsId
+     * @param representationId
+     * @param nzMmsId
+     * @param view
+     * @param expand
+     * @return Bibs collection of BIB records
+     */
     public Bibs retrieveBibs(String mmsId, String ieId, String holdingsId, String representationId,
             String nzMmsId, String view, String expand) {
         return bibsTarget
@@ -321,14 +450,29 @@ public class AlmaBibsService {
                 .invoke(Bibs.class);
     }
 
+    /**
+     * Getter for context.
+     * 
+     * @return context
+     */
     public String getContext() {
         return context;
     }
 
+    /**
+     * Getter for contextValue.
+     * 
+     * @return contextValue
+     */
     public String getContextValue() {
         return contextValue;
     }
 
+    /**
+     * Getter for almaStage.
+     * 
+     * @return almaStage
+     */
     public String getAlmaStage() {
         return almaStage;
     }
@@ -350,7 +494,10 @@ public class AlmaBibsService {
                         .map(chronology -> chronology.strip())
                         .collect(Collectors.toList());
 
-        String label = enumerationA != null && !enumerationA.isBlank() ? enumerationA : EMPTY_STRING;
+        String label = enumerationA;
+        if (label == null) {
+            label = EMPTY_STRING;
+        }
 
         if (!EMPTY_STRING.equals(chronologyI)) {
             label = String.format("%s(%s)", label, String.join(label, chronologyList));
