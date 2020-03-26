@@ -11,13 +11,13 @@ public class ApiAuthorizationService {
     private final transient VaultClient vaultClient;
     private final transient String environment;
 
-    public static ApiAuthorizationServiceBuilder builder() {
-        return new ApiAuthorizationServiceBuilder();
-    }
-
     private ApiAuthorizationService(VaultClient vaultClient, String environment) {
         this.vaultClient = vaultClient;
         this.environment = environment;
+    }
+
+    public static ApiAuthorizationServiceBuilder builder() {
+        return new ApiAuthorizationServiceBuilder();
     }
 
     public VaultApiAuthorization getApiAuthorization(String almaStage, String bibsysBibCode) {
@@ -42,6 +42,10 @@ public class ApiAuthorizationService {
             return this;
         }
 
+        /**
+         * Build-method for ApiAuthorizationService using VaultClientBuilder and environment variables.
+         * @return an ApiAuthorizationService
+         */
         public ApiAuthorizationService build() {
             Objects.requireNonNull(builderVaultClient, "VaultClient cannot be null");
             if (StringUtils.isEmpty(builderEnvironment)) {
