@@ -5,12 +5,12 @@ import java.io.IOException;
 
 public class HttpStatusException extends IOException {
 
-    private transient int status;
-    private transient String statusText;
-    private transient String method;
-    private transient String url;
-    private transient String responseBody;
-    private transient WebServiceResult webServiceResult;
+    private final transient int status;
+    private final transient String statusText;
+    private final transient String method;
+    private final transient String url;
+    private final transient String responseBody;
+    private final transient WebServiceResult webServiceResult;
 
     /**
      * HttpStatusException wraps alma responses in an exception.
