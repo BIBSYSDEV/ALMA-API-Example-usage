@@ -1,5 +1,6 @@
 package no.unit.alma;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
@@ -31,9 +32,11 @@ public class ApiHelper {
         String bibsFileName = "src/test/resources/bibs.xml";
         try {
             Bib bib = readXmlFromFile(fileName, Bib.class);
-            writeObject(bib, Bib.class);
+            String bibxml = writeObject(bib, Bib.class);
+            assertNotNull(bibxml);
             Bibs bibs = readXmlFromFile(bibsFileName, Bibs.class);
-            writeObject(bibs, Bibs.class);
+            String bibsxml = writeObject(bibs, Bibs.class);
+            assertNotNull(bibsxml);
         } catch (JAXBException e) {
             e.printStackTrace();
             fail(String.format("Error unmarshalling file %s", fileName));
@@ -55,7 +58,8 @@ public class ApiHelper {
         String path = "src/test/resources/%s.xml";
         path = String.format(path, fileName);
         try {
-            readXmlFromFile(path, type);
+            Object object = readXmlFromFile(path, type);
+            assertNotNull(object);
         } catch (JAXBException e) {
             e.printStackTrace();
             System.out.printf("Failed to read from file %s%n", fileName);
@@ -63,6 +67,13 @@ public class ApiHelper {
         }
     }
 
+    /**
+     * Convenience method to write an object as xml.
+     * @param type object to be marshalled to
+     * @param <T> class generics placeholder
+     * @return the xml
+     * @throws JAXBException something could not be parsed
+     */
     public static <T> String writeObject(T object, Class<T> type) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(object.getClass());
 
@@ -70,14 +81,22 @@ public class ApiHelper {
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
         StringWriter sw = new StringWriter();
-        QName qName = new QName(object.getClass().getPackageName(), object.getClass().getName());
-        JAXBElement<T> root = new JAXBElement<T>(qName, type, object);
+        QName qname = new QName(object.getClass().getPackageName(), object.getClass().getName());
+        JAXBElement<T> root = new JAXBElement<T>(qname, type, object);
 
         jaxbMarshaller.marshal(root, sw);
 
         return sw.toString();
     }
 
+    /**
+     * Convenience method to read xml from file.
+     * @param fileName fileName
+     * @param type object type to be unmarshalled to
+     * @param <T> class generics placeholder
+     * @return the object
+     * @throws JAXBException something could not be parsed
+     */
     public static <T> T readXmlFromFile(String fileName, Class<T> type) throws JAXBException {
         File file = new File(fileName);
         JAXBContext jaxbContext = JAXBContext.newInstance(type);
