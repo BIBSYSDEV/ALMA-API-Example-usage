@@ -182,44 +182,4 @@ class AlmaStatusResponseFilterTest {
 
     }
 
-
-//    @Test
-//    void testFilterWhenIOExceptionOnMarshallingResponse() throws IOException, URISyntaxException {
-//        String responseBody = "not xml";
-//        String urlString = "https://www.example.com";
-//        URI url = new URI(urlString);
-//        int status = 121;
-//        String method = "method";
-//        String statusText = "status text";
-//        WebServiceResult webServiceResult = null;
-//        InputStream inputStream = new ByteArrayInputStream(responseBody.getBytes());
-//        Response.Status.Family value = Response.Status.Family.SERVER_ERROR;
-//
-//        when(statusInfo.getFamily()).thenReturn(value);
-//        when(statusInfo.getReasonPhrase()).thenReturn(statusText);
-//        when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
-//        when(clientResponseContext.getMediaType()).thenReturn(MediaType.APPLICATION_XML_TYPE);
-//        when(clientResponseContext.hasEntity()).thenReturn(true);
-//        when(clientResponseContext.getEntityStream()).thenThrow(new IOException());
-//        when(clientResponseContext.getStatus()).thenReturn(status);
-//        when(clientRequestContext.getMethod()).thenReturn(method);
-//        when(clientRequestContext.getUri()).thenReturn(url);
-//
-//        AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
-//        try {
-//            almaStatusResponseFilter.filter(clientRequestContext, clientResponseContext);
-//        } catch (HttpStatusException e) {
-//            assertEquals(method, e.getMethod());
-//            assertEquals(statusText, e.getStatusText());
-//            assertEquals(status, e.getStatus());
-//            assertEquals(responseBody, e.getResponseBody());
-//            assertEquals(webServiceResult, e.getWebServiceResult());
-//            assertEquals(urlString, e.getUrl());
-//        }
-//
-//    }
-
-
-
-
 }
