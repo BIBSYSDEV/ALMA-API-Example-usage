@@ -149,7 +149,7 @@ dependencies {
     implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: '2.30.1'
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-    implementation group: 'org.jvnet.jaxb2_commons', name: 'jaxb2-basics-runtime', version: '1.11.1'
+    implementation group: 'org.jvnet.jaxb2_commons', name: 'jaxb2-basics-runtime', version: '1.11.1-PUBLISHED-BY-MISTAKE'
     implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.1'
     implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.30.1'
     implementation group: 'com.typesafe', name: 'config', version: '1.4.0'
