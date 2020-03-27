@@ -17,7 +17,6 @@ public class AlmaBibsIntegrationTest {
         Config config = ConfigFactory.defaultReference();
         AlmaBibsService almaBibsService =
                 new AlmaBibsService(new AlmaClient(JerseyClientBuilder.newClient(), config, "guest"));
-        System.out.println("alma bibs service setup...");
         almaBibsService.getBib(bibIdentifier, "");
     }
 
