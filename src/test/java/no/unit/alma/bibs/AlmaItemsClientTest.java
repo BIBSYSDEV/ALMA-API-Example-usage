@@ -590,24 +590,24 @@ class AlmaItemsClientTest {
 
     @Test
     void testGetAlmaStage() {
-        AlmaItemsService almaBibsService =
+        AlmaItemsService almaItemsService =
                 new AlmaItemsService(mockAlmaApiClient);
-        assertEquals(STAGE, almaBibsService
+        assertEquals(STAGE, almaItemsService
                 .getAlmaStage());
     }
 
     @Test
     void testGetContext() {
-        AlmaItemsService almaBibsService =
+        AlmaItemsService almaItemsService =
                 new AlmaItemsService(mockAlmaApiClient);
-        assertEquals(CONTEXT, almaBibsService.getContext());
+        assertEquals(CONTEXT, almaItemsService.getContext());
     }
 
     @Test
     void testGetContextValue() {
-        AlmaItemsService almaBibsService =
+        AlmaItemsService almaItemsService =
                 new AlmaItemsService(mockAlmaApiClient);
-        assertEquals(CONTEXT_VALUE, almaBibsService.getContextValue());
+        assertEquals(CONTEXT_VALUE, almaItemsService.getContextValue());
     }
 
     private void mockAlmaApi() {
