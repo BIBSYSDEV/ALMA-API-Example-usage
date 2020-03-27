@@ -213,20 +213,14 @@ class AlmaItemsClientTest {
         assertThrows(IllegalStateException.class, () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE,
                 TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK));
 
-        assertThrows(IllegalStateException.class,
-                () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY,
-                        TEST_CIRCULATION_DESK,
-                        TEST_FINE, TEST_LOAN_STATUS));
+        assertThrows(IllegalStateException.class, () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE,
+                TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK, TEST_FINE, TEST_LOAN_STATUS));
 
-        assertThrows(IllegalStateException.class,
-                () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY,
-                        TEST_CIRCULATION_DESK,
-                        TEST_FINE, TEST_LOAN_STATUS));
+        assertThrows(IllegalStateException.class, () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE,
+                TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK, TEST_FINE, TEST_LOAN_STATUS));
 
-        assertThrows(IllegalStateException.class,
-                () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY,
-                        TEST_CIRCULATION_DESK,
-                        TEST_FINE, TEST_LOAN_STATUS));
+        assertThrows(IllegalStateException.class, () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE,
+                TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK, TEST_FINE, TEST_LOAN_STATUS));
 
     }
 
@@ -314,11 +308,11 @@ class AlmaItemsClientTest {
                 almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
         assertEquals(TEST_BARCODE, resultPatronRequest.getBarcode());
 
-        assertThrows(IllegalArgumentException.class,
-                () -> almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, null));
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createPatronRequest(tempItem,
+                TEST_PICKUP_LOCATION, TEST_MESSAGE, null));
 
-        assertThrows(IllegalArgumentException.class,
-                () -> almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, ""));
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createPatronRequest(tempItem,
+                TEST_PICKUP_LOCATION, TEST_MESSAGE, ""));
 
         Item noItemData = createTestItem();
         noItemData.setItemData(null);
@@ -338,11 +332,11 @@ class AlmaItemsClientTest {
         resultPatronRequest = almaItemsService.createPatronRequest(TEST_MMS_ID, TEST_USER_ID, tempUserRequest);
         assertEquals(TEST_BARCODE, resultPatronRequest.getBarcode());
 
-        assertThrows(IllegalArgumentException.class,
-                () -> almaItemsService.createPatronRequest(TEST_MMS_ID, null, tempUserRequest));
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createPatronRequest(TEST_MMS_ID,
+                null, tempUserRequest));
 
-        assertThrows(IllegalArgumentException.class,
-                () -> almaItemsService.createPatronRequest(TEST_MMS_ID, "", tempUserRequest));
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createPatronRequest(TEST_MMS_ID,
+                "", tempUserRequest));
 
         resultPatronRequest =
                 almaItemsService.createPatronRequest(TEST_BARCODE, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_LT_ID);
@@ -380,18 +374,18 @@ class AlmaItemsClientTest {
 
         Item noBibData = createTestItem();
         noBibData.setBibData(null);
-        assertThrows(IllegalArgumentException.class,
-                () -> almaItemsService.createDigitizationRequest(noBibData, TEST_TARGET_DESTINATION, TEST_MESSAGE));
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createDigitizationRequest(noBibData,
+                TEST_TARGET_DESTINATION, TEST_MESSAGE));
 
         Item noHoldingData = createTestItem();
         noHoldingData.setHoldingData(null);
-        assertThrows(IllegalArgumentException.class,
-                () -> almaItemsService.createDigitizationRequest(noHoldingData, TEST_TARGET_DESTINATION, TEST_MESSAGE));
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createDigitizationRequest(noHoldingData,
+                TEST_TARGET_DESTINATION, TEST_MESSAGE));
 
         Item noItemData = createTestItem();
         noItemData.setItemData(null);
-        assertThrows(IllegalArgumentException.class,
-                () -> almaItemsService.createDigitizationRequest(noItemData, TEST_TARGET_DESTINATION, TEST_MESSAGE));
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createDigitizationRequest(noItemData,
+                TEST_TARGET_DESTINATION, TEST_MESSAGE));
 
         Item testGetItem = createTestItem();
         when(getInvocation.invoke(Item.class)).thenReturn(testGetItem);
@@ -499,8 +493,8 @@ class AlmaItemsClientTest {
         assertEquals(String.format(appendedCommentFormat, TEST_COMMENT), resultUserRequest.getComment());
 
         // emptyUserRequests
-        assertThrows(IllegalStateException.class,
-                () -> almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true));
+        assertThrows(IllegalStateException.class, () -> almaItemsService.updateCommentOnRequest(TEST_BARCODE,
+                TEST_REQUEST_ID, TEST_COMMENT, true));
     }
 
     @Test
