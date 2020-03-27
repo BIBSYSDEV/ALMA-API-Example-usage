@@ -1,8 +1,7 @@
 package no.unit.alma.bibs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -204,49 +203,30 @@ class AlmaItemsClientTest {
                 almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK,
                         TEST_FINE, TEST_LOAN_STATUS);
         assertEquals(TEST_BARCODE, resultItemLoan.getItemBarcode());
-        try {
-            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK);
-            fail("BibData == null in Item should throw exception");
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
 
-        try {
-            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK);
-            fail("HoldingData == null in Item should throw exception");
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class, () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE,
+                TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK));
 
-        try {
-            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK);
-            fail("ItemData == null in Item should throw exception");
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
-        try {
-            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK,
-                    TEST_FINE, TEST_LOAN_STATUS);
-            fail("BibData == null in Item should throw exception");
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class, () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE,
+                TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK));
 
-        try {
-            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK,
-                    TEST_FINE, TEST_LOAN_STATUS);
-            fail("HoldingData == null in Item should throw exception");
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class, () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE,
+                TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK));
 
-        try {
-            almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY, TEST_CIRCULATION_DESK,
-                    TEST_FINE, TEST_LOAN_STATUS);
-            fail("ItemData == null in Item should throw exception");
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class,
+                () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY,
+                        TEST_CIRCULATION_DESK,
+                        TEST_FINE, TEST_LOAN_STATUS));
+
+        assertThrows(IllegalStateException.class,
+                () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY,
+                        TEST_CIRCULATION_DESK,
+                        TEST_FINE, TEST_LOAN_STATUS));
+
+        assertThrows(IllegalStateException.class,
+                () -> almaItemsService.createUserLoanOnItem(TEST_BARCODE, TEST_USER_ID, TEST_LIBRARY,
+                        TEST_CIRCULATION_DESK,
+                        TEST_FINE, TEST_LOAN_STATUS));
 
     }
 
@@ -334,73 +314,42 @@ class AlmaItemsClientTest {
                 almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
         assertEquals(TEST_BARCODE, resultPatronRequest.getBarcode());
 
-        try {
-            almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, null);
-            fail("userId == null in createPatronRequest should throw exception");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, null));
 
-        try {
-            almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, "");
-            fail("userId == \"\" in createPatronRequest should throw exception");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> almaItemsService.createPatronRequest(tempItem, TEST_PICKUP_LOCATION, TEST_MESSAGE, ""));
 
         Item noItemData = createTestItem();
         noItemData.setItemData(null);
-        try {
-            almaItemsService.createPatronRequest(noItemData, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
-            fail("ItemData == null in Item should throw exception");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createPatronRequest(noItemData,
+                TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID));
 
         Item noHoldingData = createTestItem();
         noHoldingData.setHoldingData(null);
-        try {
-            almaItemsService.createPatronRequest(noHoldingData, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
-            fail("HoldingData == null in Item should throw exception");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createPatronRequest(noHoldingData,
+                TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID));
 
         Item noBibData = createTestItem();
         noBibData.setBibData(null);
-        try {
-            almaItemsService.createPatronRequest(noBibData, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID);
-            fail("BibData == null in Item should throw exception");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class, () -> almaItemsService.createPatronRequest(noBibData,
+                TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_USER_ID));
 
         resultPatronRequest = almaItemsService.createPatronRequest(TEST_MMS_ID, TEST_USER_ID, tempUserRequest);
         assertEquals(TEST_BARCODE, resultPatronRequest.getBarcode());
 
-        try {
-            almaItemsService.createPatronRequest(TEST_MMS_ID, null, tempUserRequest);
-            fail("userId == null in createPatronRequest should throw exception");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
-        try {
-            almaItemsService.createPatronRequest(TEST_MMS_ID, "", tempUserRequest);
-            fail("userId == \"\" in createPatronRequest should throw exception");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> almaItemsService.createPatronRequest(TEST_MMS_ID, null, tempUserRequest));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> almaItemsService.createPatronRequest(TEST_MMS_ID, "", tempUserRequest));
 
         resultPatronRequest =
                 almaItemsService.createPatronRequest(TEST_BARCODE, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_LT_ID);
         assertEquals(TEST_BARCODE, resultPatronRequest.getBarcode());
 
-        try {
-            almaItemsService.createPatronRequest(TEST_BARCODE, TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_LT_ID);
-            fail("ItemData == null in Item should throw exception");
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class, () -> almaItemsService.createPatronRequest(TEST_BARCODE,
+                TEST_PICKUP_LOCATION, TEST_MESSAGE, TEST_LT_ID));
     }
 
     @Test
@@ -431,30 +380,18 @@ class AlmaItemsClientTest {
 
         Item noBibData = createTestItem();
         noBibData.setBibData(null);
-        try {
-            almaItemsService.createDigitizationRequest(noBibData, TEST_TARGET_DESTINATION, TEST_MESSAGE);
-            fail("BibData == null in Item should throw exceptrion");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> almaItemsService.createDigitizationRequest(noBibData, TEST_TARGET_DESTINATION, TEST_MESSAGE));
 
         Item noHoldingData = createTestItem();
         noHoldingData.setHoldingData(null);
-        try {
-            almaItemsService.createDigitizationRequest(noHoldingData, TEST_TARGET_DESTINATION, TEST_MESSAGE);
-            fail("BibData == null in Item should throw exceptrion");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> almaItemsService.createDigitizationRequest(noHoldingData, TEST_TARGET_DESTINATION, TEST_MESSAGE));
 
         Item noItemData = createTestItem();
         noItemData.setItemData(null);
-        try {
-            almaItemsService.createDigitizationRequest(noItemData, TEST_TARGET_DESTINATION, TEST_MESSAGE);
-            fail("BibData == null in Item should throw exceptrion");
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalArgumentException.class,
+                () -> almaItemsService.createDigitizationRequest(noItemData, TEST_TARGET_DESTINATION, TEST_MESSAGE));
 
         Item testGetItem = createTestItem();
         when(getInvocation.invoke(Item.class)).thenReturn(testGetItem);
@@ -562,12 +499,8 @@ class AlmaItemsClientTest {
         assertEquals(String.format(appendedCommentFormat, TEST_COMMENT), resultUserRequest.getComment());
 
         // emptyUserRequests
-        try {
-            almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true);
-            fail("When updateCommentOnRequest on non-existing request id should throw exception");
-        } catch (IllegalStateException e) {
-            assertTrue(true);
-        }
+        assertThrows(IllegalStateException.class,
+                () -> almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true));
     }
 
     @Test
