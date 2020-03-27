@@ -6,13 +6,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.StringUtils;
 
+import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.generated.itemloans.ItemLoans;
-import no.unit.alma.generated.users.User;
-import no.unit.alma.generated.users.Users;
 import no.unit.alma.generated.userrequests.UserRequest;
 import no.unit.alma.generated.userrequests.UserRequests;
 import no.unit.alma.generated.userrequests.UserResourceSharingRequest;
-import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.users.User;
+import no.unit.alma.generated.users.Users;
 
 public class AlmaUsersService
         implements AlmaUsers, AlmaUsersLoans, AlmaUsersRequests, AlmaUsersResourceSharingRequests {
@@ -31,6 +31,11 @@ public class AlmaUsersService
     private final String contextValue;
     private final String almaStage;
 
+    /**
+     * Create new AlmaUsersService.
+     * 
+     * @param almaClient almaClient
+     */
     public AlmaUsersService(AlmaClient almaClient) {
         this.usersTarget = almaClient.getWebTarget().path("users");
         this.context = almaClient.getContext();
