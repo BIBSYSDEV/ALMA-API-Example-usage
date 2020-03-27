@@ -10,13 +10,13 @@ import no.unit.alma.commons.AlmaClient;
 
 public class AlmaBibsIntegrationTest {
 
-    private static final String bibIdentifier = "99939650000541";
+    private static final String bibIdentifier = "991334666044702202";
 
     @Test
     void testGetBib() {
         Config config = ConfigFactory.defaultReference();
         AlmaBibsService almaBibsService =
-                new AlmaBibsService(new AlmaClient(JerseyClientBuilder.newClient(), config, "zz"));
+                new AlmaBibsService(new AlmaClient(JerseyClientBuilder.newClient(), config, "guest"));
         System.out.println("alma bibs service setup...");
         almaBibsService.getBib(bibIdentifier, "");
     }
