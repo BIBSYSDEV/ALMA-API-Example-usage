@@ -694,8 +694,8 @@ class AlmaItemsClientTest {
         ItemData itemData = new ItemData();
         itemData.setPid(TEST_ITEMS_ID);
         PhysicalMaterialType physicalMaterialType = new PhysicalMaterialType();
-        String TEST_PHYSICALMATERIAL_TYPE = "physical material type";
-        physicalMaterialType.setValue(TEST_PHYSICALMATERIAL_TYPE);
+        String testPhysicalmaterialType = "physical material type";
+        physicalMaterialType.setValue(testPhysicalmaterialType);
         itemData.setPhysicalMaterialType(physicalMaterialType);
 
         Item tempItem = new Item();

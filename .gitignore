@@ -286,3 +286,4 @@ gradle-app.setting
 /sam-app/
 /gradle.properties
 /src/main/java/no/unit/alma/generated/
+/.env
