@@ -16,9 +16,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.generated.users.User;
 import no.unit.alma.generated.users.Users;
-import no.unit.alma.commons.AlmaClient;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaUsersClientTest {
@@ -30,7 +30,7 @@ class AlmaUsersClientTest {
     private static final String TEST_USER_ID = "user id";
     private static final String TEST_VIEW = "view";
     private static final String TEST_EXPAND = "expand";
-    private static final Long TOTAL_RECORD_COUNT = 5l;
+    private static final Long TOTAL_RECORD_COUNT = 5L;
 
     @Mock
     AlmaClient mockAlmaApiClient;
@@ -130,12 +130,12 @@ class AlmaUsersClientTest {
 
         int limit = 10;
         int offset = 0;
-        String TEST_ORDERBY = "order by";
+        String testOrderby = "order by";
         AlmaUsersService almaUsersClient = new AlmaUsersService(mockAlmaApiClient);
         Users resultUsers = almaUsersClient.retrieveUsers(limit, offset);
         assertEquals(TOTAL_RECORD_COUNT, resultUsers.getTotalRecordCount());
 
-        resultUsers = almaUsersClient.retrieveUsers(limit, offset, TEST_ORDERBY);
+        resultUsers = almaUsersClient.retrieveUsers(limit, offset, testOrderby);
         assertEquals(TOTAL_RECORD_COUNT, resultUsers.getTotalRecordCount());
     }
 

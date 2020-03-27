@@ -4,14 +4,13 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import no.unit.alma.generated.items.Items;
+import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.generated.holding.Holding;
 import no.unit.alma.generated.holdings.Holdings;
-
-import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.items.Items;
 
 /**
- * This client implements an integration to the /almaws/v1/bibs/<mmsId>/holdings
+ * This client implements an integration to the /almaws/v1/bibs/mmsId/holdings.
  */
 public class AlmaHoldingsService {
 
@@ -22,6 +21,11 @@ public class AlmaHoldingsService {
     private final String contextValue;
     private final String almaStage;
 
+    /**
+     * Create new AlmaHoldingsService.
+     * 
+     * @param almaClient almaClient
+     */
     public AlmaHoldingsService(AlmaClient almaClient) {
         this.bibsTarget = almaClient.getWebTarget().path(BIBS);
         this.context = almaClient.getContext();
@@ -29,6 +33,12 @@ public class AlmaHoldingsService {
         this.almaStage = almaClient.getAlmaStage();
     }
 
+    /**
+     * Get Holdings record.
+     * 
+     * @param mmsId mmsId
+     * @return Holdings record
+     */
     public Holdings getHoldings(String mmsId) {
         return bibsTarget
                 .path(mmsId)
@@ -39,6 +49,13 @@ public class AlmaHoldingsService {
                 .invoke(Holdings.class);
     }
 
+    /**
+     * Get Holding record.
+     * 
+     * @param mmsId      mmsId
+     * @param holdingsId holdingsId
+     * @return Holding record.
+     */
     public Holding getHolding(String mmsId, String holdingsId) {
         return bibsTarget
                 .path(mmsId)
@@ -50,6 +67,13 @@ public class AlmaHoldingsService {
                 .invoke(Holding.class);
     }
 
+    /**
+     * Update Holding record.
+     * 
+     * @param mmsId   mmsId
+     * @param holding holding
+     * @return Holding record
+     */
     public Holding updateHolding(String mmsId, final Holding holding) {
         return bibsTarget
                 .path(mmsId)
@@ -61,6 +85,15 @@ public class AlmaHoldingsService {
                 .invoke(Holding.class);
     }
 
+    /**
+     * Get Items record.
+     * 
+     * @param mmsId      mmsId
+     * @param holdingsId holdingsId
+     * @param limit      limit
+     * @param offset     offset
+     * @return Items record
+     */
     public Items getItems(String mmsId, String holdingsId, long limit, long offset) {
         return bibsTarget
                 .path(mmsId)
@@ -75,6 +108,13 @@ public class AlmaHoldingsService {
                 .invoke(Items.class);
     }
 
+    /**
+     * Get all Items from Holding.
+     * 
+     * @param mmsId      mmsId
+     * @param holdingsId holdingsId
+     * @return Items record
+     */
     public Items getAllItems(String mmsId, String holdingsId) {
 
         Items items = new Items();
