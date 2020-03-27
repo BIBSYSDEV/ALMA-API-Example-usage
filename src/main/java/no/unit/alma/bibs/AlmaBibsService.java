@@ -36,7 +36,7 @@ public class AlmaBibsService {
     /**
      * Create new AlmaBibsService.
      * 
-     * @param almaClient
+     * @param almaClient almaClient
      */
     public AlmaBibsService(AlmaClient almaClient) {
 
@@ -51,8 +51,8 @@ public class AlmaBibsService {
     /**
      * Get BIB from Alma.
      * 
-     * @param identifier
-     * @param availParams
+     * @param identifier  identifier
+     * @param availParams availParams
      * @return BIB record
      */
     public Bib getBib(String identifier, String availParams) {
@@ -72,8 +72,8 @@ public class AlmaBibsService {
     /**
      * Add BIB record to collection.
      *
-     * @param mmsId        of the bib record
-     * @param collectionId
+     * @param mmsId        mmsId
+     * @param collectionId collectionId
      */
 
     public void addBibToCollection(String mmsId, String collectionId) {
@@ -110,7 +110,7 @@ public class AlmaBibsService {
     /**
      * Update existing BIB record.
      * 
-     * @param bib
+     * @param bib bib
      * @return updated BIB
      */
     public Bib updateBib(final Bib bib) {
@@ -125,8 +125,8 @@ public class AlmaBibsService {
     /**
      * Get all UserRequests from BIB record.
      * 
-     * @param recordIdentifier
-     * @param deleted
+     * @param recordIdentifier recordIdentifier
+     * @param deleted          deleted
      * @return UserRequests object
      */
     public UserRequests getRequestsFromBib(String recordIdentifier, boolean deleted) {
@@ -160,11 +160,11 @@ public class AlmaBibsService {
     /**
      * Create remote digial Representation for BIB record.
      * 
-     * @param barcode
-     * @param access
-     * @param digitalRepositoryId
-     * @param url
-     * @param libraryCode
+     * @param barcode             barcode
+     * @param access              access
+     * @param digitalRepositoryId digitalRepositoryId
+     * @param url                 url
+     * @param libraryCode         libraryCode
      * @return created Representation
      */
     public Representation createRemoteRepresentation(String barcode, String access, String digitalRepositoryId,
@@ -195,12 +195,12 @@ public class AlmaBibsService {
     /**
      * Create remote digial Representation for BIB record.
      * 
-     * @param mmsId
-     * @param barcode
-     * @param access
-     * @param digitalRepositoryId
-     * @param url
-     * @param libraryCode
+     * @param mmsId               mmsId
+     * @param barcode             barcode
+     * @param access              access
+     * @param digitalRepositoryId digitalRepositoryId
+     * @param url                 url
+     * @param libraryCode         libraryCode
      * @return created Representation
      */
     public Representation createRemoteRepresentation(String mmsId, String barcode, String access,
@@ -225,19 +225,19 @@ public class AlmaBibsService {
     }
 
     /**
-     * Create remote digial Representation for BIB record.
+     * Create remote digital Representation for BIB record.
      * 
-     * @param mmsId
-     * @param access
-     * @param remoteRepositoryId
-     * @param libraryCode
-     * @param url
-     * @param year
-     * @param month
-     * @param day
-     * @param volume
-     * @param issue
-     * @param number
+     * @param mmsId              mmsId
+     * @param access             access
+     * @param remoteRepositoryId remoteRepositoryId
+     * @param libraryCode        libraryCode
+     * @param url                url
+     * @param year               year
+     * @param month              month
+     * @param day                day
+     * @param volume             volume
+     * @param issue              issue
+     * @param number             number
      * @return created Representation
      */
     @SuppressWarnings({ "PMD.ExcessiveParameterList" })
@@ -275,17 +275,17 @@ public class AlmaBibsService {
     /**
      * Create remote digial Representation for BIB record.
      * 
-     * @param barcode
-     * @param access
-     * @param remoteRepositoryId
-     * @param libraryCode
-     * @param url
-     * @param year
-     * @param month
-     * @param day
-     * @param volume
-     * @param issue
-     * @param number
+     * @param barcode            barcode
+     * @param access             access
+     * @param remoteRepositoryId remoteRepositoryId
+     * @param libraryCode        libraryCode
+     * @param url                url
+     * @param year               year
+     * @param month              month
+     * @param day                day
+     * @param volume             volume
+     * @param issue              issue
+     * @param number             number
      * @return created Representation
      */
     @SuppressWarnings({ "PMD.ExcessiveParameterList" })
@@ -324,18 +324,18 @@ public class AlmaBibsService {
     /**
      * Create remote digial Representation for BIB record.
      * 
-     * @param barcode
-     * @param label
-     * @param access
-     * @param remoteRepositoryId
-     * @param libraryCode
-     * @param url
-     * @param year
-     * @param month
-     * @param day
-     * @param volume
-     * @param issue
-     * @param number
+     * @param barcode            barcode
+     * @param label              label
+     * @param access             access
+     * @param remoteRepositoryId remoteRepositoryId
+     * @param libraryCode        libraryCode
+     * @param url                url
+     * @param year               year
+     * @param month              month
+     * @param day                day
+     * @param volume             volume
+     * @param issue              issue
+     * @param number             number
      * @return created Representation
      */
     @SuppressWarnings({ "PMD.ExcessiveParameterList" })
@@ -373,9 +373,9 @@ public class AlmaBibsService {
     /**
      * Get all remote digital Represenation from BIB record.
      * 
-     * @param mmsId
-     * @param limit
-     * @param offset
+     * @param mmsId  mmsId
+     * @param limit  limit
+     * @param offset offset
      * @return Representations from BIB
      */
     public Representations getRemoteRepresentationsFromMmsId(String mmsId, int limit, int offset) {
@@ -393,8 +393,8 @@ public class AlmaBibsService {
     /**
      * Get a single remote digital Representation from Item barcode.
      * 
-     * @param barcode
-     * @param representationId
+     * @param barcode          barcode
+     * @param representationId representationId
      * @return Representation
      */
     public Representation getSingleRemoteRepresentationFromBarcode(String barcode, String representationId) {
@@ -407,8 +407,8 @@ public class AlmaBibsService {
     /**
      * Get a single remote digital Representation from BIB record by mmsId.
      * 
-     * @param mmsId
-     * @param representationId
+     * @param mmsId            mmsId
+     * @param representationId representationId
      * @return Representation
      */
     public Representation getSingleRemoteRepresentationFromMmsId(String mmsId, String representationId) {
@@ -425,13 +425,13 @@ public class AlmaBibsService {
     /**
      * Get BIB records.
      * 
-     * @param mmsId
-     * @param ieId
-     * @param holdingsId
-     * @param representationId
-     * @param nzMmsId
-     * @param view
-     * @param expand
+     * @param mmsId            mmsId
+     * @param ieId             ieId
+     * @param holdingsId       holdingsId
+     * @param representationId representationId
+     * @param nzMmsId          nzMmsId
+     * @param view             view
+     * @param expand           expand
      * @return Bibs collection of BIB records
      */
     public Bibs retrieveBibs(String mmsId, String ieId, String holdingsId, String representationId,

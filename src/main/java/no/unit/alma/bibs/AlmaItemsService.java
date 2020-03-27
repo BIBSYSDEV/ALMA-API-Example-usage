@@ -49,6 +49,11 @@ public class AlmaItemsService {
     private final String contextValue;
     private final String almaStage;
 
+    /**
+     * Create new AlmaItesService.
+     * 
+     * @param almaClient almaClient
+     */
     public AlmaItemsService(AlmaClient almaClient) {
         this.bibsTarget = almaClient.getWebTarget().path(BIBS);
         this.itemsTarget = almaClient.getWebTarget().path(ITEMS);
@@ -58,6 +63,14 @@ public class AlmaItemsService {
         this.almaStage = almaClient.getAlmaStage();
     }
 
+    /**
+     * Get Item record.
+     * 
+     * @param mmsId      mmsId
+     * @param holdingsId holdingsId
+     * @param itemId     itemsId
+     * @return Item record
+     */
     public Item getItem(final String mmsId, final String holdingsId, final String itemId) {
         return bibsTarget
                 .path(mmsId)
@@ -71,6 +84,12 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
+    /**
+     * Get Item record.
+     * 
+     * @param barcode barcode
+     * @return Item record
+     */
     public Item getItem(final String barcode) {
         return itemsTarget
                 .queryParam("item_barcode", barcode)
@@ -80,9 +99,16 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
-    public Item createItem(final String mms, final String holdingsId) {
+    /**
+     * Create new Item.
+     * 
+     * @param mmsId      mmsId
+     * @param holdingsId holdingsId
+     * @return Item record
+     */
+    public Item createItem(final String mmsId, final String holdingsId) {
         return bibsTarget
-                .path(mms)
+                .path(mmsId)
                 .path(HOLDINGS)
                 .path(holdingsId)
                 .path(ITEMS)
@@ -92,6 +118,12 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
+    /**
+     * Update Item record.
+     * 
+     * @param item item
+     * @return Item record
+     */
     public Item updateItem(final Item item) {
         return bibsTarget
                 .path(item.getBibData().getMmsId())
@@ -105,6 +137,15 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
+    /**
+     * Create user loan on Item.
+     * 
+     * @param barcode         barcode
+     * @param userId          userId
+     * @param library         library
+     * @param circulationDesk circulationDesk
+     * @return ItemLoan record
+     */
     public ItemLoan createUserLoanOnItem(final String barcode, final String userId, final String library,
             final String circulationDesk) {
         final Item item = getItem(barcode);
@@ -138,6 +179,17 @@ public class AlmaItemsService {
                 .invoke(ItemLoan.class);
     }
 
+    /**
+     * Create user loan on Item.
+     * 
+     * @param barcode         barcode
+     * @param userId          userId
+     * @param library         library
+     * @param circulationDesk circulationDesk
+     * @param fine            fine
+     * @param loanStatus      loanStatus
+     * @return ItemLoan record
+     */
     public ItemLoan createUserLoanOnItem(final String barcode, final String userId, final String library,
             final String circulationDesk, final float fine, final LoanStatus loanStatus) {
         final Item item = getItem(barcode);
@@ -174,6 +226,15 @@ public class AlmaItemsService {
                 .invoke(ItemLoan.class);
     }
 
+    /**
+     * Update user loan.
+     * 
+     * @param userId  userId
+     * @param loanId  loanId
+     * @param dueDate dueDate
+     * @return ItemLoan record
+     * @throws DatatypeConfigurationException datatype configuration exception
+     */
     public ItemLoan updateUserLoanAndChangeDueDate(final String userId, final String loanId, final Calendar dueDate)
             throws DatatypeConfigurationException {
         final ItemLoan itemLoan = new ItemLoan();
@@ -191,6 +252,13 @@ public class AlmaItemsService {
                 .invoke(ItemLoan.class);
     }
 
+    /**
+     * Get user requests from Item.
+     * 
+     * @param item    item
+     * @param deleted deleted
+     * @return UserRequests record
+     */
     public UserRequests getRequestsFromItem(Item item, boolean deleted) {
         final String recordId = item.getBibData().getMmsId();
         final String holdingsId = item.getHoldingData().getHoldingId();
@@ -198,6 +266,15 @@ public class AlmaItemsService {
         return getRequestsFromItem(recordId, holdingsId, itemId, deleted);
     }
 
+    /**
+     * Get user requests from Item.
+     * 
+     * @param mmsId     mmsId
+     * @param holdingId holdingId
+     * @param itemPid   itemPid
+     * @param deleted   deleted
+     * @return UserRequests record
+     */
     public UserRequests getRequestsFromItem(String mmsId, String holdingId, String itemPid, boolean deleted) {
         WebTarget requestsFromItemTarget =
                 bibsTarget
@@ -222,11 +299,27 @@ public class AlmaItemsService {
                 .invoke(UserRequests.class);
     }
 
+    /**
+     * Get user requests from Item.
+     * 
+     * @param barcode barcode
+     * @param deleted deleted
+     * @return UserRequests record
+     */
     public UserRequests getRequestsFromItem(String barcode, boolean deleted) {
         final Item item = getItem(barcode);
         return getRequestsFromItem(item, deleted);
     }
 
+    /**
+     * Create user request.
+     * 
+     * @param barcode               barcode
+     * @param pickupLocationLibrary pickupLocationLibrary
+     * @param message               message
+     * @param ltId                  ltId
+     * @return UserRequest record
+     */
     public UserRequest createPatronRequest(String barcode, String pickupLocationLibrary, String message, String ltId) {
         final Item item = getItem(barcode);
         if (item.getItemData() == null) {
@@ -235,6 +328,15 @@ public class AlmaItemsService {
         return createPatronRequest(item, pickupLocationLibrary, message, ltId);
     }
 
+    /**
+     * Create user request.
+     * 
+     * @param item                  item
+     * @param pickupLocationLibrary pickupLocationLibrary
+     * @param message               message
+     * @param userId                userId
+     * @return UserRequest record
+     */
     public UserRequest createPatronRequest(Item item, String pickupLocationLibrary, String message, String userId) {
         final BibData bibData = item.getBibData();
         final HoldingData holdingData = item.getHoldingData();
@@ -268,6 +370,14 @@ public class AlmaItemsService {
                 .invoke(UserRequest.class);
     }
 
+    /**
+     * Create user request.
+     * 
+     * @param mmsId      mmsId
+     * @param userId     userId
+     * @param newRequest newRequest
+     * @return UserRequest record
+     */
     public UserRequest createPatronRequest(String mmsId, String userId, final UserRequest newRequest) {
         if (userId == null || userId.isEmpty()) {
             throw new IllegalArgumentException("No ltId provided for mmsid=" + mmsId + ", could not create request");
@@ -282,17 +392,42 @@ public class AlmaItemsService {
                 .invoke(UserRequest.class);
     }
 
+    /**
+     * Create digitization request.
+     * 
+     * @param barcode           barcode
+     * @param targetDestination targetDestination
+     * @param message           message
+     * @return UserRequest record
+     */
     public UserRequest createDigitizationRequest(String barcode, UserRequest.TargetDestination targetDestination,
             String message) {
         final Item item = getItem(barcode);
         return createDigitizationRequest(item, targetDestination, message);
     }
 
+    /**
+     * Create digitization request.
+     * 
+     * @param item              item
+     * @param targetDestination targetDestination
+     * @param message           message
+     * @return UserRequest record
+     */
     public UserRequest createDigitizationRequest(Item item, UserRequest.TargetDestination targetDestination,
             String message) {
         return createDigitizationRequest(item, targetDestination, message, null);
     }
 
+    /**
+     * Create digitization request.
+     * 
+     * @param item              item
+     * @param targetDestination targetDestination
+     * @param message           message
+     * @param userId            userId
+     * @return UserRequest
+     */
     public UserRequest createDigitizationRequest(Item item, UserRequest.TargetDestination targetDestination,
             String message, String userId) {
         final BibData bibData = item.getBibData();
@@ -331,6 +466,15 @@ public class AlmaItemsService {
                 .invoke(UserRequest.class);
     }
 
+    /**
+     * Delete Item.
+     * 
+     * @param mmsId          mmsId
+     * @param holdingsId     holdingsId
+     * @param itemId         itemId
+     * @param override       override
+     * @param holdingsRecord holdingsRecord
+     */
     public void deleteItem(final String mmsId, String holdingsId, final String itemId, boolean override,
             HoldingsRecord holdingsRecord) {
         bibsTarget
@@ -348,6 +492,13 @@ public class AlmaItemsService {
                 .close();
     }
 
+    /**
+     * Delete Item.
+     * 
+     * @param barcode        barcode
+     * @param override       override
+     * @param holdingsRecord holdingsRecord
+     */
     public void deleteItem(final String barcode, boolean override, HoldingsRecord holdingsRecord) {
         final Item item = getItem(barcode);
         final String recordId = item.getBibData().getMmsId();
@@ -372,10 +523,23 @@ public class AlmaItemsService {
                 .close();
     }
 
+    /**
+     * Delete user request.
+     * 
+     * @param barcode   barcode
+     * @param requestId requestId
+     */
     public void deleteRequest(String barcode, String requestId) {
         deleteRequest(barcode, requestId, EMPTY_STRING);
     }
 
+    /**
+     * Delete user request.
+     * 
+     * @param barcode   barcode
+     * @param requestId requestId
+     * @param note      note
+     */
     public void deleteRequest(final String barcode, final String requestId, String note) {
         final Item item = getItem(barcode);
         final String recordId = item.getBibData().getMmsId();
@@ -403,6 +567,15 @@ public class AlmaItemsService {
 
     }
 
+    /**
+     * Update comment on request.
+     * 
+     * @param barcode                 barcode
+     * @param requestId               requestId
+     * @param comment                 comment
+     * @param appendToExistingComment appendToExistingComment
+     * @return UserRequest record
+     */
     public UserRequest updateCommentOnRequest(String barcode, String requestId, String comment,
             boolean appendToExistingComment) {
         final List<UserRequest> requestsFromItem = getRequestsFromItem(barcode, false).getUserRequest();
@@ -453,11 +626,16 @@ public class AlmaItemsService {
                 .invoke(UserRequest.class);
     }
 
-    public UserRequest actionOnRequest(String barcode, String action, String requestId, boolean releaseItem) { // todo:
-                                                                                                               // releaseItem
-                                                                                                               // er
-                                                                                                               // ikke i
-                                                                                                               // bruk
+    /**
+     * Do action on request.
+     * 
+     * @param barcode     barcode
+     * @param action      action
+     * @param requestId   requestId
+     * @param releaseItem releaseItem
+     * @return UserRequest record
+     */
+    public UserRequest actionOnRequest(String barcode, String action, String requestId, boolean releaseItem) {
         final Item item = getItem(barcode);
         final String recordId = EMPTY_STRING + item.getBibData().getMmsId();
         final String holdingsId = item.getHoldingData().getHoldingId();
@@ -477,6 +655,16 @@ public class AlmaItemsService {
                 .invoke(UserRequest.class);
     }
 
+    /**
+     * Scan in Item.
+     * 
+     * @param barcode    barcode
+     * @param requestId  requestId
+     * @param department department
+     * @param circDesk   circDesk
+     * @param library    library
+     * @return Item record
+     */
     public Item scanInItem(String barcode, String requestId, String department, String circDesk, String library) {
         final Item item = getItem(barcode);
         final String recordId = EMPTY_STRING + item.getBibData().getMmsId();
@@ -499,6 +687,14 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
+    /**
+     * Scan in Item.
+     * 
+     * @param barcode  barcode
+     * @param circDesk circDesk
+     * @param library  library
+     * @return Item record
+     */
     public Item scanInItem(String barcode, String circDesk, String library) {
         final Item item = getItem(barcode);
         final String recordId = EMPTY_STRING + item.getBibData().getMmsId();
@@ -519,6 +715,14 @@ public class AlmaItemsService {
                 .invoke(Item.class);
     }
 
+    /**
+     * Update remote digital item.
+     * 
+     * @param mmsId            mmsId
+     * @param representationId representationId
+     * @param digitalItem      digitalItem
+     * @return Representation record
+     */
     public Representation updateRemoteDigitalItem(String mmsId, String representationId, Representation digitalItem) {
         return bibsTarget
                 .path(mmsId)
@@ -530,6 +734,12 @@ public class AlmaItemsService {
                 .invoke(Representation.class);
     }
 
+    /**
+     * Update Item description.
+     * 
+     * @param item item
+     * @return Item record
+     */
     public Item updateItemDescription(final Item item) {
         return bibsTarget
                 .path(item.getBibData().getMmsId())
