@@ -22,7 +22,8 @@ class HttpStatusExceptionTest {
         WebServiceResult webServiceResult  = new WebServiceResult();
         webServiceResult.setResult(resultAsString);
 
-        HttpStatusException httpStatusException = new HttpStatusException(status, statusText, method, url, responseBody, webServiceResult);
+        HttpStatusException httpStatusException = new HttpStatusException(status, statusText,method, url,
+                responseBody,webServiceResult);
 
         assertEquals(status, httpStatusException.getStatus());
         assertEquals(statusText, httpStatusException.getStatusText());
@@ -41,7 +42,8 @@ class HttpStatusExceptionTest {
         String url = "https://www.example.com";
         String responseBody = "sample body";
         WebServiceResult webServiceResult  = null;
-        HttpStatusException httpStatusException = new HttpStatusException(status, statusText, method, url, responseBody, webServiceResult);
+        HttpStatusException httpStatusException = new HttpStatusException(status, statusText, method, url,
+                responseBody, webServiceResult);
         assertFalse(httpStatusException.isWebserviceResult());
     }
 
