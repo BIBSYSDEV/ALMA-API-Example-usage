@@ -18,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import no.unit.alma.commons.AlmaClient;
 import no.unit.alma.generated.bibs.Bib;
 import no.unit.alma.generated.bibs.Bibs;
 import no.unit.alma.generated.items.BibData;
@@ -27,7 +28,6 @@ import no.unit.alma.generated.items.ItemData;
 import no.unit.alma.generated.representations.Representation;
 import no.unit.alma.generated.representations.Representations;
 import no.unit.alma.generated.userrequests.UserRequests;
-import no.unit.alma.commons.AlmaClient;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaBibsClientTest {
@@ -187,7 +187,7 @@ class AlmaBibsClientTest {
         when(bibsBuilder.buildGet()).thenReturn(bibsInvocation);
 
         Representations representations = new Representations();
-        representations.setTotalRecordCount(5l);
+        representations.setTotalRecordCount(5L);
 
         when(bibsInvocation.invoke((Class<Representations>) any())).thenReturn(representations);
         AlmaBibsService almaBibsService =
@@ -195,7 +195,7 @@ class AlmaBibsClientTest {
 
         Representations remoteRepresentations =
                 almaBibsService.getRemoteRepresentationsFromMmsId(TEST_MMS_ID, 10, 0);
-        assertEquals(5l, remoteRepresentations.getTotalRecordCount());
+        assertEquals(5L, remoteRepresentations.getTotalRecordCount());
 
     }
 
@@ -221,12 +221,12 @@ class AlmaBibsClientTest {
                 new AlmaBibsService(mockAlmaApiClient);
 
         Representation remotePresentation =
-                almaBibsService.createRemotePresentation(TEST_BARCODE, TEST_ACCESS,
+                almaBibsService.createRemoteRepresentation(TEST_BARCODE, TEST_ACCESS,
                         TEST_DIGITAL_REPOSITORY_ID, TEST_URL, TEST_LIBRARY_CODE);
         assertEquals("test", remotePresentation.getTitle());
 
         remotePresentation =
-                almaBibsService.createRemotePresentation(TEST_BARCODE, TEST_ACCESS,
+                almaBibsService.createRemoteRepresentation(TEST_BARCODE, TEST_ACCESS,
                         TEST_DIGITAL_REPOSITORY_ID, TEST_URL, TEST_LIBRARY_CODE);
         assertEquals("test", remotePresentation.getTitle());
 
@@ -242,6 +242,12 @@ class AlmaBibsClientTest {
         assertEquals("test", remotePresentation.getTitle());
 
         remotePresentation =
+                almaBibsService.createRemoteRepresentation(TEST_MMS_ID_NUMBER, TEST_ACCESS,
+                        TEST_REMOTE_REPOSITORY_ID, TEST_LIBRARY_CODE, TEST_URL, "", TEST_MONTH, TEST_DAY,
+                        TEST_VOLUME, "", TEST_NUMBER);
+        assertEquals("test", remotePresentation.getTitle());
+
+        remotePresentation =
                 almaBibsService.createRemoteRepresentation(TEST_BARCODE, TEST_ACCESS,
                         TEST_REMOTE_REPOSITORY_ID, TEST_LIBRARY_CODE, TEST_URL, TEST_YEAR, TEST_MONTH, TEST_DAY,
                         TEST_VOLUME, TEST_ISSUE, TEST_NUMBER);
@@ -252,13 +258,6 @@ class AlmaBibsClientTest {
                         TEST_REMOTE_REPOSITORY_ID, TEST_LIBRARY_CODE, TEST_URL, TEST_YEAR, TEST_MONTH, TEST_DAY,
                         TEST_VOLUME, TEST_ISSUE, TEST_NUMBER);
         assertEquals("test", remotePresentation.getTitle());
-
-        remotePresentation =
-                almaBibsService.createRemoteRepresentation(TEST_BARCODE, TEST_LABEL, TEST_ACCESS,
-                        TEST_REMOTE_REPOSITORY_ID, TEST_LIBRARY_CODE, TEST_URL, "", "", "",
-                        "", "", "");
-        assertEquals(TEST_LABEL, remotePresentation.getLabel());
-
     }
 
     @Test
