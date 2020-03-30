@@ -30,7 +30,7 @@ public class HttpStatusException extends IOException {
      * @param method HttpMethod
      * @param url request url
      * @param responseBody responseBody
-     * @param webServiceResult webServiceResult object from AlmaŒŒ
+     * @param webServiceResult webServiceResult object from Alma
      */
     public HttpStatusException(int status, String statusText, String method, String url, String responseBody,
                                WebServiceResult webServiceResult) {

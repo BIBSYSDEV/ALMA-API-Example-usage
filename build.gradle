@@ -175,12 +175,12 @@ pmdMain { exclude 'no/unit/alma/generated/**' }
 pmd {
     ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
     ruleSets = []
-//    ignoreFailures = true
+    ignoreFailures = true
 }
 
 checkstyle {
     configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
-//    showViolations = true
+    showViolations = true
 }
 
 tasks.withType(Checkstyle) {
