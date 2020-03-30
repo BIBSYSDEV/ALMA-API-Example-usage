@@ -32,8 +32,8 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
             String responseBody = unmarshalResponseEntity(clientResponseContext);
             MediaType mediaType = clientResponseContext.getMediaType();
             WebServiceResult webServiceResult =
-                    (MediaType.APPLICATION_JSON_TYPE.getType().equals(mediaType.getType())
-                            && MediaType.APPLICATION_JSON_TYPE.getSubtype().equals(mediaType.getSubtype()))
+                    MediaType.APPLICATION_JSON_TYPE.getType().equals(mediaType.getType())
+                            && MediaType.APPLICATION_JSON_TYPE.getSubtype().equals(mediaType.getSubtype())
                     ? unmarshalWebServiceResult(responseBody)
                     : null;
 
