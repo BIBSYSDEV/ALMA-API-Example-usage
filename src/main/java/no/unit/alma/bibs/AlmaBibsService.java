@@ -64,7 +64,7 @@ public class AlmaBibsService {
         }
         return getBibTarget
                 .request()
-                .accept(MediaType.APPLICATION_XML)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
                 .buildGet()
                 .invoke(Bib.class);
     }
