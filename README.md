@@ -73,6 +73,7 @@ https://developers.exlibrisgroup.com/console/
                                 </schema>
                             </schemas>
                             <bindingDirectory>src/main/resources</bindingDirectory>
+                            <extension>true</extension>
                             <bindingIncludes>
                                 <include>*.xjb</include>
                             </bindingIncludes>
@@ -134,11 +135,15 @@ to make sure the @XmlRootElement annotation is generated as well. (put that file
 xjb-files for each package (here I am not sure since we are using `<xjb:globalBindings>` and that can only be used once.)
 ```
 <?xml version="1.0"?>
-<jxb:bindings version="1.0" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" jxb:extensionBindingPrefixes="xjc" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <jxb:bindings schemaLocation="https://developers.exlibrisgroup.com/wp-content/uploads/alma/xsd/rest_partners.xsd" node="/xs:schema">
-        <jxb:globalBindings>
-            <xjc:simple/>
-        </jxb:globalBindings>
-    </jxb:bindings>
+<jxb:bindings version="1.0"
+              xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+              xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+              jxb:extensionBindingPrefixes="xjc">
+
+    <jxb:globalBindings>
+        <xjc:simple/>
+    </jxb:globalBindings>
+
 </jxb:bindings>
+
 ```
