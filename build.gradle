@@ -25,6 +25,10 @@ sourceSets {
     main { java { srcDir xjcGenerate.outputDirectory } }
 }
 
+clean.doFirst {
+    file('src/main/java/no/unit/alma/generated').deleteDir()
+}
+
 compileJava {
     dependsOn xjcGenerate
 }
