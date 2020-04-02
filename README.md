@@ -73,6 +73,7 @@ https://developers.exlibrisgroup.com/console/
                                 </schema>
                             </schemas>
                             <bindingDirectory>src/main/resources</bindingDirectory>
+                            <extension>true</extension>
                             <bindingIncludes>
                                 <include>*.xjb</include>
                             </bindingIncludes>
