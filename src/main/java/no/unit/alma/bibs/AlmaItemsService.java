@@ -20,7 +20,6 @@ import no.unit.alma.generated.items.BibData;
 import no.unit.alma.generated.items.HoldingData;
 import no.unit.alma.generated.items.Item;
 import no.unit.alma.generated.items.ItemData;
-import no.unit.alma.generated.items.ObjectFactory;
 import no.unit.alma.generated.representations.Representation;
 import no.unit.alma.generated.userrequests.PickupLocationTypes;
 import no.unit.alma.generated.userrequests.RequestTypes;
@@ -578,7 +577,7 @@ public class AlmaItemsService {
      */
     public UserRequest updateCommentOnRequest(String barcode, String requestId, String comment,
             boolean appendToExistingComment) {
-        final List<UserRequest> requestsFromItem = getRequestsFromItem(barcode, false).getUserRequest();
+        final List<UserRequest> requestsFromItem = getRequestsFromItem(barcode, false).getUserRequests();
         UserRequest updatingRequest = null;
         for (UserRequest request : requestsFromItem) {
             if (request.getRequestId().equals(requestId)) {
@@ -749,7 +748,7 @@ public class AlmaItemsService {
                 .path(item.getItemData().getPid())
                 .request()
                 .accept(MediaType.APPLICATION_XML)
-                .buildPut(Entity.xml(new ObjectFactory().createItem(item)))
+                .buildPut(Entity.xml(item))
                 .invoke(Item.class);
     }
 
