@@ -30,20 +30,22 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
                        ClientResponseContext clientResponseContext) throws IOException {
         if (clientResponseContext.getStatusInfo().getFamily() != Family.SUCCESSFUL) {
             log.trace("Response from alma is marked as unsuccessful.\nUri: {}\nMethod: {}\nResponse code: {}",
-                clientRequestContext.getUri(), clientRequestContext.getMethod(), clientResponseContext.getStatus());
+                    clientRequestContext.getUri(), clientRequestContext.getMethod(), clientResponseContext.getStatus());
 
             String responseBody = unmarshalResponseEntity(clientResponseContext);
+            MediaType mediaType = clientResponseContext.getMediaType();
             WebServiceResult webServiceResult =
-                MediaType.APPLICATION_XML_TYPE == clientResponseContext.getMediaType()
-                    ? unmarshalWebServiceResult(responseBody)
-                    : null;
+                    MediaType.APPLICATION_XML_TYPE.getType().equals(mediaType.getType())
+                            && MediaType.APPLICATION_XML_TYPE.getSubtype().equals(mediaType.getSubtype())
+                            ? unmarshalWebServiceResult(responseBody)
+                            : null;
 
             throw new HttpStatusException(clientResponseContext.getStatus(),
-                clientResponseContext.getStatusInfo().getReasonPhrase(),
-                clientRequestContext.getMethod(),
-                clientRequestContext.getUri().toString(),
-                responseBody,
-                webServiceResult
+                    clientResponseContext.getStatusInfo().getReasonPhrase(),
+                    clientRequestContext.getMethod(),
+                    clientRequestContext.getUri().toString(),
+                    responseBody,
+                    webServiceResult
             );
         }
     }
@@ -69,7 +71,7 @@ public class AlmaStatusResponseFilter implements ClientResponseFilter {
         }
         try (InputStream entityStream = clientResponseContext.getEntityStream()) {
             return new BufferedReader(new InputStreamReader(entityStream))
-                .lines().collect(Collectors.joining("\n"));
+                    .lines().collect(Collectors.joining("\n"));
         } catch (IOException e) {
             log.error("Failed to unmarshal error message body from alma", e);
             return null;

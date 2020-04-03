@@ -11,6 +11,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.Test;
@@ -98,13 +99,12 @@ class AlmaBibsClientTest {
         when(bibsWebTarget.path(any())).thenReturn(bibsWebTarget);
         when(bibsWebTarget.request()).thenReturn(bibsBuilder);
         when(bibsWebTarget.queryParam(anyString(), any())).thenReturn(bibsWebTarget);
-        when(bibsBuilder.accept(anyString())).thenReturn(bibsBuilder);
+        when(bibsBuilder.accept((MediaType) any())).thenReturn(bibsBuilder);
         when(bibsBuilder.buildGet()).thenReturn(bibsInvocation);
         Bib tempBib = new Bib();
         tempBib.setTitle("test");
         when(bibsInvocation.invoke((Class<Object>) any())).thenReturn(tempBib);
-        AlmaBibsService almaBibsService =
-                new AlmaBibsService(mockAlmaApiClient);
+        AlmaBibsService almaBibsService = new AlmaBibsService(mockAlmaApiClient);
 
         Bib resultBib = almaBibsService.getBib(TEST_MMS_ID, "true");
         assertEquals("test", resultBib.getTitle());

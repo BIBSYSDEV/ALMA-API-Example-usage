@@ -151,7 +151,7 @@ class AlmaHoldingsClientTest {
         AlmaHoldingsService almaHoldingsService = new AlmaHoldingsService(mockAlmaApiClient);
         Items allItems = almaHoldingsService.getAllItems(TEST_MMS_ID, TEST_HOLDING_ID);
         assertEquals(totalRecordCount, allItems.getTotalRecordCount());
-        assertEquals(totalRecordCount, allItems.getItem().size());
+        assertEquals(totalRecordCount, allItems.getItems().size());
         allItems = almaHoldingsService.getAllItems(TEST_MMS_ID, TEST_HOLDING_ID);
         assertEquals(40, allItems.getTotalRecordCount());
     }
@@ -177,7 +177,7 @@ class AlmaHoldingsClientTest {
         }
 
         Items items = new Items();
-        items.getItem().addAll(itemList);
+        items.getItems().addAll(itemList);
         items.setTotalRecordCount(total);
 
         return items;
