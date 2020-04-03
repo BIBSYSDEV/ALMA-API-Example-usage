@@ -9,7 +9,7 @@ import no.unit.alma.generated.libraries.Library;
 
 public class AlmaLibrariesService {
 
-    private final WebTarget confTarget;
+    private final transient WebTarget confTarget;
     private final String context;
     private final String contextValue;
     private final String almaStage;
