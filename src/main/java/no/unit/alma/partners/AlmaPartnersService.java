@@ -32,7 +32,7 @@ public class AlmaPartnersService {
 
     /**
      * Search for partners.
-     * @param q     Query as Strin
+     * @param q Query as String
      * @return Partners
      */
     public Partners searchPartner(String q) {
