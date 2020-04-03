@@ -164,6 +164,16 @@ task xjcGeneratePartners(type: XjcGenerate) {
     episodeTargetFile = file('build/xjc/partners.episode')
 }
 
+task xjcGenerateLibraries(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'libraries_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    targetPackage = 'no.unit.alma.generated.libraries'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/libraries.episode')
+}
+
 
 repositories {
    mavenCentral()
