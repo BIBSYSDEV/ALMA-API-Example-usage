@@ -450,16 +450,16 @@ class AlmaItemsClientTest {
         when(invocation.invoke(UserRequest.class)).thenReturn(testUserRequest);
 
         UserRequests testUserRequests = new UserRequests();
-        testUserRequests.getUserRequest().add(testUserRequest);
+        testUserRequests.getUserRequests().add(testUserRequest);
 
         UserRequests emptyUserRequests = new UserRequests();
         UserRequest emptyUserRequest = new UserRequest();
-        emptyUserRequests.getUserRequest().add(emptyUserRequest);
+        emptyUserRequests.getUserRequests().add(emptyUserRequest);
         emptyUserRequest.setRequestId("");
 
         UserRequests nullCommentUserRequests = new UserRequests();
         UserRequest nullCommentUserRequest = new UserRequest();
-        nullCommentUserRequests.getUserRequest().add(nullCommentUserRequest);
+        nullCommentUserRequests.getUserRequests().add(nullCommentUserRequest);
         nullCommentUserRequest.setRequestId(TEST_REQUEST_ID);
         nullCommentUserRequest.setComment(null);
         nullCommentUserRequest.setBarcode("NULL");
@@ -482,7 +482,7 @@ class AlmaItemsClientTest {
         resultUserRequest =
                 almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, false);
         assertEquals(String.format(commentFormat, TEST_COMMENT), resultUserRequest.getComment());
-        nullCommentUserRequests.getUserRequest().get(0).setComment("");
+        nullCommentUserRequests.getUserRequests().get(0).setComment("");
 
         // testUserRequests
         resultUserRequest = almaItemsService.updateCommentOnRequest(TEST_BARCODE, TEST_REQUEST_ID, TEST_COMMENT, true);

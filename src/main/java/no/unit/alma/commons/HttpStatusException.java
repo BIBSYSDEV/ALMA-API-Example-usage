@@ -8,29 +8,23 @@ import java.io.IOException;
 public class HttpStatusException extends IOException {
 
     public static final String EMPTY_STRING = "";
-    private transient int status;
-    private transient String statusText;
-    private transient String method;
-    private transient String url;
-    private transient String responseBody;
-    private transient WebServiceResult webServiceResult;
+    private final transient int status;
+    private final transient String statusText;
+    private final transient String method;
+    private final transient String url;
+    private final transient String responseBody;
+    private final transient WebServiceResult webServiceResult;
     private transient Error error;
 
-    public HttpStatusException(int status, String statusText, String method, String url, String responseBody) {
-        this(status, statusText, method, url, responseBody, null);
-    }
-
     /**
-     * The HttpStatusException is called as a filter on communication with AlmaClient in order to catch
-     * WebServiceResults, containing the error-details from Alma. The HttpServiceException will be caught be a
-     * ResponseProcessingException. Catching that, will enable you to access the almaErrorCode etc. pp..
+     * HttpStatusException wraps alma responses in an exception.
      *
-     * @param status Status number
-     * @param statusText Status message
-     * @param method HttpMethod
-     * @param url request url
-     * @param responseBody responseBody
-     * @param webServiceResult webServiceResult object from Alma
+     * @param status            Status as int
+     * @param statusText        Status as String
+     * @param method            method as String
+     * @param url               url as String
+     * @param responseBody      responseBody as String
+     * @param webServiceResult  Result as WebServiceResult
      */
     public HttpStatusException(int status, String statusText, String method, String url, String responseBody,
                                WebServiceResult webServiceResult) {
@@ -75,10 +69,10 @@ public class HttpStatusException extends IOException {
     private void setError() {
         if (webServiceResult != null && this.webServiceResult.isErrorsExist()
                 && this.getWebServiceResult().getErrorList() != null
-                && this.getWebServiceResult().getErrorList().getError() != null
-                && !this.getWebServiceResult().getErrorList().getError().isEmpty()) {
+                && this.getWebServiceResult().getErrorList().getErrors() != null
+                && !this.getWebServiceResult().getErrorList().getErrors().isEmpty()) {
 
-            this.error = this.getWebServiceResult().getErrorList().getError().get(0);
+            this.error = this.getWebServiceResult().getErrorList().getErrors().get(0);
         }
     }
 
