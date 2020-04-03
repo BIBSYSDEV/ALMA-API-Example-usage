@@ -121,7 +121,7 @@ public class AlmaHoldingsService {
         int offset = 0;
         final int limit = 100;
         Items retrievedItems = getItems(mmsId, holdingsId, limit, offset);
-        items.getItem().addAll(retrievedItems.getItem());
+        items.getItems().addAll(retrievedItems.getItems());
 
         int total = retrievedItems.getTotalRecordCount();
         boolean finished = limit + offset >= total;
@@ -130,7 +130,7 @@ public class AlmaHoldingsService {
             offset = offset + limit;
 
             retrievedItems = getItems(mmsId, holdingsId, limit, offset);
-            items.getItem().addAll(retrievedItems.getItem());
+            items.getItems().addAll(retrievedItems.getItems());
 
             finished = limit + offset > total;
         }

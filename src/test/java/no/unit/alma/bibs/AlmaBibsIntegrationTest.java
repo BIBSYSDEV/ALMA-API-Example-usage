@@ -23,7 +23,7 @@ public class AlmaBibsIntegrationTest {
     public static final String NOT_FOUND_ALMA_ERROR_CODE = "402203";
     public static final String NOT_FOUND_ALMA_ERROR_MESSAGE = "Input parameters mmsId %s is not valid.";
 
-    @Test
+    //@Test
     void testGetBib_not_found() {
         Config config = ConfigFactory.defaultReference();
         AlmaBibsService almaBibsService =

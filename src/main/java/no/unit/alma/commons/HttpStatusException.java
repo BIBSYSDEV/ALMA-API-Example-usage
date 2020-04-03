@@ -75,10 +75,10 @@ public class HttpStatusException extends IOException {
     private void setError() {
         if (webServiceResult != null && this.webServiceResult.isErrorsExist()
                 && this.getWebServiceResult().getErrorList() != null
-                && this.getWebServiceResult().getErrorList().getError() != null
-                && !this.getWebServiceResult().getErrorList().getError().isEmpty()) {
+                && this.getWebServiceResult().getErrorList().getErrors() != null
+                && !this.getWebServiceResult().getErrorList().getErrors().isEmpty()) {
 
-            this.error = this.getWebServiceResult().getErrorList().getError().get(0);
+            this.error = this.getWebServiceResult().getErrorList().getErrors().get(0);
         }
     }
 

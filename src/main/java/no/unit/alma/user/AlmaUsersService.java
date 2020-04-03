@@ -138,7 +138,7 @@ public class AlmaUsersService
         boolean finished = recordCount <= (offset += limit);
         while (!finished) {
             ItemLoans retrievedMoreLoans = retrieveUserItemLoans(userIdentifier, limit, offset);
-            retrievedLoans.getItemLoan().addAll(retrievedMoreLoans.getItemLoan());
+            retrievedLoans.getItemLoen().addAll(retrievedMoreLoans.getItemLoen());
             finished = recordCount <= (offset += limit);
         }
         return retrievedLoans;
