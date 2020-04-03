@@ -53,11 +53,6 @@ class HttpStatusExceptionTest {
 
     @Test
     public void testHttpStatusExceptionWithErrors() {
-        int status = 23;
-        String statusText = "sample status text";
-        String method = "sample method";
-        String url = "https://www.example.com";
-        String responseBody = "sample body";
         String resultAsString = "sample result string";
         WebServiceResult webServiceResult  = new WebServiceResult();
         webServiceResult.setResult(resultAsString);
@@ -72,9 +67,14 @@ class HttpStatusExceptionTest {
         ErrorList errorList = new ErrorList();
         errorList.getErrors().add(error);
         webServiceResult.setErrorList(errorList);
+        String responseBody = "sample body";
+        String url = "https://www.example.com";
+        String method = "sample method";
+        String statusText = "sample status text";
+        int status = 23;
 
-        HttpStatusException httpStatusException = new HttpStatusException(status, statusText,method, url,
-                responseBody,webServiceResult);
+        HttpStatusException httpStatusException = new HttpStatusException(status, statusText, method, url,
+                responseBody, webServiceResult);
 
         assertEquals(status, httpStatusException.getStatus());
         assertEquals(statusText, httpStatusException.getStatusText());

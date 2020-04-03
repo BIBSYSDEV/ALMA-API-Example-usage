@@ -154,6 +154,16 @@ task xjcGeneratePolines(type: XjcGenerate) {
     episodeTargetFile = file('build/xjc/polines.episode')
 }
 
+task xjcGeneratePartners(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'partners_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    targetPackage = 'no.unit.alma.generated.partners'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/partners.episode')
+}
+
 
 repositories {
    mavenCentral()
