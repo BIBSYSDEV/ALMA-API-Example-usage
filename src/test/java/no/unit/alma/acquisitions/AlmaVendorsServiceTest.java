@@ -113,15 +113,16 @@ class AlmaVendorsServiceTest {
         Vendor resultVendor = almaVendorsService.updateVendor(TEST_ID, vendor);
         assertEquals(vendor.getCode(), resultVendor.getCode());
     }
+
     @Test
     void testRetrieveVendors() {
         mockAlmaApi();
 
-        final int LIMIT = 0;
-        final int OFFSET = 10;
-        final String STATUS = "status";
-        final String  EMPTY_QUERY_STRING = "query";
-        final String  TYPE = "some_type";
+        final int limit = 0;
+        final int offset = 10;
+        final String status = "status";
+        final String emptyQueryString = "query";
+        final String type = "some_type";
 
         Vendors vendors = new Vendors();
         vendors.setTotalRecordCount(12);
@@ -135,18 +136,19 @@ class AlmaVendorsServiceTest {
 
         AlmaVendorsService almaVendorsService =
                 new AlmaVendorsService(mockAlmaApiClient);
-        Vendors resultVendors = almaVendorsService.retrieveVendors(EMPTY_QUERY_STRING, STATUS, TYPE, LIMIT, OFFSET);
+        Vendors resultVendors = almaVendorsService.retrieveVendors(emptyQueryString, status, type, limit, offset);
         assertEquals(vendors.getTotalRecordCount(), resultVendors.getTotalRecordCount());
     }
+
     @Test
     void testRetrieveAllVendors() {
         mockAlmaApi();
 
-        final int LIMIT = 10;
-        final int OFFSET = 10;
-        final String EMPTY_STATUS = "";
-        final String  EMPTY_QUERY_STRING = "";
-        final String  TYPE = "";
+        final int limit = 10;
+        final int offset = 10;
+        final String emptyStatus = "";
+        final String emptyQueryString = "";
+        final String type = "";
 
         Vendors vendors = new Vendors();
         vendors.setTotalRecordCount(12);
@@ -159,7 +161,8 @@ class AlmaVendorsServiceTest {
 
         AlmaVendorsService almaVendorsService =
                 new AlmaVendorsService(mockAlmaApiClient);
-        Vendors resultVendors = almaVendorsService.retrieveVendors(EMPTY_QUERY_STRING, EMPTY_STATUS, TYPE, LIMIT, OFFSET);
+        Vendors resultVendors =
+                almaVendorsService.retrieveVendors(emptyQueryString, emptyStatus, type, limit, offset);
         assertEquals(vendors.getTotalRecordCount(), resultVendors.getTotalRecordCount());
     }
 
@@ -167,11 +170,11 @@ class AlmaVendorsServiceTest {
     void testSearchVendors() {
         mockAlmaApi();
 
-        final int RESULT_COUNT = 121;
-        final String  QUERY_STRING = "test";
+        final int resultCount = 121;
+        final String queryString = "test";
 
         Vendors vendors = new Vendors();
-        vendors.setTotalRecordCount(RESULT_COUNT);
+        vendors.setTotalRecordCount(resultCount);
 
         when(webTarget.queryParam(anyString(),any())).thenReturn(webTarget);
         when(webTarget.path(any())).thenReturn(webTarget);
@@ -182,7 +185,7 @@ class AlmaVendorsServiceTest {
 
         AlmaVendorsService almaVendorsService =
                 new AlmaVendorsService(mockAlmaApiClient);
-        Vendors resultVendors = almaVendorsService.searchVendor(QUERY_STRING);
+        Vendors resultVendors = almaVendorsService.searchVendor(queryString);
         assertEquals(vendors.getTotalRecordCount(), resultVendors.getTotalRecordCount());
     }
 
