@@ -1,0 +1,279 @@
+import org.unbrokendome.gradle.plugins.xjc.XjcGenerate
+
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'pmd'
+    id 'jacoco'
+    id "net.linguica.maven-settings" version "0.5"
+    id 'org.unbroken-dome.xjc' version '1.4.3'
+}
+
+group 'no.unit.alma'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11  // source-code version and must be <= targetCompatibility
+targetCompatibility = JavaVersion.VERSION_11 // bytecode target version
+
+
+xjc {
+    includeInMainCompilation = true
+    includeEpisodeFileInJar = true
+}
+
+sourceSets {
+    main { java { srcDir xjcGenerate.outputDirectory } }
+}
+
+clean.doFirst {
+    file('src/main/java/no/unit/alma/generated').deleteDir()
+}
+
+compileJava {
+    dependsOn xjcGenerate
+}
+
+xjcGenerate {
+    urlSources = fileTree('src/main/schema/') { include 'webservice_result_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    targetPackage = 'no.unit.alma.generated.error'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/webservice_result.episode')
+}
+
+task xjcGenerateBibs(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'bibs_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    targetPackage = 'no.unit.alma.generated.bibs'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/bibs.episode')
+}
+
+task xjcGenerateHolding(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'holding_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/holding.episode')
+    targetPackage = 'no.unit.alma.generated.holding'
+}
+
+task xjcGenerateHoldings(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'holdings_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/holdings.episode')
+    targetPackage = 'no.unit.alma.generated.holdings'
+}
+
+task xjcGenerateItems(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'items_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/items.episode')
+    targetPackage = 'no.unit.alma.generated.items'
+}
+
+task xjcGenerateRepresentations(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'representations_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/representations.episode')
+    targetPackage = 'no.unit.alma.generated.representations'
+}
+
+task xjcGenerateUserRequests(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'user_requests_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/user_requests.episode')
+    targetPackage = 'no.unit.alma.generated.userrequests'
+}
+
+task xjcGenerateUsers(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'users_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/users.episode')
+    targetPackage = 'no.unit.alma.generated.users'
+}
+
+task xjcGenerateUserResourceSharingRequest(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'users_resource_sharing_request_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/userrequests.episode')
+    targetPackage = 'no.unit.alma.generated.userrequests'
+}
+
+task xjcGenerateItemLoans(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'item_loans_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/item_loans.episode')
+    targetPackage = 'no.unit.alma.generated.itemloans'
+}
+
+
+task xjcGenerateVendors(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'vendors_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    targetPackage = 'no.unit.alma.generated.vendors'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/vendors.episode')
+}
+
+task xjcGeneratePolines(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'polines_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    targetPackage = 'no.unit.alma.generated.polines'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/polines.episode')
+}
+
+task xjcGenerateLibraries(type: XjcGenerate) {
+    urlSources = fileTree('src/main/schema') { include 'libraries_xsd.url' }
+    outputDirectory = file('src/main/java')
+    extension = true
+    bindingFiles = fileTree('src/main/schema/binding/') { 'binding.xjb' }
+    targetPackage = 'no.unit.alma.generated.libraries'
+    episodes = fileTree('build/xjc/') { include '*.episode' }
+    episodeTargetFile = file('build/xjc/libraries.episode')
+}
+
+
+repositories {
+   mavenCentral()
+   maven {
+        url = 'https://artifactory.unit.no/artifactory/libs-releases'
+    	// put mavenUsername and mavenPassword in gradle.properties NB! Do NOT commit gradle.properties to git!
+        credentials { 
+        	username '${mavenUsername}'
+        	password '${mavenPassword}'
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+    }
+}
+
+dependencies {
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+    implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1.1'
+    implementation group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.30.1'
+    implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: '2.30.1'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    implementation group: 'org.jvnet.jaxb2_commons', name: 'jaxb2-basics-runtime', version: '1.11.1'
+    implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+    implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.30.1'
+    implementation group: 'com.typesafe', name: 'config', version: '1.4.0'
+    implementation group: 'no.bibsys', name: 'vault-client', version: '1.0.8'
+  	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.1'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.1'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.3.3'
+}
+
+
+test {
+    useJUnitPlatform()
+    failFast = true
+    finalizedBy jacocoTestReport
+}
+
+pmdMain { exclude 'no/unit/alma/generated/**' }
+
+pmd {
+    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
+    ruleSets = []
+    ignoreFailures = true
+}
+
+checkstyle {
+    configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
+    showViolations = true
+}
+
+tasks.withType(Checkstyle) {
+    exclude 'no/unit/alma/generated/**'
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
+    }
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'no/unit/alma/generated/**')
+        }))
+    }
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacoco")
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+}
+
+check.dependsOn jacocoTestCoverageVerification
+jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
+
+jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude:  [
+                    'no/unit/alma/generated/**',
+            ])
+        }))
+    }
+    violationRules {
+        rule {
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 0.99
+            }
+        }
+
+        rule {
+            limit {
+                counter = 'CLASS'
+                value = 'COVEREDRATIO'
+                minimum = 1.00
+            }
+        }
+    }
+}
+
