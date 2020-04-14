@@ -33,7 +33,7 @@ public class AlmaVendorsService  {
 
     /**
      * Search for vendors.
-     * @param q     Query as Strin
+     * @param q     Query as String
      * @return Vendors
      */
     public Vendors searchVendor(String q) {
