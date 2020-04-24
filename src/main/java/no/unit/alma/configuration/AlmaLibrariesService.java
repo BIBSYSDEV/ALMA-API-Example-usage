@@ -9,7 +9,7 @@ import no.unit.alma.generated.libraries.Library;
 
 /**
  * This client implements an integration to the /almaws/v1/bibs/mmsId/conf
- * service
+ * service.
  */
 public class AlmaLibrariesService {
 
@@ -19,7 +19,7 @@ public class AlmaLibrariesService {
     private final String almaStage;
 
     /**
-     * Create new AlmaLibrariesService
+     * Create new AlmaLibrariesService.
      * 
      * @param almaClient almaClient
      */
@@ -31,7 +31,7 @@ public class AlmaLibrariesService {
     }
 
     /**
-     * Get Libraries
+     * Get Libraries.
      * 
      * @return Libraries object
      */
@@ -45,7 +45,7 @@ public class AlmaLibrariesService {
     }
 
     /**
-     * Get Library
+     * Get Library.
      * 
      * @param libraryCode libraryCode
      * @return Library object
