@@ -193,26 +193,21 @@ class AlmaVendorsServiceTest {
     @Test
     void testGetAlmaStage() {
         mockAlmaApi();
-        AlmaVendorsService almaVendorsService =
-                new AlmaVendorsService(mockAlmaApiClient);
-        assertEquals(STAGE, almaVendorsService
-                .getAlmaStage());
+        AlmaVendorsService almaVendorsService = new AlmaVendorsService(mockAlmaApiClient);
+        assertEquals(STAGE, almaVendorsService.getAlmaStage());
     }
 
     @Test
     void testGetContext() {
         mockAlmaApi();
-        AlmaVendorsService almaVendorsService =
-                new AlmaVendorsService(mockAlmaApiClient);
+        AlmaVendorsService almaVendorsService = new AlmaVendorsService(mockAlmaApiClient);
         assertEquals(CONTEXT, almaVendorsService.getContext());
     }
 
     @Test
     void testGetContextValue() {
         mockAlmaApi();
-        AlmaVendorsService almaVendorsService =
-                new AlmaVendorsService(mockAlmaApiClient);
-        String result = almaVendorsService.getAlmaStage();
+        AlmaVendorsService almaVendorsService = new AlmaVendorsService(mockAlmaApiClient);
         assertEquals(CONTEXT_VALUE, almaVendorsService.getContextValue());
     }
 

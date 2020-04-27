@@ -1,6 +1,5 @@
 package no.unit.alma.acquisitions;
 
-import no.unit.alma.generated.polines.Notes;
 import no.unit.alma.generated.polines.PoLine;
 import no.unit.alma.generated.polines.PoLines;
 import no.unit.alma.commons.AlmaClient;
@@ -11,9 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.ResponseProcessingException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -25,9 +22,9 @@ public class AlmaPOLineService {
 
     public static final String POLINES_PATH = "po-lines";
     public static final String ACQUISITION_PATH = "acq";
-    private static final String ITEMS = "items";
+    private static final String ITEMS_PATH = "items";
 
-    private final transient WebTarget polinesTarget;
+    private final transient WebTarget acqTarget;
     private final String context;
     private final String contextValue;
     private final String almaStage;
@@ -38,7 +35,7 @@ public class AlmaPOLineService {
      * @param almaClient almaClient
      */
     public AlmaPOLineService(AlmaClient almaClient) {
-        this.polinesTarget = almaClient.getWebTarget().path(ACQUISITION_PATH);
+        this.acqTarget = almaClient.getWebTarget().path(ACQUISITION_PATH);
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
         this.almaStage = almaClient.getAlmaStage();
@@ -49,11 +46,12 @@ public class AlmaPOLineService {
      * @param poLine the poline object
      * @return the new Poline
      */
-    public PoLine create(@Nonnull PoLine poLine) {
+    public PoLine createPoline(@Nonnull PoLine poLine) {
         log.trace("Create poLine {} at {}", poLine.getNumber(), contextValue);
-        return polinesTarget
+        return acqTarget
                 .path(POLINES_PATH)
-                .request(MediaType.APPLICATION_XML)
+                .request()
+                .accept(MediaType.APPLICATION_XML)
                 .buildPost(Entity.xml(poLine))
                 .invoke(PoLine.class);
     }
@@ -63,13 +61,14 @@ public class AlmaPOLineService {
      * @param id poline number
      * @return the poline
      */
-    public PoLine read(@Nonnull String id) {
+    public PoLine getPoline(@Nonnull String id) {
         if (StringUtils.isEmpty(id)) {
             throw new IllegalArgumentException("id is empty");
         }
         log.trace("Read poLine with id {} at {}", id, contextValue);
-        return polinesTarget
-                .queryParam("po_line_id", id)
+        return acqTarget
+                .path(POLINES_PATH)
+                .path(id)
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildGet()
@@ -81,12 +80,12 @@ public class AlmaPOLineService {
      * @param poLine the poline to update
      * @return the updated poline
      */
-    public PoLine update(@Nonnull PoLine poLine) {
+    public PoLine updatePoline(@Nonnull PoLine poLine) {
         if (StringUtils.isEmpty(poLine.getNumber())) {
             throw new IllegalArgumentException("poLine.getNumber is empty");
         }
         log.trace("Update poLine {} at {}", poLine.getNumber(), contextValue);
-        return polinesTarget
+        return acqTarget
                 .path(POLINES_PATH)
                 .path(poLine.getNumber())
                 .request()
@@ -99,13 +98,13 @@ public class AlmaPOLineService {
      * Deletes a poline.
      * @param poLine the poline to delete
      */
-    public void delete(@Nonnull PoLine poLine) {
+    public void deletePoline(@Nonnull PoLine poLine) {
         if (StringUtils.isEmpty(poLine.getNumber())) {
             throw new IllegalArgumentException("poLine.getNumber is empty");
         }
         String comment = "*Cancellation via api.";
         log.trace("Delete poLine {} at {}. Comment: {}", poLine.getNumber(), contextValue, comment);
-        polinesTarget
+        acqTarget
                 .path(POLINES_PATH)
                 .path(poLine.getNumber())
                 .queryParam("reaason", "LIBRARY_CANCELLED")
@@ -159,7 +158,7 @@ public class AlmaPOLineService {
      */
     public PoLines queryPoLines(String q, String status, int offset, int limit, String acquisitionMethod, String
             library, String orderBy, boolean expand) {
-        WebTarget webTarget = polinesTarget
+        WebTarget webTarget = acqTarget
                 .path(POLINES_PATH)
                 .queryParam("q", q)
                 .queryParam("status", status)
@@ -200,10 +199,10 @@ public class AlmaPOLineService {
             throw new IllegalArgumentException("poLineId is empty");
         }
         log.trace("Receiving item (Id={}) on poLine (Id={}) at {}", itemId, poLineNumber, contextValue);
-        return polinesTarget
+        return acqTarget
                 .path(POLINES_PATH)
                 .path(poLineNumber)
-                .path(ITEMS)
+                .path(ITEMS_PATH)
                 .path(itemId)
                 .queryParam("op", "receive")
                 .request()
@@ -223,8 +222,8 @@ public class AlmaPOLineService {
      * @param expand expand by NOTE and LOCATION
      * @return list of polines
      */
-    public PoLines search(@Nonnull String query, @Nonnull String status, int offset, int limit,
-                           @Nullable String library, @Nullable String orderBy, boolean expand) {
+    public PoLines searchPolines(@Nonnull String query, @Nonnull String status, int offset, int limit,
+                                 @Nullable String library, @Nullable String orderBy, boolean expand) {
         if (StringUtils.isEmpty(status)) {
             throw new IllegalArgumentException("status is null or empty");
         }
