@@ -19,8 +19,6 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -35,6 +33,14 @@ class AlmaPOLineServiceTest {
     private static final String STAGE = "alma-sandbox2";
     private static final String TEST_ID = "POL-124356";
     private static final String TEST_BARCODE = "124356";
+    public static final String EMPTY_STRING = "";
+    public static final int A_BUNCH_OF_POLINES = 152;
+    public static final int AMOUNT_OF_POLINES_RETREIVALS = 4;
+    public static final int AMOUNT_OF_POLINES = 2;
+    public static final String QUERY = "q";
+    public static final String CLOSED = "CLOSED";
+    public static final String LIBRARY_NUMBER = "0183331";
+    public static final String ORDER_BY_TITLE = "title";
 
     @Mock
     private AlmaClient mockAlmaApiClient;
@@ -89,7 +95,7 @@ class AlmaPOLineServiceTest {
         PoLine resultPoline = almaPOLineService.getPoline(TEST_ID);
         assertEquals(mockPoline.getNumber(), resultPoline.getNumber());
 
-        assertThrows(IllegalArgumentException.class, () -> almaPOLineService.getPoline(""),
+        assertThrows(IllegalArgumentException.class, () -> almaPOLineService.getPoline(EMPTY_STRING),
                 "should have failed without an id.");
     }
 
@@ -110,7 +116,7 @@ class AlmaPOLineServiceTest {
         PoLine poLine = almaPOLineService.updatePoline(mockPoline);
         assertEquals(TEST_ID, poLine.getNumber());
 
-        mockPoline.setNumber("");
+        mockPoline.setNumber(EMPTY_STRING);
         assertThrows(IllegalArgumentException.class, () -> almaPOLineService.updatePoline(mockPoline),
                 "should have failed without poline_number.");
     }
@@ -132,7 +138,7 @@ class AlmaPOLineServiceTest {
         mockPoline.setNumber(TEST_ID);
         almaPOLineService.deletePoline(mockPoline);
 
-        mockPoline.setNumber("");
+        mockPoline.setNumber(EMPTY_STRING);
         assertThrows(IllegalArgumentException.class, () -> almaPOLineService.deletePoline(mockPoline),
                 "should have failed without poline_number.");
     }
@@ -147,12 +153,12 @@ class AlmaPOLineServiceTest {
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildGet()).thenReturn(invocation);
         PoLines mockPolines = new PoLines();
-        mockPolines.setTotalRecordCount(Integer.valueOf(152));
+        mockPolines.setTotalRecordCount(Integer.valueOf(A_BUNCH_OF_POLINES));
         when(invocation.invoke((Class<Object>) any())).thenReturn(mockPolines);
 
         AlmaPOLineService almaPOLineService = new AlmaPOLineService(mockAlmaApiClient);
         List<PoLines> poLines = almaPOLineService.readAllActive();
-        assertEquals(4, poLines.size());
+        assertEquals(AMOUNT_OF_POLINES_RETREIVALS, poLines.size());
     }
 
     @Test
@@ -165,17 +171,17 @@ class AlmaPOLineServiceTest {
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.buildGet()).thenReturn(invocation);
         PoLines mockPolines = new PoLines();
-        mockPolines.setTotalRecordCount(Integer.valueOf(2));
+        mockPolines.setTotalRecordCount(Integer.valueOf(AMOUNT_OF_POLINES));
         when(invocation.invoke((Class<Object>) any())).thenReturn(mockPolines);
 
         AlmaPOLineService almaPOLineService = new AlmaPOLineService(mockAlmaApiClient);
-        String q = "q";
-        String status = "CLOSED";
+        String q = QUERY;
+        String status = CLOSED;
         int offset = 0;
         int limit = 5;
-        String acquisitionMethod = "LEGAL_DEPOSIT";
-        String library = "0183331";
-        String orderBy = "title";
+        String acquisitionMethod = AlmaPOLineService.LEGAL_DEPOSIT_LEGAL_DEPOSIT_NOLETTER;
+        String library = LIBRARY_NUMBER;
+        String orderBy = ORDER_BY_TITLE;
         boolean expand = true;
         PoLines poLines = almaPOLineService.queryPoLines(q, status, offset, limit, acquisitionMethod, library, orderBy,
                 expand);
@@ -209,9 +215,9 @@ class AlmaPOLineServiceTest {
         when(webTarget.path(anyString())).thenReturn(acqTarget);
 
         AlmaPOLineService almaPOLineService = new AlmaPOLineService(mockAlmaApiClient);
-        assertThrows(IllegalArgumentException.class, () -> almaPOLineService.receiveItem("", TEST_BARCODE),
+        assertThrows(IllegalArgumentException.class, () -> almaPOLineService.receiveItem(EMPTY_STRING, TEST_BARCODE),
                 "should have failed without a poline_number.");
-        assertThrows(IllegalArgumentException.class, () -> almaPOLineService.receiveItem(TEST_ID, ""),
+        assertThrows(IllegalArgumentException.class, () -> almaPOLineService.receiveItem(TEST_ID, EMPTY_STRING),
                 "should have failed without an item_id.");
     }
 
@@ -229,18 +235,18 @@ class AlmaPOLineServiceTest {
         when(invocation.invoke((Class<Object>) any())).thenReturn(mockPolines);
 
         AlmaPOLineService almaPOLineService = new AlmaPOLineService(mockAlmaApiClient);
-        String query = "query";
-        String status = "CLOSED";
+        String query = QUERY;
+        String status = CLOSED;
         int offset = 0;
         int limit = 5;
-        String library = "0183331";
-        String orderBy = "title";
+        String library = LIBRARY_NUMBER;
+        String orderBy = ORDER_BY_TITLE;
         boolean expand = false;
         PoLines poLines = almaPOLineService.searchPolines(query, status, offset, limit, library, orderBy, expand);
         assertEquals(152, poLines.getTotalRecordCount());
 
-        assertThrows(IllegalArgumentException.class, () -> almaPOLineService.searchPolines(query, "", offset, limit,
-                library, orderBy, expand), "should have failed without status.");
+        assertThrows(IllegalArgumentException.class, () -> almaPOLineService.searchPolines(query, EMPTY_STRING, offset,
+                limit, library, orderBy, expand), "should have failed without status.");
     }
 
     @Test
