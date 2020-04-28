@@ -25,7 +25,6 @@ class AlmaUsersClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
     private static final String TEST_NAME = "Test Name";
     private static final String TEST_USER_ID = "user id";
     private static final String TEST_VIEW = "view";
@@ -143,7 +142,6 @@ class AlmaUsersClientTest {
 
         when(mockAlmaApiClient.getWebTarget())
                 .thenReturn(webTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }

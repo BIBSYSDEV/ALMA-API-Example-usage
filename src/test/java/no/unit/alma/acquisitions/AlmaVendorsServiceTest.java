@@ -11,14 +11,14 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import no.unit.alma.generated.vendors.Vendors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.unit.alma.generated.vendors.Vendor;
 import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.vendors.Vendor;
+import no.unit.alma.generated.vendors.Vendors;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaVendorsServiceTest {
@@ -26,7 +26,6 @@ class AlmaVendorsServiceTest {
     private static final String TEST_ID = "123456";
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
 
     @Mock
     private AlmaClient mockAlmaApiClient;
@@ -68,12 +67,10 @@ class AlmaVendorsServiceTest {
         when(invocation.invoke()).thenReturn(response);
         doNothing().when(response).close();
 
-
         AlmaVendorsService almaVendorsService =
                 new AlmaVendorsService(mockAlmaApiClient);
         almaVendorsService.deleteVendor(TEST_ID);
     }
-
 
     @Test
     void testPostVendor() {
@@ -127,7 +124,7 @@ class AlmaVendorsServiceTest {
         Vendors vendors = new Vendors();
         vendors.setTotalRecordCount(12);
 
-        when(webTarget.queryParam(anyString(),any())).thenReturn(webTarget);
+        when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
@@ -176,7 +173,7 @@ class AlmaVendorsServiceTest {
         Vendors vendors = new Vendors();
         vendors.setTotalRecordCount(resultCount);
 
-        when(webTarget.queryParam(anyString(),any())).thenReturn(webTarget);
+        when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
@@ -187,16 +184,6 @@ class AlmaVendorsServiceTest {
                 new AlmaVendorsService(mockAlmaApiClient);
         Vendors resultVendors = almaVendorsService.searchVendor(queryString);
         assertEquals(vendors.getTotalRecordCount(), resultVendors.getTotalRecordCount());
-    }
-
-
-    @Test
-    void testGetAlmaStage() {
-        mockAlmaApi();
-        AlmaVendorsService almaVendorsService =
-                new AlmaVendorsService(mockAlmaApiClient);
-        assertEquals(STAGE, almaVendorsService
-                .getAlmaStage());
     }
 
     @Test
@@ -212,21 +199,14 @@ class AlmaVendorsServiceTest {
         mockAlmaApi();
         AlmaVendorsService almaVendorsService =
                 new AlmaVendorsService(mockAlmaApiClient);
-        String result = almaVendorsService.getAlmaStage();
         assertEquals(CONTEXT_VALUE, almaVendorsService.getContextValue());
     }
-
 
     private void mockAlmaApi() {
         when(this.mockAlmaApiClient.getWebTarget())
                 .thenReturn(webTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }
-
-
-
-
 
 }

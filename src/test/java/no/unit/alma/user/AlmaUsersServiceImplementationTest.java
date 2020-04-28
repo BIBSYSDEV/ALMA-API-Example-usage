@@ -17,21 +17,12 @@ class AlmaUsersServiceImplementationTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
 
     @Mock
     AlmaClient mockAlmaApiClient;
 
     @Mock
     WebTarget webTarget;
-
-    @Test
-    void testGetAlmaStage() {
-        mockAlmaApi();
-        AlmaUsersService almaBibsService =
-                new AlmaUsersService(mockAlmaApiClient);
-        assertEquals(STAGE, almaBibsService.getAlmaStage());
-    }
 
     @Test
     void testGetContext() {
@@ -53,7 +44,6 @@ class AlmaUsersServiceImplementationTest {
 
         when(mockAlmaApiClient.getWebTarget())
                 .thenReturn(webTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }

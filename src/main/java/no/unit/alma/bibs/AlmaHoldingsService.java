@@ -19,7 +19,6 @@ public class AlmaHoldingsService {
     private final transient WebTarget bibsTarget;
     private final String context;
     private final String contextValue;
-    private final String almaStage;
 
     /**
      * Create new AlmaHoldingsService.
@@ -30,7 +29,6 @@ public class AlmaHoldingsService {
         this.bibsTarget = almaClient.getWebTarget().path(BIBS);
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
-        this.almaStage = almaClient.getAlmaStage();
     }
 
     /**
@@ -145,9 +143,5 @@ public class AlmaHoldingsService {
 
     public String getContextValue() {
         return contextValue;
-    }
-
-    public String getAlmaStage() {
-        return almaStage;
     }
 }
