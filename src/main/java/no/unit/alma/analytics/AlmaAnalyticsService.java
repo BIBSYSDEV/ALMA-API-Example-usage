@@ -1,13 +1,19 @@
 package no.unit.alma.analytics;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.commons.AlmaStatusResponseFilter;
 import no.unit.alma.generated.vendors.Vendor;
+import org.glassfish.jersey.client.JerseyClientBuilder;
+import org.glassfish.jersey.moxy.xml.MoxyXmlFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.ws.rs.Priorities;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -25,6 +31,7 @@ import javax.ws.rs.client.Entity;
 public class AlmaAnalyticsService {
 
     public static final String ANALYTICS_PATH = "analytics";
+    public static final String REPORT_PATH = "reports";
 
     private final transient WebTarget webTarget;
     private final String context;
@@ -44,18 +51,17 @@ public class AlmaAnalyticsService {
     }
 
 
-    public Entity getAnalyticsReport(String path, String filter) throws UnsupportedEncodingException {
-        path = URLEncoder.encode(path, "UTF-8");
-        path = "/reports?path=" + path + "&limit=500";
-        System.out.println("PATH: " + path);
+    public String getAnalyticsReport(String reportPath, String ObiFilter) throws UnsupportedEncodingException {
+        Config config = ConfigFactory.defaultReference();//TODO: remove when prod-vault-issue is fixed
 
         return webTarget
-                .path(path)
-                //.path(filter)
+                .path(REPORT_PATH)
+                .queryParam("path", reportPath)
                 .request()
-                .accept(MediaType.APPLICATION_XML)
-                .buildGet()
-                .invoke(Entity.class);
+                .header("Authorization", config.getString("apikey"))//TODO: remove when prod-vault-issue is fixed
+                .accept(MediaType.APPLICATION_JSON)
+                .get()
+                .readEntity(String.class);
     }
 
 

@@ -1,12 +1,16 @@
 package no.unit.alma.commons;
 
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Priorities;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Feature;
 
 import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.moxy.xml.MoxyXmlFeature;
 
 import com.typesafe.config.Config;
@@ -72,12 +76,16 @@ public class AlmaClient {
                 apiAuthorizationService
                         .getApiAuthorization(config.getString("stage"), bibCode);
 
+        Logger logger = Logger.getLogger(getClass().getName());
+        Feature loggerFeature = new LoggingFeature(logger, Level.INFO, null, null);
+
         this.webTarget =
                 client
                         .property(ClientProperties.CONNECT_TIMEOUT, connectTimeout)
                         .property(ClientProperties.READ_TIMEOUT, readTimeout)
                         .register(MoxyXmlFeature.class)
-                        .register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)
+                        .register(loggerFeature)
+                        //.register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)//TODO: comment in back when prod-vault-issue is fixed
                         .register(AlmaStatusResponseFilter.class, Priorities.ENTITY_CODER)
                         .target(buildAlmaUrl(apiAuthorization.getAlmaHost(), config.getString("almaServiceContext")));
         this.almaStage = config.getString("stage");

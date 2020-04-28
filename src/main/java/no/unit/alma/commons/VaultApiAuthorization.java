@@ -20,9 +20,9 @@ public class VaultApiAuthorization {
     /**
      * The ApiKeys for Alma are stored in Vault. This class retrieves teh secrets from Vault to use them as apiKeys
      * for Alma-Api-endpoints dependent on the environment/stage.
-     * @param vaultClient VaultClient
-     * @param environment environment (test, utv, prod)
-     * @param almaStage alma-phase (sandbox, prod)
+     * @param vaultClient  VaultClient
+     * @param environment  environment (test, utv, prod)
+     * @param almaStage    alma-phase (sandbox, prod)
      * @param organization alma-instance (bibcode)
      */
     public VaultApiAuthorization(VaultClient vaultClient, String environment, String almaStage, String organization) {
@@ -75,7 +75,7 @@ public class VaultApiAuthorization {
         final String secret = vaultClient.read(secretPath);
         if (secret == null) {
             throw new RuntimeException(String.format("Unable to retrieve AlmaContext secret. Environment: '%s'"
-                            + ", Alma stage: '%s', AlmaContext: '%s', Value: '%s'", environment, almaStage, type, key));
+                    + ", Alma stage: '%s', AlmaContext: '%s', Value: '%s'", environment, almaStage, type, key));
         }
         log.debug("AlmaContext secret found for Environment '{}', Alma stage '{}', Context '{}', Value '{}'",
                 environment, almaStage, type, key);
