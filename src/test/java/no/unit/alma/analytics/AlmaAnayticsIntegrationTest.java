@@ -17,8 +17,8 @@ public class AlmaAnayticsIntegrationTest {
         Config config = ConfigFactory.defaultReference();
         AlmaAnalyticsService almaAnalyticsService =
                 new AlmaAnalyticsService(new AlmaClient(JerseyClientBuilder.newClient(), config, "guest"));
-        String response = almaAnalyticsService.getAnalyticsReport(reportPath, "");
-        System.out.println(response);
+        String result = almaAnalyticsService.getAnalyticsReport(reportPath, "", "");
+        assert (result.length() > 0);
     }
 }
 
