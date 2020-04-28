@@ -36,8 +36,6 @@ public class VaultApiAuthorization {
         this.vaultClient = vaultClient;
         this.environment = environment;
         this.organization = organization;
-        // make sure that we can retrieve the almaHost or fail fast
-        getSecret("almaHost", "host");
         // make sure that we can retrieve the apikey or fail fast
         getSecret("apiKey", organization);
     }
