@@ -14,7 +14,6 @@ public class AlmaAnalyticsService {
     private final transient WebTarget webTarget;
     private final String context;
     private final String contextValue;
-    private final String almaStage;
 
     /**
      * Service for Alma Analytics.
@@ -25,7 +24,6 @@ public class AlmaAnalyticsService {
         this.webTarget = almaClient.getWebTarget().path(ANALYTICS_PATH);
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
-        this.almaStage = almaClient.getAlmaStage();
     }
 
     String getAnalyticsReport(String reportPath, String obiFilter, String resumptionToken) {
@@ -50,9 +48,6 @@ public class AlmaAnalyticsService {
         return contextValue;
     }
 
-    public String getAlmaStage() {
-        return almaStage;
-    }
 }
 
 

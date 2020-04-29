@@ -69,7 +69,6 @@ class AlmaAnalyticsServiceTest {
     private void mockAlmaApi() {
         when(this.mockAlmaApiClient.getWebTarget())
                 .thenReturn(webTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }
