@@ -46,7 +46,6 @@ public class AlmaItemsService {
     private final transient WebTarget usersTarget;
     private final String context;
     private final String contextValue;
-    private final String almaStage;
 
     /**
      * Create new AlmaItesService.
@@ -59,7 +58,6 @@ public class AlmaItemsService {
         this.usersTarget = almaClient.getWebTarget().path(USERS);
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
-        this.almaStage = almaClient.getAlmaStage();
     }
 
     /**
@@ -758,9 +756,5 @@ public class AlmaItemsService {
 
     public String getContextValue() {
         return contextValue;
-    }
-
-    public String getAlmaStage() {
-        return almaStage;
     }
 }

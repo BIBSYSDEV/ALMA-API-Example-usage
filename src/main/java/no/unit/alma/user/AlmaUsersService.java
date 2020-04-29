@@ -29,7 +29,6 @@ public class AlmaUsersService
     private final transient WebTarget usersTarget;
     private final String context;
     private final String contextValue;
-    private final String almaStage;
 
     /**
      * Create new AlmaUsersService.
@@ -40,7 +39,6 @@ public class AlmaUsersService
         this.usersTarget = almaClient.getWebTarget().path("users");
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
-        this.almaStage = almaClient.getAlmaStage();
     }
 
     @Override
@@ -235,9 +233,5 @@ public class AlmaUsersService
 
     public String getContextValue() {
         return contextValue;
-    }
-
-    public String getAlmaStage() {
-        return almaStage;
     }
 }

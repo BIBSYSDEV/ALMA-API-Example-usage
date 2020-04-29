@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.configuration.AlmaLibrariesService;
 import no.unit.alma.generated.libraries.Libraries;
 import no.unit.alma.generated.libraries.Library;
 
@@ -25,7 +24,6 @@ class AlmaLibrariesClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
 
     private static final Integer TOTAL_RECORD_COUNT = 1;
     private static final String LIBRARY_CODE = "library code";
@@ -82,14 +80,6 @@ class AlmaLibrariesClientTest {
     }
 
     @Test
-    void testGetAlmaStage() {
-        AlmaLibrariesService almaLibrariesService =
-                new AlmaLibrariesService(mockAlmaApiClient);
-        assertEquals(STAGE, almaLibrariesService
-                .getAlmaStage());
-    }
-
-    @Test
     void testGetContext() {
         AlmaLibrariesService almaLibrariesService =
                 new AlmaLibrariesService(mockAlmaApiClient);
@@ -107,7 +97,6 @@ class AlmaLibrariesClientTest {
 
         when(mockAlmaApiClient.getWebTarget())
                 .thenReturn(librariesWebTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }

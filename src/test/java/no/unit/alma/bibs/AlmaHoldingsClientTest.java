@@ -33,7 +33,6 @@ class AlmaHoldingsClientTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
 
     private static final Integer TOTAL_RECORD_COUNT = 1;
     private static final String TEST_MMS_ID = "123456";
@@ -184,14 +183,6 @@ class AlmaHoldingsClientTest {
     }
 
     @Test
-    void testGetAlmaStage() {
-        AlmaHoldingsService almaBibsService =
-                new AlmaHoldingsService(mockAlmaApiClient);
-        assertEquals(STAGE, almaBibsService
-                .getAlmaStage());
-    }
-
-    @Test
     void testGetContext() {
         AlmaHoldingsService almaBibsService =
                 new AlmaHoldingsService(mockAlmaApiClient);
@@ -209,7 +200,6 @@ class AlmaHoldingsClientTest {
 
         when(mockAlmaApiClient.getWebTarget())
                 .thenReturn(holdingsWebTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }

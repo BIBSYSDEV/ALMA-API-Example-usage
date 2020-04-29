@@ -16,15 +16,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.unit.alma.generated.userrequests.UserResourceSharingRequest;
 import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.userrequests.UserResourceSharingRequest;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaUsersResourceSharingRequestsTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
     private static final String TEST_USER_ID = "user id";
     private static final String TEST_BARCODE = "barcode";
     private static final String TEST_REQUEST_ID = "request id";
@@ -90,7 +89,6 @@ class AlmaUsersResourceSharingRequestsTest {
 
         when(mockAlmaApiClient.getWebTarget())
                 .thenReturn(webTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }

@@ -1,24 +1,25 @@
 package no.unit.alma.partners;
 
-import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.generated.partners.Partner;
-import no.unit.alma.generated.partners.PartnerDetails;
-import no.unit.alma.generated.partners.Partners;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.partners.Partner;
+import no.unit.alma.generated.partners.PartnerDetails;
+import no.unit.alma.generated.partners.Partners;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaPartnersServiceTest {
@@ -26,7 +27,6 @@ class AlmaPartnersServiceTest {
     private static final String TEST_ID = "123456";
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
 
     @Mock
     private AlmaClient mockAlmaApiClient;
@@ -70,12 +70,10 @@ class AlmaPartnersServiceTest {
         when(invocation.invoke()).thenReturn(response);
         doNothing().when(response).close();
 
-
         AlmaPartnersService almaPartnersService =
                 new AlmaPartnersService(mockAlmaApiClient);
         almaPartnersService.deletePartner(TEST_ID);
     }
-
 
     @Test
     void testPostPartner() {
@@ -132,7 +130,7 @@ class AlmaPartnersServiceTest {
         Partners partners = new Partners();
         partners.setTotalRecordCount(12);
 
-        when(webTarget.queryParam(anyString(),any())).thenReturn(webTarget);
+        when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
@@ -181,7 +179,7 @@ class AlmaPartnersServiceTest {
         Partners partners = new Partners();
         partners.setTotalRecordCount(resultCount);
 
-        when(webTarget.queryParam(anyString(),any())).thenReturn(webTarget);
+        when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.path(any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
@@ -192,16 +190,6 @@ class AlmaPartnersServiceTest {
                 new AlmaPartnersService(mockAlmaApiClient);
         Partners resultPartners = almaPartnersService.searchPartner(queryString);
         assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
-    }
-
-
-    @Test
-    void testGetAlmaStage() {
-        mockAlmaApi();
-        AlmaPartnersService almaPartnersService =
-                new AlmaPartnersService(mockAlmaApiClient);
-        assertEquals(STAGE, almaPartnersService
-                .getAlmaStage());
     }
 
     @Test
@@ -217,21 +205,14 @@ class AlmaPartnersServiceTest {
         mockAlmaApi();
         AlmaPartnersService almaPartnersService =
                 new AlmaPartnersService(mockAlmaApiClient);
-        String result = almaPartnersService.getAlmaStage();
         assertEquals(CONTEXT_VALUE, almaPartnersService.getContextValue());
     }
-
 
     private void mockAlmaApi() {
         when(this.mockAlmaApiClient.getWebTarget())
                 .thenReturn(webTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }
-
-
-
-
 
 }
