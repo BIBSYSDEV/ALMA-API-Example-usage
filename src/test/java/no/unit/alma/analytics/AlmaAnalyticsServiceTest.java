@@ -21,7 +21,6 @@ class AlmaAnalyticsServiceTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
 
     @Mock
     private AlmaClient mockAlmaApiClient;
