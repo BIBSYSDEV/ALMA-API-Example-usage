@@ -5,71 +5,95 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AlmaAnayticsTest {
 
-    final String reportPath = "/shared/Community/Reports/Shared Reports/Reports/Industry Standard Reports - BIBSYS/Legal Deposit/HistoryVersion2";
-
     @Mock
     AlmaAnalyticsService almaAnalyticsService;
 
 
     @Test
-    void testGetAnalyticsReport() throws UnsupportedEncodingException {
+    void testGetAnalyticsReport() throws IOException {
         AlmaAnalyticsHelper almaAnalyticsHelper = new AlmaAnalyticsHelper(almaAnalyticsService);
-        String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "    <report>\n" +
-                "        <QueryResult>\n" +
-                "            <IsFinished>true</IsFinished>\n" +
-                "            <ResultXml>\n" +
-                "              <rowset xmlns=\"urn:schemas-microsoft-com:xml-analysis:rowset\">\n" +
-                "                <Row>\n" +
-                "                  <Column0>0</Column0>\n" +
-                "                  <Column1>9788230013762; 8230013764</Column1>\n" +
-                "                  <Column3>Book</Column3>\n" +
-                "                  <Column4>999919809503102205</Column4>\n" +
-                "                  <Column6>Thembalethu</Column6>\n" +
-                "                  <Column8>None</Column8>\n" +
-                "                  <Column9>LEGAL_DEPOSIT</Column9>\n" +
-                "                  <Column10>Yes</Column10>\n" +
-                "                  <Column11>ACTIVE</Column11>\n" +
-                "                  <Column12>pl_5298</Column12>\n" +
-                "                  <Column13>Forlagssentralen ANS</Column13>\n" +
-                "                  <Column14>2015</Column14>\n" +
-                "                  <Column15>1</Column15>\n" +
-                "                </Row>\n" +
-                "                <Row>\n" +
-                "                  <Column0>0</Column0>\n" +
-                "                  <Column1>9788230013762; 8230013764</Column1>\n" +
-                "                  <Column3>Book</Column3>\n" +
-                "                  <Column4>999919816913402204</Column4>\n" +
-                "                  <Column6>Thembalethu</Column6>\n" +
-                "                  <Column8>None</Column8>\n" +
-                "                  <Column9>LEGAL_DEPOSIT</Column9>\n" +
-                "                  <Column10>Yes</Column10>\n" +
-                "                  <Column11>ACTIVE</Column11>\n" +
-                "                  <Column12>pl_5298</Column12>\n" +
-                "                  <Column13>Forlagssentralen ANS</Column13>\n" +
-                "                  <Column14>2015</Column14>\n" +
-                "                  <Column15>1</Column15>\n" +
-                "                </Row>\n" +
-                "              </rowset>\n" +
-                "            </ResultXml>\n" +
-                "        </QueryResult>\n" +
-                "    </report>";
+        String mockedResponse = readMockedResponseFromFile("analytics_response_valid.xml");
         when(almaAnalyticsService.getAnalyticsReport(anyString(), anyString(), anyString())).thenReturn(mockedResponse);
-        List<Map<String, String>> test = almaAnalyticsHelper.retrieveAnalyticsReport(reportPath, "");
-        System.out.println(test.size());
-        assert (test.size() == 2);
-        //TODO: null-values, resumptiontoken, errors, wrong format, etc...
+        List<Map<String, String>> response = almaAnalyticsHelper.retrieveAnalyticsReport("somePath", "someFilter");
+        assertEquals(2, response.size());
     }
+
+    @Test
+    void testGetAnalyticsReportTagMissing() throws IOException {
+        AlmaAnalyticsHelper almaAnalyticsHelper = new AlmaAnalyticsHelper(almaAnalyticsService);
+        String mockedResponse = readMockedResponseFromFile("analytics_response_valid_finished_missing.xml");
+        when(almaAnalyticsService.getAnalyticsReport(anyString(), anyString(), anyString())).thenReturn(mockedResponse);
+        List<Map<String, String>> response = almaAnalyticsHelper.retrieveAnalyticsReport("somePath", "someFilter");
+        assertEquals(2, response.size());
+    }
+
+    @Test
+    void testGetAnalyticsReportWithPagination() throws IOException {
+        AlmaAnalyticsHelper almaAnalyticsHelper = new AlmaAnalyticsHelper(almaAnalyticsService);
+        String mockedResponse1 = readMockedResponseFromFile("analytics_response_valid_first_page.xml");
+        String mockedResponse2 = readMockedResponseFromFile("analytics_response_valid_last_page.xml");
+        when(almaAnalyticsService.getAnalyticsReport(anyString(), anyString(), anyString()))
+                .thenReturn(mockedResponse1)
+                .thenReturn(mockedResponse2);
+        List<Map<String, String>> response2 = almaAnalyticsHelper.retrieveAnalyticsReport("somePath", "someFilter");
+        assertEquals(123, response2.size());
+
+    }
+
+    @Test
+    void testGetInvalidAnalyticsReport() throws IOException {
+        AlmaAnalyticsHelper almaAnalyticsHelper = new AlmaAnalyticsHelper(almaAnalyticsService);
+        String mockedResponse = readMockedResponseFromFile("analytics_response_invalid.xml");
+        when(almaAnalyticsService.getAnalyticsReport(anyString(), anyString(), anyString())).thenReturn(mockedResponse);
+        List<Map<String, String>> response = almaAnalyticsHelper.retrieveAnalyticsReport("any string", "any string");
+        assert (response.size() == 0);
+    }
+
+
+    @Test
+    void testGetCrashedAnalyticsReport() throws IOException {
+        AlmaAnalyticsHelper almaAnalyticsHelper = new AlmaAnalyticsHelper(almaAnalyticsService);
+        String mockedResponse = readMockedResponseFromFile("analytics_response_really_invalid.xml");
+        when(almaAnalyticsService.getAnalyticsReport(anyString(), anyString(), anyString())).thenReturn(mockedResponse);
+        List<Map<String, String>> response = almaAnalyticsHelper.retrieveAnalyticsReport("any string", "any string");
+        assert (response.size() == 0);
+    }
+
+    @Test
+    void testCreateFilterMethodsExistsAndReturnsSomething() {
+        String result1 = AlmaAnalyticsHelper.createOperatorFilter("", "");
+        String result2 = AlmaAnalyticsHelper.createSingleValueFilter("", "", "");
+        String result3 = AlmaAnalyticsHelper.createSingleValueFilter("", "", "");
+        String result4 = AlmaAnalyticsHelper.createSingleValueFilter("","","","","");
+        String result5 = AlmaAnalyticsHelper.createValueFilter("", "", "", "", "", "");
+        assert (result1.contains("<sawx"));
+        assert (result2.contains("<sawx"));
+        assert (result3.contains("<sawx"));
+        assert (result4.contains("<sawx"));
+        assert (result5.contains("<sawx"));
+    }
+
+
+    private String readMockedResponseFromFile(String s) throws IOException {
+        return new String(Objects.requireNonNull(getClass()
+                .getClassLoader()
+                .getResourceAsStream(s))
+                .readAllBytes()
+        );
+    }
+
 }
 
 

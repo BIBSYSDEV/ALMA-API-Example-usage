@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<report>
+    <QueryResult>
+        <ResultXml>
+            <rowset xmlns="urn:schemas-microsoft-com:xml-analysis:rowset">
+                <Row>
+                    <Column0>0</Column0>
+                    <Column1>9788230013762; 8230013764</Column1>
+                    <Column3>Book</Column3>
+                    <Column4>999919809503102205</Column4>
+                    <Column6>Thembalethu</Column6>
+                    <Column8>None</Column8>
+                    <Column9>LEGAL_DEPOSIT</Column9>
+                    <Column10>Yes</Column10>
+                    <Column11>ACTIVE</Column11>
+                    <Column12>pl_5298</Column12>
+                    <Column13>Forlagssentralen ANS</Column13>
+                    <Column14>2015</Column14>
+                    <Column15>1</Column15>
+                </Row>
+                <Row>
+                    <Column0>0</Column0>
+                    <Column1>9788230013762; 8230013764</Column1>
+                    <Column3>Book</Column3>
+                    <Column4>999919816913402204</Column4>
+                    <Column6>Thembalethu</Column6>
+                    <Column8>None</Column8>
+                    <Column9>LEGAL_DEPOSIT</Column9>
+                    <Column10>Yes</Column10>
+                    <Column11>ACTIVE</Column11>
+                    <Column12>pl_5298</Column12>
+                    <Column13>Forlagssentralen ANS</Column13>
+                    <Column14>2015</Column14>
+                    <Column15>1</Column15>
+                </Row>
+            </rowset>
+        </ResultXml>
+    </QueryResult>
+</report>

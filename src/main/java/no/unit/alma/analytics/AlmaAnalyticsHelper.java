@@ -14,7 +14,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,6 +25,12 @@ public class AlmaAnalyticsHelper {
 
     //static final int REPORT_SIZE = 65_000;
     static final int REPORT_SIZE = 1_500;
+    public static final String QUERY_RESULT_TAG = "QueryResult";
+    public static final String FINISHED_TAG = "IsFinished";
+    public static final String RESUMPTION_TOKEN_TAG = "ResumptionToken";
+    public static final String ROWSET_TAG = "rowset";
+    public static final String ROW_TAG = "Row";
+    public static final int RETRIES = 3;
     private final AlmaAnalyticsService almaAnalyticsService;
 
     public AlmaAnalyticsHelper(AlmaAnalyticsService almaAnalyticsService) {
@@ -79,9 +84,6 @@ public class AlmaAnalyticsHelper {
 
     public List<Map<String, String>> retrieveAnalyticsReport(String reportPath, String filter) {
         List<Map<String, String>> report = new ArrayList<>();
-        //TODO: trengs dette ?
-        //            path = URLEncoder.encode(path, UTF_8);
-        //            filter = URLEncoder.encode(filter, UTF_8);
         boolean finished = false;
         String token = "";
         int errorCount = 0;
@@ -93,23 +95,23 @@ public class AlmaAnalyticsHelper {
                 InputSource is = new InputSource();
                 is.setCharacterStream(new StringReader(response));
                 Document doc = db.parse(is);
-                NodeList queryResultElements = doc.getElementsByTagName("QueryResult");
+                NodeList queryResultElements = doc.getElementsByTagName(QUERY_RESULT_TAG);
                 Element result = (Element) queryResultElements.item(0);
-                NodeList finishedElementNodeList = result.getElementsByTagName("IsFinished");
+                NodeList finishedElementNodeList = result.getElementsByTagName(FINISHED_TAG);
                 if (finishedElementNodeList.getLength() > 0) {
-                    finished = Boolean.valueOf(finishedElementNodeList.item(0).getTextContent());
+                    finished = Boolean.parseBoolean(finishedElementNodeList.item(0).getTextContent());
                 } else {
                     finished = true;
                 }
                 if (token.equals("")) {
-                    NodeList tokenNodeList = doc.getElementsByTagName("ResumptionToken");
+                    NodeList tokenNodeList = doc.getElementsByTagName(RESUMPTION_TOKEN_TAG);
                     if (tokenNodeList.getLength() > 0) {
                         token = tokenNodeList.item(0).getTextContent();
                     }
                 }
-                NodeList rowset = result.getElementsByTagName("rowset");
-                if (rowset.getLength() > 0) {
-                    NodeList rowList = ((Element) rowset.item(0)).getElementsByTagName("Row");
+                NodeList rowSet = result.getElementsByTagName(ROWSET_TAG);
+                if (rowSet.getLength() > 0) {
+                    NodeList rowList = ((Element) rowSet.item(0)).getElementsByTagName(ROW_TAG);
                     for (int i = 0; i < rowList.getLength(); i++) {
                         Element row = (Element) rowList.item(i);
                         NodeList childNodes = row.getChildNodes();
@@ -123,10 +125,15 @@ public class AlmaAnalyticsHelper {
                             }
                         }
                     }
+                } else if (!finished) {  //Often ALMA REST API returns a HTTP response code 200 with no results.
+                    if (errorCount++ >= RETRIES) {
+                        log.error("Looping over empty results. Aborting");
+                        return report;
+                    }
                 }
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 finished = false;
-                if (errorCount++ > 3) {
+                if (errorCount++ >= RETRIES) {
                     log.error("Error getting report from Analytics", e);
                     break;
                 }
@@ -134,62 +141,4 @@ public class AlmaAnalyticsHelper {
         }
         return report;
     }
-
- /* Often ALMA REST API Analytics fails even with a HTTP response code 200.
-
-    Here is the typical invalid response where it says an empty ResultXml,
-     IsFinished is false and with a resumptionToken :
-    <report>
-        <QueryResult>
-            <ResumptionToken>5514B8CE1BB0CBF68781B2DB54F0135132BD803B68E1925014B279344854
-            0607967A74E50AECA3074E758E52BBB76CA1677D3AD05EDC3CA7F06182E34E9D7A2F</ResumptionToken>
-            <IsFinished>false</IsFinished>
-            <ResultXml/>
-        </QueryResult>
-    </report>
-
-
-    Here is a valid response:
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <report>
-        <QueryResult>
-            <IsFinished>true</IsFinished>
-            <ResultXml>
-              <rowset xmlns="urn:schemas-microsoft-com:xml-analysis:rowset">
-                <Row>
-                  <Column0>0</Column0>
-                  <Column1>9788230013762; 8230013764</Column1>
-                  <Column3>Book</Column3>
-                  <Column4>999919809503102205</Column4>
-                  <Column6>Thembalethu</Column6>
-                  <Column8>None</Column8>
-                  <Column9>LEGAL_DEPOSIT</Column9>
-                  <Column10>Yes</Column10>
-                  <Column11>ACTIVE</Column11>
-                  <Column12>pl_5298</Column12>
-                  <Column13>Forlagssentralen ANS</Column13>
-                  <Column14>2015</Column14>
-                  <Column15>1</Column15>
-                </Row>
-                <Row>
-                  <Column0>0</Column0>
-                  <Column1>9788230013762; 8230013764</Column1>
-                  <Column3>Book</Column3>
-                  <Column4>999919816913402204</Column4>
-                  <Column6>Thembalethu</Column6>
-                  <Column8>None</Column8>
-                  <Column9>LEGAL_DEPOSIT</Column9>
-                  <Column10>Yes</Column10>
-                  <Column11>ACTIVE</Column11>
-                  <Column12>pl_5298</Column12>
-                  <Column13>Forlagssentralen ANS</Column13>
-                  <Column14>2015</Column14>
-                  <Column15>1</Column15>
-                </Row>
-              </rowset>
-            </ResultXml>
-        </QueryResult>
-    </report>
-    */
-
 }

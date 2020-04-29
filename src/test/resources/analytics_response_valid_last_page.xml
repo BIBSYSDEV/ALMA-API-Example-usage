@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><report><QueryResult>
+    <ResumptionToken>01FDDB40AF7F135770AB16F19C425ADD7EBC899BFBD9508A15211F0E9A32EC2FC5D6034EFCBE6A9EBC0E38426649D5C7163D8CC5881FFC5A208117904853089A</ResumptionToken>
+    <IsFinished>true</IsFinished>
+    <ResultXml>
+        <rowset xmlns="urn:schemas-microsoft-com:xml-analysis:rowset">
+            <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:saw-sql="urn:saw-sql" targetNamespace="urn:schemas-microsoft-com:xml-analysis:rowset">
+                <xsd:complexType name="Row">
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="Column0" saw-sql:columnHeading="0" saw-sql:displayFormula="saw_0" saw-sql:tableHeading="" saw-sql:type="integer" type="xsd:int"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="Column1" saw-sql:columnHeading="First Name" saw-sql:displayFormula="saw_1" saw-sql:tableHeading="User Details" saw-sql:type="varchar" type="xsd:string"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="Column2" saw-sql:columnHeading="Last Name" saw-sql:displayFormula="saw_2" saw-sql:tableHeading="User Details" saw-sql:type="varchar" type="xsd:string"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="Column3" saw-sql:columnHeading="Primary Identifier" saw-sql:displayFormula="saw_3" saw-sql:tableHeading="User Details" saw-sql:type="varchar" type="xsd:string"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="Column4" saw-sql:columnHeading="User Group" saw-sql:displayFormula="saw_4" saw-sql:tableHeading="User Details" saw-sql:type="varchar" type="xsd:string"/>
+                        <xsd:element maxOccurs="1" minOccurs="0" name="Column5" saw-sql:columnHeading=" MAX( RCOUNT(1))" saw-sql:displayFormula="saw_5" saw-sql:tableHeading="" saw-sql:type="integer" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:schema>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 13</Column2>
+                <Column3>AlmaUser13</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 12</Column2>
+                <Column3>AlmaUser12</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 11</Column2>
+                <Column3>AlmaUser11</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 10</Column2>
+                <Column3>AlmaUser10</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 09</Column2>
+                <Column3>AlmaUser09</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 08</Column2>
+                <Column3>AlmaUser08</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 07</Column2>
+                <Column3>AlmaUser07</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 06</Column2>
+                <Column3>AlmaUser06</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 05</Column2>
+                <Column3>AlmaUser05</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 04</Column2>
+                <Column3>AlmaUser04</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 03</Column2>
+                <Column3>AlmaUser03</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 02</Column2>
+                <Column3>AlmaUser02</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>User 01</Column2>
+                <Column3>AlmaUser01</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Cataloging</Column1>
+                <Column2>Operator</Column2>
+                <Column3>AlmaCat638</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Alma</Column1>
+                <Column2>Administrator</Column2>
+                <Column3>AlmaAdmin</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Acquisitions</Column1>
+                <Column2>Administrator</Column2>
+                <Column3>AcqAdmin</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Brian</Column1>
+                <Column2>Conway</Column2>
+                <Column3>3128000218</Column3>
+                <Column4>Undergraduate Student</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Heather</Column1>
+                <Column2>Francis</Column2>
+                <Column3>3127160479</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Patrick</Column1>
+                <Column2>Barnes</Column2>
+                <Column3>200100</Column3>
+                <Column4>Faculty</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Marci</Column1>
+                <Column2>Deignan</Column2>
+                <Column3>200079</Column3>
+                <Column4>Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Audrey</Column1>
+                <Column2>Ho</Column2>
+                <Column3>200062</Column3>
+                <Column4>Faculty</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Matthew</Column1>
+                <Column2>Ball</Column2>
+                <Column3>100003</Column3>
+                <Column4>Academic Staff</Column4>
+                <Column5>123</Column5>
+            </Row>
+            <Row>
+                <Column0>0</Column0>
+                <Column1>Michele</Column1>
+                <Column2>Arms</Column2>
+                <Column3>100002</Column3>
+                <Column4>Graduate Student</Column4>
+                <Column5>123</Column5>
+            </Row>
+        </rowset>
+    </ResultXml>
+</QueryResult></report>
