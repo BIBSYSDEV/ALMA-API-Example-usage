@@ -189,16 +189,14 @@ class AlmaVendorsServiceTest {
     @Test
     void testGetContext() {
         mockAlmaApi();
-        AlmaVendorsService almaVendorsService =
-                new AlmaVendorsService(mockAlmaApiClient);
+        AlmaVendorsService almaVendorsService = new AlmaVendorsService(mockAlmaApiClient);
         assertEquals(CONTEXT, almaVendorsService.getContext());
     }
 
     @Test
     void testGetContextValue() {
         mockAlmaApi();
-        AlmaVendorsService almaVendorsService =
-                new AlmaVendorsService(mockAlmaApiClient);
+        AlmaVendorsService almaVendorsService = new AlmaVendorsService(mockAlmaApiClient);
         assertEquals(CONTEXT_VALUE, almaVendorsService.getContextValue());
     }
 
