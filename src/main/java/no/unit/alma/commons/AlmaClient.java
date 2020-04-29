@@ -83,7 +83,6 @@ public class AlmaClient {
                         .property(ClientProperties.READ_TIMEOUT, readTimeout)
                         .register(MoxyXmlFeature.class)
                         .register(loggerFeature)
-                        //.register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)//TODO: comment in back when prod-vault-issue is fixed
                         .register(AlmaStatusResponseFilter.class, Priorities.ENTITY_CODER)
                         .target(config.getString("almaBaseUrl"));
         this.contextValue = apiAuthorization.getOrganization();
