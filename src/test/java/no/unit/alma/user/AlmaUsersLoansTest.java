@@ -16,15 +16,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import no.unit.alma.generated.itemloans.ItemLoans;
 import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.itemloans.ItemLoans;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaUsersLoansTest {
 
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
-    private static final String STAGE = "alma-sandbox2";
     private static final Integer TOTAL_RECORD_COUNT = 150;
     private static final String TEST_USER_ID = "user id";
     private static final int LIMIT = 10;
@@ -74,7 +73,6 @@ class AlmaUsersLoansTest {
 
         when(mockAlmaApiClient.getWebTarget())
                 .thenReturn(webTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }

@@ -1,29 +1,30 @@
 package no.unit.alma.acquisitions;
 
-import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.generated.items.Item;
-import no.unit.alma.generated.items.ItemData;
-import no.unit.alma.generated.polines.PoLine;
-import no.unit.alma.generated.polines.PoLines;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+
+import java.util.List;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.items.ItemData;
+import no.unit.alma.generated.polines.PoLine;
+import no.unit.alma.generated.polines.PoLines;
 
 @ExtendWith(MockitoExtension.class)
 class AlmaPOLineServiceTest {
@@ -183,8 +184,9 @@ class AlmaPOLineServiceTest {
         String library = LIBRARY_NUMBER;
         String orderBy = ORDER_BY_TITLE;
         boolean expand = true;
-        PoLines poLines = almaPOLineService.queryPoLines(q, status, offset, limit, acquisitionMethod, library, orderBy,
-                expand);
+        PoLines poLines =
+                almaPOLineService.queryPoLines(q, status, offset, limit, acquisitionMethod, library, orderBy,
+                        expand);
         assertEquals(2, poLines.getTotalRecordCount());
     }
 
@@ -250,13 +252,6 @@ class AlmaPOLineServiceTest {
     }
 
     @Test
-    void testGetAlmaStage() {
-        mockAlmaApi();
-        AlmaPOLineService almaPOLineService = new AlmaPOLineService(mockAlmaApiClient);
-        assertEquals(STAGE, almaPOLineService.getAlmaStage());
-    }
-
-    @Test
     void testGetContext() {
         mockAlmaApi();
         AlmaPOLineService almaPOLineService = new AlmaPOLineService(mockAlmaApiClient);
@@ -272,10 +267,8 @@ class AlmaPOLineServiceTest {
 
     private void mockAlmaApi() {
         when(this.mockAlmaApiClient.getWebTarget()).thenReturn(webTarget);
-        when(mockAlmaApiClient.getAlmaStage()).thenReturn(STAGE);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }
-
 
 }

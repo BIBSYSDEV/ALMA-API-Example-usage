@@ -30,7 +30,6 @@ public class AlmaBibsService {
     private final transient WebTarget bibsTarget;
     private final transient String context;
     private final transient String contextValue;
-    private final transient String almaStage;
     private final transient AlmaItemsService almaItemsService;
 
     /**
@@ -45,7 +44,6 @@ public class AlmaBibsService {
         this.bibsTarget = almaClient.getWebTarget().path("bibs");
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
-        this.almaStage = almaClient.getAlmaStage();
     }
 
     /**
@@ -466,15 +464,6 @@ public class AlmaBibsService {
      */
     public String getContextValue() {
         return contextValue;
-    }
-
-    /**
-     * Getter for almaStage.
-     * 
-     * @return almaStage
-     */
-    public String getAlmaStage() {
-        return almaStage;
     }
 
     private String createLabel(String enumerationA, String enumerationB, String enumerationC, String enumerationD,

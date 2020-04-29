@@ -18,7 +18,6 @@ public class AlmaClient {
 
     private final WebTarget webTarget;
     private final String contextValue;
-    private final String almaStage;
 
     private static final int connectTimeout = 10_000;
     private static final int readTimeout = 120_000;
@@ -69,8 +68,7 @@ public class AlmaClient {
         Objects.requireNonNull(client, "JAX-RS rest client must be provided");
         Objects.requireNonNull(apiAuthorizationService, "Alma API authorization is required");
         VaultApiAuthorization apiAuthorization =
-                apiAuthorizationService
-                        .getApiAuthorization(config.getString("stage"), bibCode);
+                apiAuthorizationService.getApiAuthorization(bibCode);
 
         this.webTarget =
                 client
@@ -79,8 +77,7 @@ public class AlmaClient {
                         .register(MoxyXmlFeature.class)
                         .register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)
                         .register(AlmaStatusResponseFilter.class, Priorities.ENTITY_CODER)
-                        .target(buildAlmaUrl(apiAuthorization.getAlmaHost(), config.getString("almaServiceContext")));
-        this.almaStage = config.getString("stage");
+                        .target(config.getString("almaBaseUrl"));
         this.contextValue = apiAuthorization.getOrganization();
     }
 
@@ -94,13 +91,5 @@ public class AlmaClient {
 
     public String getContextValue() {
         return contextValue;
-    }
-
-    public String getAlmaStage() {
-        return almaStage;
-    }
-
-    protected static String buildAlmaUrl(String host, String serviceContext) {
-        return String.format("%s://%s/%s", "https", host, serviceContext);
     }
 }

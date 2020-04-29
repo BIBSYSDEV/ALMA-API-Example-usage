@@ -1,20 +1,22 @@
 package no.unit.alma.acquisitions;
 
-import no.unit.alma.generated.polines.PoLine;
-import no.unit.alma.generated.polines.PoLines;
-import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.generated.items.Item;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.items.Item;
+import no.unit.alma.generated.polines.PoLine;
+import no.unit.alma.generated.polines.PoLines;
 
 public class AlmaPOLineService {
 
@@ -51,22 +53,21 @@ public class AlmaPOLineService {
     private final transient WebTarget acqTarget;
     private final String context;
     private final String contextValue;
-    private final String almaStage;
-
 
     /**
      * Service for Polines.
+     * 
      * @param almaClient almaClient
      */
     public AlmaPOLineService(AlmaClient almaClient) {
         this.acqTarget = almaClient.getWebTarget().path(ACQUISITION_PATH);
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
-        this.almaStage = almaClient.getAlmaStage();
     }
 
     /**
      * Create a new Poline.
+     * 
      * @param poLine the poline object
      * @return the new Poline
      */
@@ -82,6 +83,7 @@ public class AlmaPOLineService {
 
     /**
      * Get a poline by its polineNumber.
+     * 
      * @param id poline number
      * @return the poline
      */
@@ -101,6 +103,7 @@ public class AlmaPOLineService {
 
     /**
      * updates a poline.
+     * 
      * @param poLine the poline to update
      * @return the updated poline
      */
@@ -120,13 +123,15 @@ public class AlmaPOLineService {
 
     /**
      * Deletes a poline.
+     * 
      * @param poLine the poline to delete
      */
     public void deletePoline(@Nonnull PoLine poLine) {
         if (StringUtils.isEmpty(poLine.getNumber())) {
             throw new IllegalArgumentException("poLine.getNumber is empty");
         }
-        log.trace("Delete poLine {} at {}. Comment: {}", poLine.getNumber(), contextValue, QUERY_PARAM_DEFAULT_CANCELLATION_COMMENT);
+        log.trace("Delete poLine {} at {}. Comment: {}", poLine.getNumber(), contextValue,
+                QUERY_PARAM_DEFAULT_CANCELLATION_COMMENT);
         acqTarget
                 .path(POLINES_PATH)
                 .path(poLine.getNumber())
@@ -134,7 +139,7 @@ public class AlmaPOLineService {
                 .queryParam(QUERY_PARAM_COMMENT, QUERY_PARAM_DEFAULT_CANCELLATION_COMMENT)
                 .queryParam(QUERY_PARAM_INFORM_VENDOR, false)
                 .queryParam(QUERY_PARAM_OVERRIDE, false)
-                .queryParam(QUERY_PARAM_BIB, QUERY_PARAM_BIB_RETAIN) //delete or suppress
+                .queryParam(QUERY_PARAM_BIB, QUERY_PARAM_BIB_RETAIN) // delete or suppress
                 .request()
                 .accept(MediaType.APPLICATION_XML)
                 .buildDelete()
@@ -144,6 +149,7 @@ public class AlmaPOLineService {
 
     /**
      * retrieves all ACTIVE polines.
+     * 
      * @return list of active polines
      */
     public List<PoLines> readAllActive() {
@@ -154,8 +160,9 @@ public class AlmaPOLineService {
         int limit = 50;
         int offset = 0;
         List<PoLines> poLinesList = new ArrayList<>();
-        PoLines poLines = this.queryPoLines(q, status, offset, limit, acquisitionMethod, null, null,
-                true);
+        PoLines poLines =
+                this.queryPoLines(q, status, offset, limit, acquisitionMethod, null, null,
+                        true);
         poLinesList.add(poLines);
         Integer recordCount = poLines.getTotalRecordCount();
 
@@ -169,37 +176,42 @@ public class AlmaPOLineService {
 
     /**
      * Search for PoLines.
-     * @param q search criteria
-     * @param status status of the order lines (e.g. ACTIVE)
-     * @param offset offset of the retrieval
-     * @param limit limit of the retrieval
+     * 
+     * @param q                 search criteria
+     * @param status            status of the order lines (e.g. ACTIVE)
+     * @param offset            offset of the retrieval
+     * @param limit             limit of the retrieval
      * @param acquisitionMethod e.g. LEGAL_DEPOSIT
-     * @param library narrow the search by library code
-     * @param orderBy sorting param
-     * @param expand expand by NOTE and LOCATION
+     * @param library           narrow the search by library code
+     * @param orderBy           sorting param
+     * @param expand            expand by NOTE and LOCATION
      * @return list of Polines
      */
-    public PoLines queryPoLines(String q, String status, int offset, int limit, String acquisitionMethod, String
-            library, String orderBy, boolean expand) {
-        WebTarget webTarget = acqTarget
-                .path(POLINES_PATH)
-                .queryParam(QUERY_PARAM_Q, q)
-                .queryParam(QUERY_PARAM_STATUS, status)
-                .queryParam(QUERY_PARAM_LIMIT, limit)
-                .queryParam(QUERY_PARAM_OFFSET, offset)
-                .queryParam(QUERY_PARAM_ACQUISITION_METHOD, acquisitionMethod);
+    public PoLines queryPoLines(String q, String status, int offset, int limit, String acquisitionMethod,
+            String library, String orderBy, boolean expand) {
+        WebTarget webTarget =
+                acqTarget
+                        .path(POLINES_PATH)
+                        .queryParam(QUERY_PARAM_Q, q)
+                        .queryParam(QUERY_PARAM_STATUS, status)
+                        .queryParam(QUERY_PARAM_LIMIT, limit)
+                        .queryParam(QUERY_PARAM_OFFSET, offset)
+                        .queryParam(QUERY_PARAM_ACQUISITION_METHOD, acquisitionMethod);
         if (StringUtils.isNotEmpty(orderBy)) {
-            webTarget = webTarget
-                    .queryParam(QUERY_PARAM_ORDER_BY, orderBy)
-                    .queryParam(QUERY_PARAM_DIRECTION, DESC);
+            webTarget =
+                    webTarget
+                            .queryParam(QUERY_PARAM_ORDER_BY, orderBy)
+                            .queryParam(QUERY_PARAM_DIRECTION, DESC);
         }
         if (expand) {
-            webTarget = webTarget
-                    .queryParam(QUERY_PARAM_EXPAND, LOCATIONS_NOTES);
+            webTarget =
+                    webTarget
+                            .queryParam(QUERY_PARAM_EXPAND, LOCATIONS_NOTES);
         }
         if (StringUtils.isNotEmpty(library)) {
-            webTarget = webTarget
-                    .queryParam(QUERY_PARAM_LIBRARY, library);
+            webTarget =
+                    webTarget
+                            .queryParam(QUERY_PARAM_LIBRARY, library);
         }
         return webTarget
                 .request()
@@ -210,7 +222,8 @@ public class AlmaPOLineService {
 
     /**
      * Receive an existing item.
-     * @param itemId barcode
+     * 
+     * @param itemId       barcode
      * @param poLineNumber order number
      * @return the item
      */
@@ -236,17 +249,18 @@ public class AlmaPOLineService {
 
     /**
      * Search for PoLines.
-     * @param query search criteria
-     * @param status status of the order lines (e.g. ACTIVE)
-     * @param offset offset of the retrieval
-     * @param limit limit of the retrieval
+     * 
+     * @param query   search criteria
+     * @param status  status of the order lines (e.g. ACTIVE)
+     * @param offset  offset of the retrieval
+     * @param limit   limit of the retrieval
      * @param library narrow the search by library code
      * @param orderBy sorting param
-     * @param expand expand by NOTE and LOCATION
+     * @param expand  expand by NOTE and LOCATION
      * @return list of polines
      */
     public PoLines searchPolines(@Nonnull String query, @Nonnull String status, int offset, int limit,
-                                 @Nullable String library, @Nullable String orderBy, boolean expand) {
+            @Nullable String library, @Nullable String orderBy, boolean expand) {
         if (StringUtils.isEmpty(status)) {
             throw new IllegalArgumentException("status is null or empty");
         }
@@ -262,9 +276,4 @@ public class AlmaPOLineService {
     public String getContextValue() {
         return contextValue;
     }
-
-    public String getAlmaStage() {
-        return almaStage;
-    }
-
 }

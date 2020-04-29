@@ -20,8 +20,8 @@ public class ApiAuthorizationService {
         return new ApiAuthorizationServiceBuilder();
     }
 
-    public VaultApiAuthorization getApiAuthorization(String almaStage, String bibsysBibCode) {
-        return new VaultApiAuthorization(vaultClient, environment, almaStage, bibsysBibCode);
+    public VaultApiAuthorization getApiAuthorization(String bibsysBibCode) {
+        return new VaultApiAuthorization(vaultClient, environment, bibsysBibCode);
     }
 
     public static class ApiAuthorizationServiceBuilder {
@@ -43,7 +43,9 @@ public class ApiAuthorizationService {
         }
 
         /**
-         * Build-method for ApiAuthorizationService using VaultClientBuilder and environment variables.
+         * Build-method for ApiAuthorizationService using VaultClientBuilder and
+         * environment variables.
+         * 
          * @return an ApiAuthorizationService
          */
         public ApiAuthorizationService build() {

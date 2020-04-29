@@ -14,18 +14,18 @@ public class VaultApiAuthorization {
 
     private final transient VaultClient vaultClient;
     private final String environment;
-    private final String almaStage;
     private final String organization;
 
     /**
-     * The ApiKeys for Alma are stored in Vault. This class retrieves teh secrets from Vault to use them as apiKeys
-     * for Alma-Api-endpoints dependent on the environment/stage.
-     * @param vaultClient VaultClient
-     * @param environment environment (test, utv, prod)
-     * @param almaStage alma-phase (sandbox, prod)
+     * The ApiKeys for Alma are stored in Vault. This class retrieves teh secrets
+     * from Vault to use them as apiKeys for Alma-Api-endpoints dependent on the
+     * environment/stage.
+     * 
+     * @param vaultClient  VaultClient
+     * @param environment  environment (test, utv, prod)
      * @param organization alma-instance (bibcode)
      */
-    public VaultApiAuthorization(VaultClient vaultClient, String environment, String almaStage, String organization) {
+    public VaultApiAuthorization(VaultClient vaultClient, String environment, String organization) {
         Objects.requireNonNull(vaultClient, "Vault client is required");
         if (StringUtils.isEmpty(environment)) {
             throw new RuntimeException("Environment is required");
@@ -33,23 +33,15 @@ public class VaultApiAuthorization {
         if (StringUtils.isEmpty(organization)) {
             throw new RuntimeException("Organization is required");
         }
-        Objects.requireNonNull(almaStage, "Alma stage is required");
         this.vaultClient = vaultClient;
         this.environment = environment;
-        this.almaStage = almaStage;
         this.organization = organization;
-        // make sure that we can retrieve the almaHost or fail fast
-        getSecret("almaHost", "host");
         // make sure that we can retrieve the apikey or fail fast
         getSecret("apiKey", organization);
     }
 
     public String getEnvironment() {
         return environment;
-    }
-
-    public String getAlmaStage() {
-        return almaStage;
     }
 
     public String getOrganization() {
@@ -69,16 +61,16 @@ public class VaultApiAuthorization {
     }
 
     private String getSecret(String type, String key) {
-        String secretPath = String.format("secret/service/alma/apikey/%s/%s/%s#value", environment, almaStage, key);
-        log.trace("Vault secret path for Environment '{}', Alma stage '{}', Context '{}', Value '{}': {}", environment,
-                almaStage, type, key, secretPath);
+        String secretPath = String.format("secret/service/alma/apikey/%s/%s#value", environment, key);
+        log.trace("Vault secret path for Environment '{}', Context '{}', Value '{}': {}", environment,
+                type, key, secretPath);
         final String secret = vaultClient.read(secretPath);
         if (secret == null) {
             throw new RuntimeException(String.format("Unable to retrieve AlmaContext secret. Environment: '%s'"
-                            + ", Alma stage: '%s', AlmaContext: '%s', Value: '%s'", environment, almaStage, type, key));
+                    + ", AlmaContext: '%s', Value: '%s'", environment, type, key));
         }
-        log.debug("AlmaContext secret found for Environment '{}', Alma stage '{}', Context '{}', Value '{}'",
-                environment, almaStage, type, key);
+        log.debug("AlmaContext secret found for Environment '{}', Context '{}', Value '{}'",
+                environment, type, key);
         return secret;
     }
 
@@ -93,21 +85,19 @@ public class VaultApiAuthorization {
         VaultApiAuthorization that = (VaultApiAuthorization) o;
         return Objects.equals(organization, that.organization)
                 && Objects.equals(environment, that.environment)
-                && almaStage == that.almaStage
                 && Objects.equals(getAlmaHost(), that.getAlmaHost())
                 && Objects.equals(getApiKey(), that.getApiKey());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(organization, environment, getAlmaHost(), getApiKey(), almaStage);
+        return Objects.hash(organization, environment, getAlmaHost(), getApiKey());
     }
 
     @Override
     public String toString() {
         return "ApiAuthorization{"
                 + "environment='" + environment + '\''
-                + ", almaStage=" + almaStage
                 + ", organization='" + organization + '\''
                 + '}';
     }

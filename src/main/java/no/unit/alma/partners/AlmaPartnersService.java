@@ -1,13 +1,14 @@
 package no.unit.alma.partners;
 
-import no.unit.alma.commons.AlmaClient;
-import no.unit.alma.generated.partners.Partner;
-import no.unit.alma.generated.partners.Partners;
-import org.apache.commons.lang3.StringUtils;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.lang3.StringUtils;
+
+import no.unit.alma.commons.AlmaClient;
+import no.unit.alma.generated.partners.Partner;
+import no.unit.alma.generated.partners.Partners;
 
 public class AlmaPartnersService {
 
@@ -16,7 +17,6 @@ public class AlmaPartnersService {
     private final transient WebTarget webTarget;
     private final String context;
     private final String contextValue;
-    private final String almaStage;
 
     /**
      * Service for partners.
@@ -27,11 +27,11 @@ public class AlmaPartnersService {
         this.webTarget = almaClient.getWebTarget();
         this.context = almaClient.getContext();
         this.contextValue = almaClient.getContextValue();
-        this.almaStage = almaClient.getAlmaStage();
     }
 
     /**
      * Search for partners.
+     * 
      * @param q Query as String
      * @return Partners
      */
@@ -39,15 +39,14 @@ public class AlmaPartnersService {
         return retrievePartners(q, "ACTIVE", "material_supplier", -1, 0);
     }
 
-
     /**
      * Retrieve Partners.
      *
-     * @param q         Query as String
-     * @param status    Status as String
-     * @param type      Type as String
-     * @param limit     Limit as int
-     * @param offset    Offset as int
+     * @param q      Query as String
+     * @param status Status as String
+     * @param type   Type as String
+     * @param limit  Limit as int
+     * @param offset Offset as int
      * @return Partners
      */
     public Partners retrievePartners(String q, String status, String type, int limit, int offset) {
@@ -61,8 +60,9 @@ public class AlmaPartnersService {
                     .invoke(Partners.class);
         }
 
-        partnersTarget = partnersTarget
-                .queryParam("status", StringUtils.isEmpty(status) ? "ALL" : status);
+        partnersTarget =
+                partnersTarget
+                        .queryParam("status", StringUtils.isEmpty(status) ? "ALL" : status);
 
         if (StringUtils.isNotEmpty(q)) {
             partnersTarget = partnersTarget.queryParam("q", q);
@@ -84,7 +84,6 @@ public class AlmaPartnersService {
                 .invoke(Partners.class);
     }
 
-
     /**
      * Fetch partner.
      *
@@ -101,7 +100,6 @@ public class AlmaPartnersService {
                 .invoke(Partner.class);
     }
 
-
     /**
      * Post new partner.
      *
@@ -116,12 +114,11 @@ public class AlmaPartnersService {
                 .invoke(Partner.class);
     }
 
-
     /**
      * Update a partner.
      *
-     * @param partnerIdentifier  as String
-     * @param partner            changed partner as Partner
+     * @param partnerIdentifier as String
+     * @param partner           changed partner as Partner
      * @return Partner
      */
     public Partner updatePartner(String partnerIdentifier, final Partner partner) {
@@ -133,7 +130,6 @@ public class AlmaPartnersService {
                 .buildPut(Entity.xml(partner))
                 .invoke(Partner.class);
     }
-
 
     /**
      * Delete partner.
@@ -151,18 +147,11 @@ public class AlmaPartnersService {
                 .close();
     }
 
-
     public String getContext() {
         return context;
     }
 
-
     public String getContextValue() {
         return contextValue;
-    }
-
-
-    public String getAlmaStage() {
-        return almaStage;
     }
 }
