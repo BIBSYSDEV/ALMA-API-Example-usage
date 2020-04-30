@@ -20,7 +20,7 @@ public class VaultApiAuthorization {
      * The ApiKeys for Alma are stored in Vault. This class retrieves teh secrets
      * from Vault to use them as apiKeys for Alma-Api-endpoints dependent on the
      * environment/stage.
-     * 
+     *
      * @param vaultClient  VaultClient
      * @param environment  environment (test, utv, prod)
      * @param organization alma-instance (bibcode)
