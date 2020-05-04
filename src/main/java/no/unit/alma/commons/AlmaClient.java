@@ -82,6 +82,7 @@ public class AlmaClient {
                         .property(ClientProperties.CONNECT_TIMEOUT, connectTimeout)
                         .property(ClientProperties.READ_TIMEOUT, readTimeout)
                         .register(MoxyXmlFeature.class)
+                        .register(new AlmaAuthorizationRequestFilter(apiAuthorization), Priorities.AUTHORIZATION)
                         .register(loggerFeature)
                         .register(AlmaStatusResponseFilter.class, Priorities.ENTITY_CODER)
                         .target(config.getString("almaBaseUrl"));
