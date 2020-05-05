@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -41,6 +42,9 @@ class AlmaClientTest {
     @Mock
     WebTarget webTarget;
 
+    @Mock
+    LoggingFeature loggingFeature;
+
     public static final String BIBCODE = "b";
     public static final String CONTEXT = "bibsysBibKode";
     public static final String SERVICE_CONTEXT = "path1/path2";
@@ -59,6 +63,7 @@ class AlmaClientTest {
         when(client.property(any(), any())).thenReturn(client);
         when(client.register(any())).thenReturn(client);
         when(client.register(any(AlmaAuthorizationRequestFilter.class), anyInt())).thenReturn(client);
+        when(client.register(any(LoggingFeature.class))).thenReturn(client);
         when(client.register(any(), anyInt())).thenReturn(client);
         when(client.target(anyString())).thenReturn(webTarget);
 

@@ -1,5 +1,6 @@
 package no.unit.alma.analytics;
 
+import no.unit.alma.acquisitions.AlmaPOLineService;
 import no.unit.alma.acquisitions.AlmaVendorsService;
 import no.unit.alma.commons.AlmaClient;
 import org.junit.jupiter.api.Test;
@@ -52,25 +53,23 @@ class AlmaAnalyticsServiceTest {
     @Test
     void testGetContext() {
         mockAlmaApi();
-        AlmaVendorsService almaVendorsService =
-                new AlmaVendorsService(mockAlmaApiClient);
-        assertEquals(CONTEXT, almaVendorsService.getContext());
+        AlmaPOLineService almaPOLineService = new AlmaPOLineService(mockAlmaApiClient);
+        assertEquals(CONTEXT, almaPOLineService.getContext());
     }
 
     @Test
     void testGetContextValue() {
         mockAlmaApi();
-        AlmaVendorsService almaVendorsService =
-                new AlmaVendorsService(mockAlmaApiClient);
-        assertEquals(CONTEXT_VALUE, almaVendorsService.getContextValue());
+        AlmaPOLineService almaPOLineService = new AlmaPOLineService(mockAlmaApiClient);
+        assertEquals(CONTEXT_VALUE, almaPOLineService.getContextValue());
     }
 
     private void mockAlmaApi() {
-        when(this.mockAlmaApiClient.getWebTarget())
-                .thenReturn(webTarget);
+        when(this.mockAlmaApiClient.getWebTarget()).thenReturn(webTarget);
         when(mockAlmaApiClient.getContext()).thenReturn(CONTEXT);
         when(mockAlmaApiClient.getContextValue()).thenReturn(CONTEXT_VALUE);
     }
+
 
 
 }
