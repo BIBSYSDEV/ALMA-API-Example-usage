@@ -27,6 +27,7 @@ class AlmaPartnersServiceTest {
     private static final String TEST_ID = "123456";
     private static final String CONTEXT = "exampleContext";
     private static final String CONTEXT_VALUE = "exampleContextValue";
+    public static final String EMPTY_STRING = "";
 
     @Mock
     private AlmaClient mockAlmaApiClient;
@@ -120,13 +121,6 @@ class AlmaPartnersServiceTest {
     @Test
     void testRetrievePartners() {
         mockAlmaApi();
-
-        final int limit = 0;
-        final int offset = 10;
-        final String status = "status";
-        final String emptyQueryString = "query";
-        final String type = "some_type";
-
         Partners partners = new Partners();
         partners.setTotalRecordCount(12);
 
@@ -137,10 +131,59 @@ class AlmaPartnersServiceTest {
         when(builder.buildGet()).thenReturn(invocation);
         when(invocation.invoke((Class<Object>) any())).thenReturn(partners);
 
-        AlmaPartnersService almaPartnersService =
-                new AlmaPartnersService(mockAlmaApiClient);
+        AlmaPartnersService almaPartnersService = new AlmaPartnersService(mockAlmaApiClient);
+
+        final int limit = 0;
+        final int offset = 10;
+        String status = "status";
+        String emptyQueryString = "query";
+        String type = "some_type";
         Partners resultPartners = almaPartnersService.retrievePartners(emptyQueryString, status, type, limit, offset);
         assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
+
+        status = EMPTY_STRING;
+        emptyQueryString = "query";
+        type = "some_type";
+        resultPartners = almaPartnersService.retrievePartners(emptyQueryString, status, type, limit, offset);
+        assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
+
+        status = EMPTY_STRING;
+        emptyQueryString = EMPTY_STRING;
+        type = "some_type";
+        resultPartners = almaPartnersService.retrievePartners(emptyQueryString, status, type, limit, offset);
+        assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
+
+        status = EMPTY_STRING;
+        emptyQueryString = EMPTY_STRING;
+        type = EMPTY_STRING;
+        resultPartners = almaPartnersService.retrievePartners(emptyQueryString, status, type, limit, offset);
+        assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
+
+        status = EMPTY_STRING;
+        emptyQueryString = "query";
+        type = EMPTY_STRING;
+        resultPartners = almaPartnersService.retrievePartners(emptyQueryString, status, type, limit, offset);
+        assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
+
+        status = "status";
+        emptyQueryString = EMPTY_STRING;
+        type = EMPTY_STRING;
+        resultPartners = almaPartnersService.retrievePartners(emptyQueryString, status, type, limit, offset);
+        assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
+
+        status = "status";
+        emptyQueryString = "query";
+        type = EMPTY_STRING;
+        resultPartners = almaPartnersService.retrievePartners(emptyQueryString, status, type, limit, offset);
+        assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
+
+        status = "status";
+        emptyQueryString = EMPTY_STRING;
+        type = "type";
+        resultPartners = almaPartnersService.retrievePartners(emptyQueryString, status, type, limit, offset);
+        assertEquals(partners.getTotalRecordCount(), resultPartners.getTotalRecordCount());
+
+
     }
 
     @Test
