@@ -37,11 +37,13 @@ public class AlmaAnalyticsHelper {
     }
 
     private static final String NAMESPACE = " xmlns:saw=\"com.siebel.analytics.web/report/v1.1\" "
-            + "xmlns:sawx=\"com.siebel.analytics.web/expression/v1.1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+            + "xmlns:sawx=\"com.siebel.analytics.web/expression/v1.1\" "
+            + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
             + "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" ";
 
 
-    public static String createSingleValueFilter(String valueType, String value, String field, String operation, String operationType) {
+    public static String createSingleValueFilter(String valueType, String value, String field, String operation,
+                                                 String operationType) {
         return "<sawx:expr xsi:type=\"sawx:" + operationType + "\" op=\"" + operation + "\" " + NAMESPACE + ">"
                 + "<sawx:expr xsi:type=\"sawx:sqlExpression\">"
                 + field
@@ -65,7 +67,8 @@ public class AlmaAnalyticsHelper {
                 + "</sawx:expr>";
     }
 
-    public static String createValueFilter(String valueType, String value1, String value2, String field, String operation, String operationType) {
+    public static String createValueFilter(String valueType, String value1, String value2, String field,
+                                           String operation, String operationType) {
         return "<sawx:expr xsi:type=\"sawx:" + operationType + "\" op=\"" + operation + "\" " + NAMESPACE + ">"
                 + "<sawx:expr xsi:type=\"sawx:sqlExpression\">"
                 + field

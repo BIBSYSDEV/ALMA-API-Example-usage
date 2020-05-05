@@ -73,14 +73,14 @@ public class AlmaAnalyticsHelperTest {
     @Test
     void testCreateFilterMethodsExistsAndReturnsSomething() {
         String result1 = AlmaAnalyticsHelper.createOperatorFilter("", "");
-        String result2 = AlmaAnalyticsHelper.createSingleValueFilter("", "", "");
-        String result3 = AlmaAnalyticsHelper.createSingleValueFilter("", "", "");
-        String result4 = AlmaAnalyticsHelper.createSingleValueFilter("", "", "", "", "");
-        String result5 = AlmaAnalyticsHelper.createValueFilter("", "", "", "", "", "");
         assert (result1.contains("<sawx"));
+        String result2 = AlmaAnalyticsHelper.createSingleValueFilter("", "", "");
         assert (result2.contains("<sawx"));
+        String result3 = AlmaAnalyticsHelper.createSingleValueFilter("", "", "");
         assert (result3.contains("<sawx"));
+        String result4 = AlmaAnalyticsHelper.createSingleValueFilter("", "", "", "", "");
         assert (result4.contains("<sawx"));
+        String result5 = AlmaAnalyticsHelper.createValueFilter("", "", "", "", "", "");
         assert (result5.contains("<sawx"));
     }
 

@@ -33,13 +33,13 @@ class AlmaAnalyticsServiceTest {
 
     @Test
     void testGetVendor() {
-        String returnString = "result";
         mockAlmaApi();
         when(webTarget.path(anyString())).thenReturn(webTarget);
         when(webTarget.queryParam(anyString(), any())).thenReturn(webTarget);
         when(webTarget.request()).thenReturn(builder);
         when(builder.accept(anyString())).thenReturn(builder);
         when(builder.get()).thenReturn(response);
+        String returnString = "result";
         when(response.readEntity(String.class)).thenReturn(returnString);
 
         AlmaAnalyticsService almaAnalyticsService =
