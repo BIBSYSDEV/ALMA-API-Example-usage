@@ -7,6 +7,8 @@ plugins {
     id 'jacoco'
     id "net.linguica.maven-settings" version "0.5"
     id 'org.unbroken-dome.xjc' version '1.4.3'
+    id 'nebula.lint' version '16.17.0'
+    id "org.owasp.dependencycheck" version "6.1.2"
 }
 
 group 'no.unit.alma'
@@ -176,8 +178,10 @@ task xjcGenerateLibraries(type: XjcGenerate) {
 
 
 repositories {
-   mavenCentral()
-   maven {
+    mavenCentral()
+    jcenter()
+    maven { url "https://jitpack.io" }
+    maven {
         url = 'https://artifactory.unit.no/artifactory/libs-releases'
     	// put mavenUsername and mavenPassword in gradle.properties NB! Do NOT commit gradle.properties to git!
         credentials { 
@@ -188,6 +192,10 @@ repositories {
             basic(BasicAuthentication)
         }
     }
+}
+
+dependencyCheck {
+    failBuildOnCVSS = 5
 }
 
 dependencies {
@@ -203,12 +211,12 @@ dependencies {
     implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.31'
     implementation group: 'com.typesafe', name: 'config', version: '1.4.0'
     implementation group: 'no.bibsys', name: 'vault-client', version: '1.0.8'
-  	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.4.6'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.4.6'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.5.7'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.5.7'
 }
 
 
@@ -229,6 +237,7 @@ pmd {
 checkstyle {
     configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
     showViolations = true
+    toolVersion '8.41';    // your choice here
 }
 
 tasks.withType(Checkstyle) {
@@ -263,7 +272,7 @@ jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
 jacocoTestCoverageVerification {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude:  [
+            fileTree(dir: it, exclude: [
                     'no/unit/alma/generated/**',
             ])
         }))
