@@ -9,15 +9,20 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,6 +58,9 @@ class AlmaStatusResponseFilterTest {
         when(clientResponseContext.getStatus()).thenReturn(status);
         when(clientRequestContext.getMethod()).thenReturn(method);
         when(clientRequestContext.getUri()).thenReturn(url);
+        MultivaluedMap<String, Object> headers = mock(MultivaluedMap.class);
+        when(clientRequestContext.getHeaders()).thenReturn(headers);
+        when(headers.get(anyString())).thenReturn(Collections.singletonList("String"));
 
         AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
         try {
@@ -88,6 +96,9 @@ class AlmaStatusResponseFilterTest {
         when(clientResponseContext.getStatus()).thenReturn(status);
         when(clientRequestContext.getMethod()).thenReturn(method);
         when(clientRequestContext.getUri()).thenReturn(url);
+        MultivaluedMap<String, Object> headers = mock(MultivaluedMap.class);
+        when(clientRequestContext.getHeaders()).thenReturn(headers);
+        when(headers.get(anyString())).thenReturn(Collections.singletonList("String"));
 
         AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
         try {
@@ -108,6 +119,10 @@ class AlmaStatusResponseFilterTest {
         Response.Status.Family value = Response.Status.Family.SUCCESSFUL;
         when(statusInfo.getFamily()).thenReturn(value);
         when(clientResponseContext.getStatusInfo()).thenReturn(statusInfo);
+        when(clientRequestContext.getUri()).thenReturn(URI.create("String"));
+        MultivaluedMap<String, Object> headers = mock(MultivaluedMap.class);
+        when(clientRequestContext.getHeaders()).thenReturn(headers);
+        when(headers.get(anyString())).thenReturn(Collections.singletonList("String"));
         AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
         almaStatusResponseFilter.filter(clientRequestContext, clientResponseContext);
     }
@@ -130,6 +145,9 @@ class AlmaStatusResponseFilterTest {
         when(clientResponseContext.getStatus()).thenReturn(status);
         when(clientRequestContext.getMethod()).thenReturn(method);
         when(clientRequestContext.getUri()).thenReturn(url);
+        MultivaluedMap<String, Object> headers = mock(MultivaluedMap.class);
+        when(clientRequestContext.getHeaders()).thenReturn(headers);
+        when(headers.get(anyString())).thenReturn(Collections.singletonList("String"));
 
         AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
         try {
@@ -165,6 +183,9 @@ class AlmaStatusResponseFilterTest {
         when(clientResponseContext.getStatus()).thenReturn(status);
         when(clientRequestContext.getMethod()).thenReturn(method);
         when(clientRequestContext.getUri()).thenReturn(url);
+        MultivaluedMap<String, Object> headers = mock(MultivaluedMap.class);
+        when(clientRequestContext.getHeaders()).thenReturn(headers);
+        when(headers.get(anyString())).thenReturn(Collections.singletonList("String"));
 
         AlmaStatusResponseFilter almaStatusResponseFilter = new AlmaStatusResponseFilter();
         try {

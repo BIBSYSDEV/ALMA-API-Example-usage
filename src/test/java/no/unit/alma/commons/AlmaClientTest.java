@@ -63,8 +63,6 @@ class AlmaClientTest {
         when(client.property(any(), any())).thenReturn(client);
         when(client.register(any())).thenReturn(client);
         when(client.register(any(AlmaAuthorizationRequestFilter.class), anyInt())).thenReturn(client);
-        when(client.register(any(LoggingFeature.class))).thenReturn(client);
-        when(client.register(any(), anyInt())).thenReturn(client);
         when(client.target(anyString())).thenReturn(webTarget);
 
         AlmaClient almaClient = new AlmaClient(client, config, apiAuthorizationService, BIBCODE);
